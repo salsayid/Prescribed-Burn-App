@@ -1,5 +1,6 @@
 package edu.unl.cse.soft160.B2.burnplan.evaluator;
 
+import java.sql.Time;
 
 public class BurnPlan {
 	private Integer windSpeed;
@@ -7,9 +8,9 @@ public class BurnPlan {
 	private Double relativeHumidity; //yes this is different from humidity
 	private Boolean isOutdoorBuringBanned;
 	private Direction windDirection;
-	private Integer timeOfDay;
+	private Time timeOfDay;
 	private Season season;
-
+	
 	public BurnPlan() {
 		
 	}
