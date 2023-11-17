@@ -16,6 +16,8 @@ public class BurnPlan {
 	private Double rainChance;
 	private Double rainAmount;
 	private Boolean isColdFrontApproaching;
+	private Double airTemperature;
+	private Integer widthOfBlacklines;
 	
 	public BurnPlan() {
 		
