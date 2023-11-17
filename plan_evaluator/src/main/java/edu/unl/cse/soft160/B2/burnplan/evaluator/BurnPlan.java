@@ -11,6 +11,9 @@ public class BurnPlan {
 	private Time timeOfDay;
 	private Season season;
 	private Boolean isBlackLineVolatile;
+	private Double rainChance;
+	private Double rainAmount;
+	private Boolean isColdFrontApproaching;
 	
 	public BurnPlan() {
 		
