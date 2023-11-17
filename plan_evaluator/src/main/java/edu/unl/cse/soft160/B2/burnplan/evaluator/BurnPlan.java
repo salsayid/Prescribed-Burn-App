@@ -10,6 +10,7 @@ public class BurnPlan {
 	private Direction windDirection;
 	private Time timeOfDay;
 	private Season season;
+	private Boolean isBlackLineVolatile;
 	
 	public BurnPlan() {
 		
