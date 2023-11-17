@@ -3,6 +3,8 @@ package edu.unl.cse.soft160.B2.burnplan.evaluator;
 import java.sql.Time;
 
 public class BurnPlan {
+	private Double latitude;
+	private Double longitude;
 	private Integer windSpeed;
 	private Double humidity;
 	private Double relativeHumidity; //yes this is different from humidity
