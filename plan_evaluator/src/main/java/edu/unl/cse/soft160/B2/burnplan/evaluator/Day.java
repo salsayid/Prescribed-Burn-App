@@ -1,6 +1,5 @@
 package edu.unl.cse.soft160.B2.burnplan.evaluator;
 
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -11,7 +10,7 @@ public class Day {
 	private Weather weather;
 	private LocalDate date;
 	
-	public Day(LocalDate date, Weather weather, boolean isOutdoorBurningBanned, Time timeOfDay, Season season) {
+	public Day(LocalDate date, Weather weather, boolean isOutdoorBurningBanned, LocalTime timeOfDay, Season season) {
 		this.weather = weather;
 		this.isOutdoorBuringBanned = isOutdoorBurningBanned;
 		this.timeOfDay = timeOfDay;
@@ -27,11 +26,11 @@ public class Day {
 		this.isOutdoorBuringBanned = isOutdoorBuringBanned;
 	}
 
-	public Time getTimeOfDay() {
+	public LocalTime getTimeOfDay() {
 		return timeOfDay;
 	}
 
-	public void setTimeOfDay(Time timeOfDay) {
+	public void setTimeOfDay(LocalTime timeOfDay) {
 		this.timeOfDay = timeOfDay;
 	}
 
