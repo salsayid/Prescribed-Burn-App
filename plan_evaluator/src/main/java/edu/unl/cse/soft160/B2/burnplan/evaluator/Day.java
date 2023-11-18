@@ -5,7 +5,7 @@ import java.time.LocalTime;
 
 public class Day {
 	private boolean isOutdoorBuringBanned;
-	private LocalTime timeOfDay;
+	private LocalTime timeOfDay; //hour:minute
 	private Season season;
 	private Weather weather;
 	private LocalDate date;

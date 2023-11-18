@@ -1,7 +1,5 @@
 package edu.unl.cse.soft160.B2.burnplan.evaluator;
 
-import java.sql.Time;
-
 public class BurnPlan {
 	private double latitude;
 	private double longitude;
