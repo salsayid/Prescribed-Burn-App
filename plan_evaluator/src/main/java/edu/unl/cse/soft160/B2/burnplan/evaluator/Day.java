@@ -2,10 +2,11 @@ package edu.unl.cse.soft160.B2.burnplan.evaluator;
 
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Day {
 	private boolean isOutdoorBuringBanned;
-	private Time timeOfDay;
+	private LocalTime timeOfDay;
 	private Season season;
 	private Weather weather;
 	private LocalDate date;
