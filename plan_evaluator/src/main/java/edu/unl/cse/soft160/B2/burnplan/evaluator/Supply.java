@@ -2,11 +2,11 @@ package edu.unl.cse.soft160.B2.burnplan.evaluator;
 
 public class Supply {
 	private String name;
-	private int quantity;
+	private double quantity;
 	private double capacity;
 	private String unit;
 	
-	public Supply (String name, int quantity, double capacity, String unit) {
+	public Supply (String name, double quantity, double capacity, String unit) {
 		this.name = name;
 		this.quantity = quantity;
 		this.capacity = capacity;
@@ -21,11 +21,11 @@ public class Supply {
 		this.name = name;
 	}
 
-	public int getQuantity() {
+	public double getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(double quantity) {
 		this.quantity = quantity;
 	}
 
