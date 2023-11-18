@@ -5,12 +5,15 @@ public class BurnPlan {
 	private double longitude;
 	private boolean isBlackLineVolatile;
 	private Day day;
-	
-	public BurnPlan(Day day, double latitude, double longitude, boolean isBlackLineVolatile) {
+	private Supply supply;
+	private FirePattern firePattern;
+	public BurnPlan(Day day, double latitude, double longitude, boolean isBlackLineVolatile, FirePattern firePattern, Supply supply) {
 		this.day = day;
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.isBlackLineVolatile = isBlackLineVolatile;
+		this.supply = supply;
+		this.firePattern = firePattern;
 	}
 
 	public double getLatitude() {
@@ -43,6 +46,22 @@ public class BurnPlan {
 
 	public void setDay(Day day) {
 		this.day = day;
+	}
+
+	public Supply getSupply() {
+		return supply;
+	}
+
+	public void setSupply(Supply supply) {
+		this.supply = supply;
+	}
+
+	public FirePattern getFirePattern() {
+		return firePattern;
+	}
+
+	public void setFirePattern(FirePattern firePattern) {
+		this.firePattern = firePattern;
 	}
 
 }

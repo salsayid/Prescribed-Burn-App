@@ -5,12 +5,14 @@ public class Supply {
 	private double quantity;
 	private double capacity;
 	private String unit;
+	private FuelType fuelType;
 	
-	public Supply (String name, double quantity, double capacity, String unit) {
+	public Supply (String name, double quantity, double capacity, String unit, FuelType fuelType) {
 		this.name = name;
 		this.quantity = quantity;
 		this.capacity = capacity;
 		this.unit = unit;
+		this.fuelType = fuelType;
 	}
 
 	public String getName() {
@@ -43,5 +45,13 @@ public class Supply {
 
 	public void setUnit(String unit) {
 		this.unit = unit;
+	}
+
+	public FuelType getFuelType() {
+		return fuelType;
+	}
+
+	public void setFuelType(FuelType fuelType) {
+		this.fuelType = fuelType;
 	}
 }
