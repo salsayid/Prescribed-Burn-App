@@ -5,7 +5,6 @@ public class Supply {
 	private double quantity;
 	private double capacity;
 	private String unit;
-	private FuelType fuelType;
 	
 	public Supply (String name, double quantity, double capacity, String unit, FuelType fuelType) {
 		this.name = name;
