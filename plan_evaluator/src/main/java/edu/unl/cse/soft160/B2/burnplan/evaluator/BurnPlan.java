@@ -10,7 +10,7 @@ public class BurnPlan {
 	private Boolean isBlackLineVolatile;
 	private LocalDate currentDay;
 	private Integer acresToBeBurned;
-	private Day day;
+	private Day dayOfFire;
 	private List<Supply> supplies;
 	private FirePattern firePattern;
 	private FuelType fuelType;
@@ -19,7 +19,7 @@ public class BurnPlan {
 	public BurnPlan(Day day, Double latitude, Double longitude, Boolean isBlackLineVolatile, FirePattern firePattern,
 			List<Supply> supplies, FuelType fuelType, Integer widthOfBlacklines, Integer acresToBeBurned,
 			LocalDate currentDay) {
-		this.day = day;
+		this.dayOfFire = day;
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.isBlackLineVolatile = isBlackLineVolatile;
@@ -56,11 +56,11 @@ public class BurnPlan {
 	}
 
 	public Day getDay() {
-		return day;
+		return dayOfFire;
 	}
 
 	public void setDay(Day day) {
-		this.day = day;
+		this.dayOfFire = day;
 	}
 
 	public List<Supply> getSupplies() {
