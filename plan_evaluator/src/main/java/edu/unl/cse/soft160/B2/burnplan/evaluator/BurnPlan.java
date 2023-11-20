@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BurnPlan {
-	private double latitude;
-	private double longitude;
+	private Double latitude;
+	private Double longitude;
 	private Boolean isBlackLineVolatile;
 	private LocalDate currentDay;
 	private Integer acresToBeBurned;
