@@ -1,22 +1,37 @@
 package edu.unl.cse.soft160.B2.burnplan.evaluator;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 public class BurnPlan {
 	private double latitude;
 	private double longitude;
-	private boolean isBlackLineVolatile;
+	private Boolean isBlackLineVolatile;
+	private LocalDate currentDay;
+	private Integer acresToBeBurned;
 	private Day day;
-	private Supply supply;
+	private List<Supply> supplies;
 	private FirePattern firePattern;
-	public BurnPlan(Day day, double latitude, double longitude, boolean isBlackLineVolatile, FirePattern firePattern, Supply supply) {
+	private FuelType fuelType;
+	private Integer widthOfBlacklines;
+
+	public BurnPlan(Day day, Double latitude, Double longitude, Boolean isBlackLineVolatile, FirePattern firePattern,
+			List<Supply> supplies, FuelType fuelType, Integer widthOfBlacklines, Integer acresToBeBurned,
+			LocalDate currentDay) {
 		this.day = day;
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.isBlackLineVolatile = isBlackLineVolatile;
-		this.supply = supply;
+		this.supplies = supplies;
 		this.firePattern = firePattern;
+		this.fuelType = fuelType;
+		this.widthOfBlacklines = widthOfBlacklines;
+		this.acresToBeBurned = acresToBeBurned;
+		this.currentDay = currentDay;
 	}
 
-	public double getLatitude() {
+	public Double getLatitude() {
 		return latitude;
 	}
 
@@ -24,7 +39,7 @@ public class BurnPlan {
 		this.latitude = latitude;
 	}
 
-	public double getLongitude() {
+	public Double getLongitude() {
 		return longitude;
 	}
 
@@ -32,7 +47,7 @@ public class BurnPlan {
 		this.longitude = longitude;
 	}
 
-	public boolean isBlackLineVolatile() {
+	public Boolean isBlackLineVolatile() {
 		return isBlackLineVolatile;
 	}
 
@@ -48,12 +63,12 @@ public class BurnPlan {
 		this.day = day;
 	}
 
-	public Supply getSupply() {
-		return supply;
+	public List<Supply> getSupplies() {
+		return supplies;
 	}
 
-	public void setSupply(Supply supply) {
-		this.supply = supply;
+	public void setSupplies(Supply supply) {
+		this.supplies = supplies;
 	}
 
 	public FirePattern getFirePattern() {
@@ -62,6 +77,38 @@ public class BurnPlan {
 
 	public void setFirePattern(FirePattern firePattern) {
 		this.firePattern = firePattern;
+	}
+
+	public LocalDate getCurrentDay() {
+		return currentDay;
+	}
+
+	public void setCurrentDay(LocalDate currentDay) {
+		this.currentDay = currentDay;
+	}
+
+	public Integer getAcresToBeBurned() {
+		return acresToBeBurned;
+	}
+
+	public void setAcresToBeBurned(int acresToBeBurned) {
+		this.acresToBeBurned = acresToBeBurned;
+	}
+
+	public FuelType getFuelType() {
+		return fuelType;
+	}
+
+	public void setFuelType(FuelType fuelType) {
+		this.fuelType = fuelType;
+	}
+
+	public Integer getWidthOfBlacklines() {
+		return widthOfBlacklines;
+	}
+
+	public void setWidthOfBlacklines(int widthOfBlacklines) {
+		this.widthOfBlacklines = widthOfBlacklines;
 	}
 
 }

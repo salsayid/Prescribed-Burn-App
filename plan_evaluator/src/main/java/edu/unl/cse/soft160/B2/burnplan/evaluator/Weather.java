@@ -1,9 +1,9 @@
 package edu.unl.cse.soft160.B2.burnplan.evaluator;
 
 public class Weather {
-	private double windSpeed; //mph
-	private double humidity;
-	private double relativeHumidity; //yes this is different from humidity
+	private Double windSpeed; // mph
+	private Double humidity;
+	private Double relativeHumidity; // yes this is different from humidity
 	private Direction windDirection;
 	private double rainChance;
 	private double rainAmount; //inches
@@ -22,7 +22,7 @@ public class Weather {
 		this.temperature = temperature;
 	}
 
-	public double getWindSpeed() {
+	public Double getWindSpeed() {
 		return windSpeed;
 	}
 
@@ -30,7 +30,7 @@ public class Weather {
 		this.windSpeed = windSpeed;
 	}
 
-	public double getHumidity() {
+	public Double getHumidity() {
 		return humidity;
 	}
 
@@ -38,7 +38,7 @@ public class Weather {
 		this.humidity = humidity;
 	}
 
-	public double getRelativeHumidity() {
+	public Double getRelativeHumidity() {
 		return relativeHumidity;
 	}
 
@@ -54,7 +54,7 @@ public class Weather {
 		this.windDirection = windDirection;
 	}
 
-	public double getRainChance() {
+	public Double getRainChance() {
 		return rainChance;
 	}
 
@@ -62,7 +62,7 @@ public class Weather {
 		this.rainChance = rainChance;
 	}
 
-	public double getRainAmount() {
+	public Double getRainAmount() {
 		return rainAmount;
 	}
 
@@ -70,11 +70,19 @@ public class Weather {
 		this.rainAmount = rainAmount;
 	}
 
-	public boolean isColdFrontApproaching() {
+	public Boolean isColdFrontApproaching() {
 		return isColdFrontApproaching;
 	}
 
 	public void setColdFrontApproaching(boolean isColdFrontApproaching) {
 		this.isColdFrontApproaching = isColdFrontApproaching;
+	}
+
+	public Double getTemperature() {
+		return temperature;
+	}
+
+	public void setTemperature(double temperature) {
+		this.temperature = temperature;
 	}
 }
