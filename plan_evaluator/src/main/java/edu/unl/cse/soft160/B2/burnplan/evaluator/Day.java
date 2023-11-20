@@ -9,7 +9,7 @@ public class Day {
 	private Season season;
 	private Weather weather;
 	private LocalDate date;
-	
+		
 	public Day(LocalDate date, Weather weather, boolean isOutdoorBurningBanned, LocalTime timeOfDay, Season season) {
 		this.weather = weather;
 		this.isOutdoorBuringBanned = isOutdoorBurningBanned;

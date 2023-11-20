@@ -8,9 +8,10 @@ public class Weather {
 	private double rainChance;
 	private double rainAmount; //inches
 	private boolean isColdFrontApproaching;
+	private double temperature; //Fahrenheit
 	
 	public Weather(double windSpeed, double humidity, double relativeHumidity, Direction windDirection,
-			double rainChance, double rainAmount, boolean isColdFrontApproaching) {
+			double rainChance, double rainAmount, boolean isColdFrontApproaching, double temperature) {
 		this.windSpeed = windSpeed;
 		this.humidity = humidity;
 		this.relativeHumidity = relativeHumidity;
@@ -18,6 +19,7 @@ public class Weather {
 		this.rainChance = rainChance;
 		this.rainAmount = rainAmount;
 		this.isColdFrontApproaching = isColdFrontApproaching;
+		this.temperature = temperature;
 	}
 
 	public double getWindSpeed() {
