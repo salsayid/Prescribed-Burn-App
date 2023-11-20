@@ -11,7 +11,6 @@ public class Supply {
 		this.quantity = quantity;
 		this.capacity = capacity;
 		this.unit = unit;
-		this.fuelType = fuelType;
 	}
 
 	public String getName() {
@@ -46,11 +45,4 @@ public class Supply {
 		this.unit = unit;
 	}
 
-	public FuelType getFuelType() {
-		return fuelType;
-	}
-
-	public void setFuelType(FuelType fuelType) {
-		this.fuelType = fuelType;
-	}
 }
