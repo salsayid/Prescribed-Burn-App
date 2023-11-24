@@ -5,13 +5,13 @@ public class Weather {
 	private Double humidity;
 	private Double relativeHumidity; // yes this is different from humidity
 	private Direction windDirection;
-	private double rainChance;
-	private double rainAmount; //inches
+	private Double rainChance;
+	private Double rainAmount; //inches
 	private boolean isColdFrontApproaching;
-	private double temperature; //Fahrenheit
+	private Double temperature; //Fahrenheit
 	
-	public Weather(double windSpeed, double humidity, double relativeHumidity, Direction windDirection,
-			double rainChance, double rainAmount, boolean isColdFrontApproaching, double temperature) {
+	public Weather(Double windSpeed, Double humidity, Double relativeHumidity, Direction windDirection,
+			Double rainChance, Double rainAmount, boolean isColdFrontApproaching, Double temperature) {
 		this.windSpeed = windSpeed;
 		this.humidity = humidity;
 		this.relativeHumidity = relativeHumidity;
