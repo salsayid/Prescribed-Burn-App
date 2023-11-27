@@ -67,7 +67,7 @@ public class BurnPlan {
 		return supplies;
 	}
 
-	public void setSupplies(Supply supply) {
+	public void setSupplies(Supply supply, List<Supply> supplies) {
 		this.supplies = supplies;
 	}
 
