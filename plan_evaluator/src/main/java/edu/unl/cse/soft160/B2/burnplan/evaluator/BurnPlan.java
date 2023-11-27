@@ -86,7 +86,6 @@ public class BurnPlan {
 	public void setCurrentDay(LocalDate currentDay) {
 		this.currentDay = currentDay;
 	}
-
 	public Integer getAcresToBeBurned() {
 		return acresToBeBurned;
 	}
