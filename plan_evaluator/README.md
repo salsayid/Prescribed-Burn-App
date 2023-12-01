@@ -2,8 +2,7 @@
 
 # Burn Plan Evaluation App
 
-* This is a temp. description.
-The Burn Plan Evaluation app connects to OpenWeather and takes in user information. It then determines if a burn can proceed. (Something like that)
+The Burn Plan Evaluation app connects to OpenWeather. Upon taking; the date, if burning is banned, the coordinates in Latitude and Longitude, fuel type, fire pattern, width, if the fuel is volatile, acres, and a list of supplies. The app reports if the user, upon matching specifications, has a desired or acceptable burn. If the burn is outside of specifications, the app shall result in not recommending the burn along with the reason for the recommendation. If there are multiple reasons for the burn plan resulting in not recommended, the program will prioritize a specific reason. Should the burn be banned, the app will result in telling the user that the ban is prohibited. If the inputs are missing any information, the app should result in informing the user that the result is indeterminate.
 
 Project Status: **incomplete, not tested, no test failures, and no known bugs**
 
@@ -17,7 +16,7 @@ Authors:
 
 ## Dependencies
 
-The burn plan evaluation app depends on [the OpenWeather REST connector](**Link for OpenWeather Git**).
+The burn plan evaluation app depends on [the OpenWeather REST connector](https://git.unl.edu/soft-core/soft-160/openweather-rest-and-file-connector).
 The REST connector must be in the project's build path during development (and the project's classpath?) when the app is run.
 
 For development, JUnit 4 is required to run the project's unit tests.
@@ -35,6 +34,6 @@ For development, 'BurnPlanEvaluationAlgorithm.java' can be run in Eclipse by rig
 [Software Architecture Info Goes Here]
 
 
-# Testing & Test Results
+## Testing & Test Results
 
 [Testing & Test Results Info Goes Here]
