@@ -4,23 +4,23 @@ import java.util.Date;
 
 
 public class Day {
-	private boolean isOutdoorBuringBanned;
+	private Boolean isOutdoorBuringBanned;
 	private Season season;
 	private Weather weather;
 	private Date date;
 		
-	public Day(Date date, Weather weather, boolean isOutdoorBurningBanned, Season season) {
+	public Day(Date date, Weather weather, Boolean isOutdoorBurningBanned, Season season) {
 		this.weather = weather;
 		this.isOutdoorBuringBanned = isOutdoorBurningBanned;
 		this.season = season;
 		this.date = date;
 	}
 
-	public boolean isOutdoorBuringBanned() {
+	public Boolean isOutdoorBuringBanned() {
 		return isOutdoorBuringBanned;
 	}
 
-	public void setOutdoorBuringBanned(boolean isOutdoorBuringBanned) {
+	public void setOutdoorBuringBanned(Boolean isOutdoorBuringBanned) {
 		this.isOutdoorBuringBanned = isOutdoorBuringBanned;
 	}
 
