@@ -10,7 +10,7 @@ public class Weather {
 	private boolean isColdFrontApproaching;
 	private Double temperature; //Fahrenheit
 	
-	public Weather(Double windSpeed, Double humidity, Double relativeHumidity, Direction windDirection,
+	public Weather(Double windSpeed, Direction windDirection, Double humidity, Double relativeHumidity,
 			Double rainChance, Double rainAmount, boolean isColdFrontApproaching, Double temperature) {
 		this.windSpeed = windSpeed;
 		this.humidity = humidity;
