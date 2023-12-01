@@ -105,7 +105,13 @@ public class BurnPlanEvaluationApp {
 		String dataSet = getDataSet(scanner);
 		OpenWeatherConnector openWeather = new OpenWeatherConnector(dataSet, apiKey);
 		String data = getData(openWeather, dataSet, now, scanner);
-
+		
+		if (data == null) {
+			System.err.println("Unable to get data from OpenWeather");
+			System.exit(1);
+		}
+		
+		// get user input
 		String[] inputPrompts = { "What is the planed date for the burn (YYYY, MM, DD): ",
 				"Is Burning banned for the planed day (true/false): ", "What is the latitude for the burn: ",
 				"What is the longitude for the burn: ", "What Fuel Type is going to be used (Light/Heavy): ",
@@ -119,6 +125,7 @@ public class BurnPlanEvaluationApp {
 		String input = "";
 		boolean haveAllInputs = false;
 
+		System.out.println("If at any point you wish to close the program type exit in one of the prompts");
 		do {
 			input = "";
 			input = getInput(inputPrompts[prompt], scanner);
@@ -128,6 +135,9 @@ public class BurnPlanEvaluationApp {
 				if (prompt == inputPrompts.length) {
 					haveAllInputs = true;
 				}
+			}
+			if (input.equals("exit")) {
+				System.exit(1);
 			}
 		} while (!haveAllInputs);
 		scanner.close();
@@ -149,6 +159,7 @@ public class BurnPlanEvaluationApp {
 			Day dayOfPlanedBurn = new Day(dayOfPlanedBurnDate, dayOfPlanedBurnWeather,
 					Boolean.parseBoolean(inputs.get(1)));
 
+
 			List<Supply> supplies = new ArrayList<>(Arrays.asList(new Supply(null, null, null, null, null)));
 
 			BurnPlan burnPlan = new BurnPlan(dayOfPlanedBurn, currentDay, Double.valueOf(inputs.get(2)),
@@ -157,8 +168,9 @@ public class BurnPlanEvaluationApp {
 					Boolean.parseBoolean(inputs.get(7)), Integer.valueOf(inputs.get(8)), supplies);
 			// BurnPlanEvaluationAlgorithm.evaluate(burnPlan);
 		} catch (NumberFormatException e) {
-			System.out.println(
-					"At least one input that required a number was not a valid number \nIf you meant for one of the true/false prompts to be true make sure to enter true, \nany other response will be seen as false");
+			System.err.println("At least one input that required a number was not a valid number \nIf you meant for one of the true/false prompts to be true make sure to enter true, any other response will be seen as false");
+			System.err.println();
+			System.err.println("Make sure to enter Fuel type and Fire pattern exactly as shown in the prompt");
 		}
 	}
 }
