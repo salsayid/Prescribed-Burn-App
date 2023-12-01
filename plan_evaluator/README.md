@@ -1,4 +1,4 @@
-Here is a link for an example README <https://canvas.unl.edu/courses/162910/files/15695789>
+	Here is a link for an example README <https://canvas.unl.edu/courses/162910/files/15695789>
 
 # Burn Plan Determination App
 
@@ -28,7 +28,7 @@ For development, JUnit 4 is required to run the project's unit tests.
 
 ## Running
 
-[Running Info Goes Here]
+For development, 'BurnPlanEvaluationAlgorithm.java' can be run in Eclipse by right-clicking on it in the "Package Explorer" and selecting "Run As" → "Java Application".
 
 ## Software Architecture
 
