@@ -145,9 +145,9 @@ public class BurnPlanEvaluationApp {
 			Weather dayOfPlanedBurnWeather = new Weather(null, null, null, null, null, null, false, null);
 			Weather dayBeforePlanedBurnWeather = new Weather(null, null, null, null, null, null, false, null);
 
-			Day dayBeforePlanedBurn = new Day(dayBeforePlanedBurnDate, dayBeforePlanedBurnWeather, false, null);
+			Day dayBeforePlanedBurn = new Day(dayBeforePlanedBurnDate, dayBeforePlanedBurnWeather, false);
 			Day dayOfPlanedBurn = new Day(dayOfPlanedBurnDate, dayOfPlanedBurnWeather,
-					Boolean.parseBoolean(inputs.get(1)), null);
+					Boolean.parseBoolean(inputs.get(1)));
 
 			List<Supply> supplies = new ArrayList<>(Arrays.asList(new Supply(null, null, null, null, null)));
 
