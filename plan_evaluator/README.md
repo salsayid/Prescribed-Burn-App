@@ -1,4 +1,4 @@
-	Here is a link for an example README <https://canvas.unl.edu/courses/162910/files/15695789>
+	Here is a link for an example README.md <https://canvas.unl.edu/courses/162910/files/15695789>
 
 # Burn Plan Determination App
 
