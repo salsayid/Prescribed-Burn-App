@@ -1,6 +1,6 @@
 package edu.unl.cse.soft160.B2.burnplan.evaluator;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +8,7 @@ public class BurnPlan {
 	private Double latitude;
 	private Double longitude;
 	private Boolean isBlackLineVolatile;
-	private LocalDate currentDay;
+	private Date currentDay;
 	private Integer acresToBeBurned;
 	private Day dayOfFire;
 	private List<Supply> supplies;
@@ -18,7 +18,7 @@ public class BurnPlan {
 
 	public BurnPlan(Day day, Double latitude, Double longitude, Boolean isBlackLineVolatile, FirePattern firePattern,
 			List<Supply> supplies, FuelType fuelType, Integer widthOfBlacklines, Integer acresToBeBurned,
-			LocalDate currentDay) {
+			Date currentDay) {
 		this.dayOfFire = day;
 		this.latitude = latitude;
 		this.longitude = longitude;
@@ -79,11 +79,11 @@ public class BurnPlan {
 		this.firePattern = firePattern;
 	}
 
-	public LocalDate getCurrentDay() {
+	public Date getCurrentDay() {
 		return currentDay;
 	}
 
-	public void setCurrentDay(LocalDate currentDay) {
+	public void setCurrentDay(Date currentDay) {
 		this.currentDay = currentDay;
 	}
 	public Integer getAcresToBeBurned() {
