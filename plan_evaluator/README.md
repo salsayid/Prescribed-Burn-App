@@ -2,8 +2,7 @@
 
 # Burn Plan Evaluation App
 
-* This is a temp. description.
-The Burn Plan Evaluation app connects to OpenWeather and takes in user information. It then determines if a burn can proceed. (Something like that)
+The Burn Plan Evaluation app connects to OpenWeather. Upon taking; the date, if burning is banned, the coordinates in Latitude and Longitude, fuel type, fire pattern, width, if the fuel is volatile, acres, and a list of supplies. The app reports if the user, upon matching specifications, has a desired or acceptable burn. If the burn is outside of specifications, the app shall result in not recommending the burn along with the reason for the recommendation. If there are multiple reasons for the burn plan resulting in not recommended, the program will prioritize a specific reason. Should the burn be banned, the app will result in telling the user that the ban is prohibited. If the inputs are missing any information, the app should result in informing the user that the result is indeterminate.
 
 Project Status: **incomplete, not tested, no test failures, and no known bugs**
 
@@ -17,7 +16,7 @@ Authors:
 
 ## Dependencies
 
-The burn plan evaluation app depends on [the OpenWeather REST connector](**Link for OpenWeather Git**).
+The burn plan evaluation app depends on [the OpenWeather REST connector](https://git.unl.edu/soft-core/soft-160/openweather-rest-and-file-connector).
 The REST connector must be in the project's build path during development (and the project's classpath?) when the app is run.
 
 For development, JUnit 4 is required to run the project's unit tests.
@@ -34,25 +33,25 @@ For development, 'BurnPlanEvaluationAlgorithm.java' can be run in Eclipse by rig
 
 [Software Architecture Info Goes Here]
 
+## Testing & Test Results
 
-# Testing & Test Results
 The code [will] be tested through category-partition testing. These are the categories and partitions:
 Ex. Category- partition 1, partition 2, ...
-latitude- an integer, null
-longitude- an integer, null
-isBlackLineVolatile- true, false, null
-acresToBeBurned- 0, more than 0, less than 0, null
-dayOfFire- within date range (based on currentDay), before date range (based on currentDay), after date range (based on currentDay), null
-supplies- no supplies, all the necessary supplies are present and the right amount, all the supplies are present but not the right amount (each individual type of supplies), one type of supplies is not present
-firePattern- HeadFire,BlackLines, BackFire/any other fire type
-fuelType- Light, Heavy, null
-widthOfBlacklines = 0, 100, 500, null
-windSpeed- Desireable wind speed for headfires, desireable wind speed for blacklines, acceptable wind speed for headfires, acceptable wind speed for blacklines, acceptable windspeed for all other fires, wind speed of 100 mph, null
-humidity- desired for headfires, desired for blacklines, acceptable for headfires, acceptable for blacklines, acceptable for all other fires, humidity in the range of a red flag condition, null
-relativeHumidity- <20, >=20, null
-windDirection- North, North East, East, South East, South, SouthWest, West, NorthWest, null (tested on head fires specifically)
-rainChance- <50, >=50, null
-rainAmount- <10, >=10, null
-isColdFrontApproaching- true, false, null/unknown
-temperature- desired for headfires, desired for blacklines, acceptable for headfires, acceptable for blacklines, acceptable for all other fires, temperature above 80 when the fire is not a black line or a head fire, null
+* latitude - an integer, null
+* longitude- an integer, null
+* isBlackLineVolatile- true, false, null
+* acresToBeBurned- 0, more than 0, less than 0, null
+* dayOfFire- within date range (based on currentDay), before date range (based on currentDay), after date range (based on currentDay), null
+* supplies- no supplies, all the necessary supplies are present and the right amount, all the supplies are present but not the right amount (each individual type of supplies), one type of supplies is not present
+* firePattern- HeadFire,BlackLines, BackFire/any other fire type
+* fuelType- Light, Heavy, null
+* widthOfBlacklines = 0, 100, 500, null
+* windSpeed- Desireable wind speed for headfires, desireable wind speed for blacklines, acceptable wind speed for headfires, acceptable wind speed for blacklines, acceptable windspeed for all other fires, wind speed of 100 mph, null
+* humidity- desired for headfires, desired for blacklines, acceptable for headfires, acceptable for blacklines, acceptable for all other fires, humidity in the range of a red flag condition, null
+* relativeHumidity- <20, >=20, null
+* windDirection- North, North East, East, South East, South, SouthWest, West, NorthWest, null (tested on head fires specifically)
+* rainChance- <50, >=50, null
+* rainAmount- <10, >=10, null
+* isColdFrontApproaching- true, false, null/unknown
+* temperature- desired for headfires, desired for blacklines, acceptable for headfires, acceptable for blacklines, acceptable for all other fires, temperature above 80 when the fire is not a black line or a head fire, null
 
