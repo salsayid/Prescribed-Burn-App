@@ -105,7 +105,13 @@ public class BurnPlanEvaluationApp {
 		String dataSet = getDataSet(scanner);
 		OpenWeatherConnector openWeather = new OpenWeatherConnector(dataSet, apiKey);
 		String data = getData(openWeather, dataSet, now, scanner);
-
+		
+		if (data == null) {
+			System.err.println("Unable to get data from OpenWeather");
+			System.exit(1);
+		}
+		
+		// get user input
 		String[] inputPrompts = { "What is the planed date for the burn (YYYY, MM, DD): ",
 				"Is Burning banned for the planed day (true/false): ", "What is the latitude for the burn: ",
 				"What is the longitude for the burn: ", "What Fuel Type is going to be used (Light/Heavy): ",
@@ -157,8 +163,9 @@ public class BurnPlanEvaluationApp {
 					Boolean.parseBoolean(inputs.get(7)), Integer.valueOf(inputs.get(8)), supplies);
 			// BurnPlanEvaluationAlgorithm.evaluate(burnPlan);
 		} catch (NumberFormatException e) {
-			System.out.println(
-					"At least one input that required a number was not a valid number \nIf you meant for one of the true/false prompts to be true make sure to enter true, \nany other response will be seen as false");
+			System.err.println("At least one input that required a number was not a valid number \nIf you meant for one of the true/false prompts to be true make sure to enter true, any other response will be seen as false");
+			System.err.println();
+			System.err.println("Make sure to enter Fuel type and Fire pattern exactly as shown in the prompt");
 		}
 	}
 }
