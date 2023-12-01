@@ -125,6 +125,7 @@ public class BurnPlanEvaluationApp {
 		String input = "";
 		boolean haveAllInputs = false;
 
+		System.out.println("If at any point you wish to close the program type exit in one of the prompts");
 		do {
 			input = "";
 			input = getInput(inputPrompts[prompt], scanner);
@@ -134,6 +135,9 @@ public class BurnPlanEvaluationApp {
 				if (prompt == inputPrompts.length) {
 					haveAllInputs = true;
 				}
+			}
+			if (input.equals("exit")) {
+				System.exit(1);
 			}
 		} while (!haveAllInputs);
 		scanner.close();
@@ -151,9 +155,8 @@ public class BurnPlanEvaluationApp {
 			Weather dayOfPlanedBurnWeather = new Weather(null, null, null, null, null, null, false, null);
 			Weather dayBeforePlanedBurnWeather = new Weather(null, null, null, null, null, null, false, null);
 
-			Day dayBeforePlanedBurn = new Day(dayBeforePlanedBurnDate, dayBeforePlanedBurnWeather, false, null);
-			Day dayOfPlanedBurn = new Day(dayOfPlanedBurnDate, dayOfPlanedBurnWeather,
-					Boolean.parseBoolean(inputs.get(1)), null);
+			Day dayBeforePlanedBurn = new Day(dayBeforePlanedBurnDate, dayBeforePlanedBurnWeather, false);
+			Day dayOfPlanedBurn = new Day(dayOfPlanedBurnDate, dayOfPlanedBurnWeather, Boolean.parseBoolean(inputs.get(1)));
 
 			List<Supply> supplies = new ArrayList<>(Arrays.asList(new Supply(null, null, null, null, null)));
 
