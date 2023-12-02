@@ -88,8 +88,86 @@ public class BurnPlanEvaluationApp {
 		}
 		return data;
 	}
+	static void printSuppliesOutput(List<Supply> supplies, BurnPlan burnPlan) {
+		//for what the user actually has available for the burn
+		String suppliesName = " ";
+		for (int supplyNumber =0; supplyNumber<supplies.size(); supplyNumber++) {
+			suppliesName = suppliesName + " " + supplies.get(supplyNumber).getName();
+		}
+		System.out.print("Supplies available: "+suppliesName+"\n");
+		System.out.println("The following are the required supplies, if you have the right amount, they will be followed by the word true.");
+		System.out.println("If you do not have enough of an item, it will be followed by the word false.");
+		//for whether or not the user has the required supplies
+		// makes all of the indexes return an error by default
+		int pumperIndex = -1;
+		int fuelIndex = -1;
+		int dripTorchIndex = -1;
+		int fireSwatterIndex = -1;
+		int backpackPumpIndex = -1;
+		int dozerIndex = -1;
+		// gets indexes for all required items
+		int indexNumber = 0;
+		for (Supply supply : supplies) {
+			if (supply.getName() == "pumper") {
+				pumperIndex = indexNumber;
+			} else if (supply.getName() == "fire-starting fuel") {
+				fuelIndex = indexNumber;
+			} else if (supply.getName() == "drip torches") {
+				dripTorchIndex = indexNumber;
+			} else if (supply.getName() == "rakes" || supply.getName() == "fire swatters") {
+				fireSwatterIndex = indexNumber;
+			} else if (supply.getName() == "backpack pump") {
+				backpackPumpIndex = indexNumber;
+			} else if (supply.getName() == "dozer") {
+				dozerIndex = indexNumber;
+			}
+			indexNumber++;
+		}
+		//catches any missing or lacking supplies
+		try {
+		System.out.print("Do the pumpers meet the required supply?: "+!((supplies.get(pumperIndex).getQuantity() / burnPlan.getAcresToBeBurned()) < 0.0125)+"\n");
+		} catch (Exception itemMissing){
+			System.out.print("Do the pumpers meet the required supply?: "+"false"+"\n");
+		}
+		System.out.println("You need at least "+(burnPlan.getAcresToBeBurned()*0.0125)+" pumper(s).");
+		try {
+		System.out.print("Does the fire starting fuel meet the required supply?: "+!((supplies.get(fuelIndex).getQuantity() / burnPlan.getAcresToBeBurned()) < 0.1)+"\n");
+		} catch (Exception itemMissing){
+			System.out.print("Does the fire starting fuel meet the required supply?: "+"false"+"\n");
+		}
+		System.out.println("You need at least "+(burnPlan.getAcresToBeBurned()*0.1)+" gallons of fire starting fuel.");
+		try {
+		System.out.print("Do the drip torches meet the required supply?: "+!((supplies.get(dripTorchIndex).getQuantity()/ supplies.get(fuelIndex).getQuantity()) < 0.1)+"\n");
+		} catch (Exception itemMissing){
+			System.out.print("Do the drip torches meet the required supply?: "+"false"+"\n");
+		}
+		System.out.println("You need at least "+(supplies.get(fuelIndex).getQuantity()*0.1)+" drip torch(es).");
+		try {
+		System.out.print("Do the rakes or fire swatters meet the required supply?: "+!((supplies.get(fireSwatterIndex).getQuantity() / burnPlan.getAcresToBeBurned()) < 0.1)+"\n");
+		} catch (Exception itemMissing){
+			System.out.print("Do the rakes or fire swatters meet the required supply?: "+"false"+"\n");
+		}
+		System.out.println("You need at least "+(burnPlan.getAcresToBeBurned()*0.1)+" rakes or fireSwatters(s).");
+
+		try {
+		System.out.print("Is there at least one backpack pump?: "+(supplies.get(backpackPumpIndex).getQuantity()>0)+"\n");
+		} catch (Exception itemMissing){
+			System.out.print("Is there at least one backpack pump?: "+"false"+"\n");
+		}
+		try {
+		System.out.print("Is there at least one dozer?: "+(supplies.get(dozerIndex).getQuantity()>0)+"\n");
+		} catch (Exception itemMissing){
+			System.out.print("Is there at least one dozer?: "+"false"+"\n");
+		}
+	}
 	static void printPlanOutput(BurnPlan burnPlan, BurnDetermination planEvaluation) {
-		System.out.print("Report generated on "+ burnPlan.getCurrentDay().toString());
+		System.out.print("Report generated on: "+ burnPlan.getCurrentDay().toString()+"\n");
+		System.out.print("Location: "+burnPlan.getLatitude()+" Latitude, and "+burnPlan.getLongitude()+" Longitude\n");
+		System.out.print("Size of land to be burned: "+ burnPlan.getAcresToBeBurned()+"\n");
+		System.out.print("Land fuel type: "+burnPlan.getFuelType()+"\n");
+		System.out.print("Type of fire: "+ burnPlan.getFirePattern()+"\n");
+		printSuppliesOutput(burnPlan.getSupplies(), burnPlan);
+		System.out.print(""+"\n");
 	}
 
 
