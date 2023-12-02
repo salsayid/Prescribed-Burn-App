@@ -4,9 +4,12 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 public class BurnPlanEvaluationAlgorithm {
+	
+	private static final int SECONDS_PER_DAY = 86400;
 
 	static public boolean checkRedFlagConditions(Weather weather, Day day) {
 		int redFlags = 0;
@@ -111,8 +114,12 @@ public class BurnPlanEvaluationAlgorithm {
 		}
 
 		boolean hasRequiredSupplies = checkSupplies(burnPlan.getSupplies(), burnPlan.getAcresToBeBurned());
-		boolean withinDateRange = burnPlan.getDay().getDate().isAfter(burnPlan.getCurrentDay().plusDays(2))
-				&& burnPlan.getDay().getDate().isBefore(burnPlan.getCurrentDay().plusDays(5));
+		Date twoDaysLater = burnPlan.getCurrentDay();
+		Date fiveDaysLater = burnPlan.getCurrentDay();
+		twoDaysLater.setTime(burnPlan.getCurrentDay().getTime() + (SECONDS_PER_DAY * 2));
+		fiveDaysLater.setTime(burnPlan.getCurrentDay().getTime() * (SECONDS_PER_DAY * 5));
+		boolean withinDateRange = burnPlan.getDay().getDate().after(twoDaysLater)
+				&& burnPlan.getDay().getDate().before(fiveDaysLater);
 		if (!hasRequiredSupplies || burnPlan.getDay().getWeather().isColdFrontApproaching()
 				|| (burnPlan.getFuelType() == FuelType.HEAVY && weather.getRainChance() > 50) || !withinDateRange) {
 			return BurnDetermination.NOT_RECOMMENDED_OTHER;
@@ -147,8 +154,12 @@ public class BurnPlanEvaluationAlgorithm {
 			return BurnDetermination.NOT_RECOMMENDED_WIND;
 		}
 		boolean hasRequiredSupplies = checkSupplies(burnPlan.getSupplies(), burnPlan.getAcresToBeBurned());
-		boolean withinDateRange = burnPlan.getDay().getDate().isAfter(burnPlan.getCurrentDay().plusDays(2))
-				&& burnPlan.getDay().getDate().isBefore(burnPlan.getCurrentDay().plusDays(5));
+		Date twoDaysLater = burnPlan.getCurrentDay();
+		Date fiveDaysLater = burnPlan.getCurrentDay();
+		twoDaysLater.setTime(burnPlan.getCurrentDay().getTime() + (SECONDS_PER_DAY * 2));
+		fiveDaysLater.setTime(burnPlan.getCurrentDay().getTime() * (SECONDS_PER_DAY * 5));
+		boolean withinDateRange = burnPlan.getDay().getDate().after(twoDaysLater)
+				&& burnPlan.getDay().getDate().before(fiveDaysLater);
 		if (!hasRequiredSupplies || burnPlan.getDay().getWeather().isColdFrontApproaching()
 				|| (burnPlan.getFuelType() == FuelType.HEAVY && weather.getRainChance() > 50) || !withinDateRange) {
 			return BurnDetermination.NOT_RECOMMENDED_OTHER;
@@ -203,8 +214,12 @@ public class BurnPlanEvaluationAlgorithm {
 				return BurnDetermination.NOT_RECOMMENDED_WIND;
 			}
 			boolean hasRequiredSupplies = checkSupplies(burnPlan.getSupplies(), burnPlan.getAcresToBeBurned());
-			boolean withinDateRange = burnPlan.getDay().getDate().isAfter(burnPlan.getCurrentDay().plusDays(2))
-					&& burnPlan.getDay().getDate().isBefore(burnPlan.getCurrentDay().plusDays(5));
+			Date twoDaysLater = burnPlan.getCurrentDay();
+			Date fiveDaysLater = burnPlan.getCurrentDay();
+			twoDaysLater.setTime(burnPlan.getCurrentDay().getTime() + (SECONDS_PER_DAY * 2));
+			fiveDaysLater.setTime(burnPlan.getCurrentDay().getTime() * (SECONDS_PER_DAY * 5));
+			boolean withinDateRange = burnPlan.getDay().getDate().after(twoDaysLater)
+					&& burnPlan.getDay().getDate().before(fiveDaysLater);
 			if (!hasRequiredSupplies || burnPlan.getDay().getWeather().isColdFrontApproaching()
 					|| (burnPlan.getFuelType() == FuelType.HEAVY && weather.getRainChance() > 50) || !withinDateRange) {
 				return BurnDetermination.NOT_RECOMMENDED_OTHER;
