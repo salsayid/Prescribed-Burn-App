@@ -1,4 +1,4 @@
-	Here is a link for an example README.md <https://canvas.unl.edu/courses/162910/files/15695789>
+	Link for an example README.md <https://canvas.unl.edu/courses/162910/files/15695789>
 
 # Burn Plan Evaluation App
 
@@ -50,6 +50,7 @@ No UI testing, load/stress testing, security testing was performed for this mile
 [Temp Text. The app is passing all unit-level and system-level tests. The unit-level tests
 achieve 100% statement coverage of the code developed by our team.]
 
+# This Info Might be Changed or Gotten Rid of from Testing
 The code [will] be tested through category-partition testing. These are the categories and partitions:
 Ex. Category- partition 1, partition 2, ...
 * latitude - an integer, null
