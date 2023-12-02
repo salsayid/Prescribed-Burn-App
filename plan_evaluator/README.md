@@ -19,6 +19,9 @@ Authors:
 The burn plan evaluation app depends on [the OpenWeather REST connector](https://git.unl.edu/soft-core/soft-160/openweather-rest-and-file-connector).
 The REST connector must be in the project's build path during development (and the project's classpath?) when the app is run.
 
+To run, the REST connector requires a running instance of OpenWeather either
+on the same computer or accessible over a network.
+
 For development, JUnit 4 is required to run the project's unit tests.
 
 ## Building
@@ -34,6 +37,18 @@ For development, 'BurnPlanEvaluationAlgorithm.java' can be run in Eclipse by rig
 [Software Architecture Info Goes Here]
 
 ## Testing & Test Results
+
+[Description of tests Goes Here]
+
+Unit tests are available in one class in the 'test' folder:
+* 'BurnPlanEvaluationAlgorithmTest.java'
+
+The unit tests require JUnit 4.
+
+No UI testing, load/stress testing, security testing was performed for this milestone.
+
+[Temp Text. The app is passing all unit-level and system-level tests. The unit-level tests
+achieve 100% statement coverage of the code developed by our team.]
 
 The code [will] be tested through category-partition testing. These are the categories and partitions:
 Ex. Category- partition 1, partition 2, ...
