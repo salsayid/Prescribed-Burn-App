@@ -88,6 +88,10 @@ public class BurnPlanEvaluationApp {
 		}
 		return data;
 	}
+	static void printPlanOutput(BurnPlan burnPlan, BurnDetermination planEvaluation) {
+		System.out.print("Rachel will add this tommorrow!");
+	}
+
 
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
@@ -166,11 +170,14 @@ public class BurnPlanEvaluationApp {
 					Double.valueOf(inputs.get(3)), FuelType.valueOf(inputs.get(4).toUpperCase()),
 					FirePattern.valueOf(inputs.get(5).toUpperCase()), Integer.valueOf(inputs.get(6)),
 					Boolean.parseBoolean(inputs.get(7)), Integer.valueOf(inputs.get(8)), supplies);
+			BurnDetermination planEvaluation = BurnPlanEvaluationAlgorithm.evaluate(burnPlan);
+			printPlanOutput(burnPlan,planEvaluation);
 			// BurnPlanEvaluationAlgorithm.evaluate(burnPlan);
 		} catch (NumberFormatException e) {
 			System.err.println("At least one input that required a number was not a valid number \nIf you meant for one of the true/false prompts to be true make sure to enter true, any other response will be seen as false");
 			System.err.println();
 			System.err.println("Make sure to enter Fuel type and Fire pattern exactly as shown in the prompt");
 		}
+
 	}
 }
