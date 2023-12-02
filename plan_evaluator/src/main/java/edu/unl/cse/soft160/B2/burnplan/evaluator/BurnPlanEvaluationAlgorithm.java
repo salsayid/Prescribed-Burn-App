@@ -1,22 +1,15 @@
 package edu.unl.cse.soft160.B2.burnplan.evaluator;
 
-import java.io.IOException;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Calendar;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
-
-import edu.unl.cse.soft160.burnplan.BurnPlan;
-import edu.unl.cse.soft160.burnplan.Day;
-import edu.unl.cse.soft160.burnplan.Weather;
-import edu.unl.cse.soft160.json_connections.connection.RestConnection;
-import edu.unl.cse.soft160.json_connections.connector.OpenWeatherConnector;
 
 public class BurnPlanEvaluationAlgorithm {
+	
+	private static final int SECONDS_PER_DAY = 86400;
 
 	static public boolean checkRedFlagConditions(Weather weather, Day day) {
 		int redFlags = 0;
@@ -121,8 +114,12 @@ public class BurnPlanEvaluationAlgorithm {
 		}
 
 		boolean hasRequiredSupplies = checkSupplies(burnPlan.getSupplies(), burnPlan.getAcresToBeBurned());
-		boolean withinDateRange = burnPlan.getDay().getDate().isAfter(burnPlan.getCurrentDay().plusDays(2))
-				&& burnPlan.getDay().getDate().isBefore(burnPlan.getCurrentDay().plusDays(5));
+		Date twoDaysLater = burnPlan.getCurrentDay();
+		Date fiveDaysLater = burnPlan.getCurrentDay();
+		twoDaysLater.setTime(burnPlan.getCurrentDay().getTime() + (SECONDS_PER_DAY * 2));
+		fiveDaysLater.setTime(burnPlan.getCurrentDay().getTime() * (SECONDS_PER_DAY * 5));
+		boolean withinDateRange = burnPlan.getDay().getDate().after(twoDaysLater)
+				&& burnPlan.getDay().getDate().before(fiveDaysLater);
 		if (!hasRequiredSupplies || burnPlan.getDay().getWeather().isColdFrontApproaching()
 				|| (burnPlan.getFuelType() == FuelType.HEAVY && weather.getRainChance() > 50) || !withinDateRange) {
 			return BurnDetermination.NOT_RECOMMENDED_OTHER;
@@ -157,8 +154,12 @@ public class BurnPlanEvaluationAlgorithm {
 			return BurnDetermination.NOT_RECOMMENDED_WIND;
 		}
 		boolean hasRequiredSupplies = checkSupplies(burnPlan.getSupplies(), burnPlan.getAcresToBeBurned());
-		boolean withinDateRange = burnPlan.getDay().getDate().isAfter(burnPlan.getCurrentDay().plusDays(2))
-				&& burnPlan.getDay().getDate().isBefore(burnPlan.getCurrentDay().plusDays(5));
+		Date twoDaysLater = burnPlan.getCurrentDay();
+		Date fiveDaysLater = burnPlan.getCurrentDay();
+		twoDaysLater.setTime(burnPlan.getCurrentDay().getTime() + (SECONDS_PER_DAY * 2));
+		fiveDaysLater.setTime(burnPlan.getCurrentDay().getTime() * (SECONDS_PER_DAY * 5));
+		boolean withinDateRange = burnPlan.getDay().getDate().after(twoDaysLater)
+				&& burnPlan.getDay().getDate().before(fiveDaysLater);
 		if (!hasRequiredSupplies || burnPlan.getDay().getWeather().isColdFrontApproaching()
 				|| (burnPlan.getFuelType() == FuelType.HEAVY && weather.getRainChance() > 50) || !withinDateRange) {
 			return BurnDetermination.NOT_RECOMMENDED_OTHER;
@@ -171,8 +172,10 @@ public class BurnPlanEvaluationAlgorithm {
 		boolean windSpeedIsDesired = weather.getWindSpeed() <= 8;
 		LocalTime midMorningStart = LocalTime.of(10, 0, 0, 0);
 		LocalTime lateAfternoonStart = LocalTime.of(16, 0, 0, 0);
-		boolean timeIsDesired = burnPlan.getDay().getTimeOfDay().isAfter(midDayStart)
-				&& burnPlan.getDay().getTimeOfDay().isBefore(lateAfternoonStart);
+		Instant instant = Instant.ofEpochMilli(burnPlan.getDay().getDate().getTime());
+		LocalTime timeOfBurnDate = LocalDateTime.ofInstant(instant, ZoneId.of("America/Chicago")).toLocalTime();
+		boolean timeIsDesired = timeOfBurnDate.isAfter(midMorningStart)
+				&& timeOfBurnDate.isBefore(lateAfternoonStart);
 		boolean widthOfBlackLinesDesired = true;
 		if (burnPlan.isBlackLineVolatile() == null || burnPlan.isBlackLineVolatile()) {
 			widthOfBlackLinesDesired = burnPlan.getWidthOfBlacklines() >= 500;
@@ -211,8 +214,12 @@ public class BurnPlanEvaluationAlgorithm {
 				return BurnDetermination.NOT_RECOMMENDED_WIND;
 			}
 			boolean hasRequiredSupplies = checkSupplies(burnPlan.getSupplies(), burnPlan.getAcresToBeBurned());
-			boolean withinDateRange = burnPlan.getDay().getDate().isAfter(burnPlan.getCurrentDay().plusDays(2))
-					&& burnPlan.getDay().getDate().isBefore(burnPlan.getCurrentDay().plusDays(5));
+			Date twoDaysLater = burnPlan.getCurrentDay();
+			Date fiveDaysLater = burnPlan.getCurrentDay();
+			twoDaysLater.setTime(burnPlan.getCurrentDay().getTime() + (SECONDS_PER_DAY * 2));
+			fiveDaysLater.setTime(burnPlan.getCurrentDay().getTime() * (SECONDS_PER_DAY * 5));
+			boolean withinDateRange = burnPlan.getDay().getDate().after(twoDaysLater)
+					&& burnPlan.getDay().getDate().before(fiveDaysLater);
 			if (!hasRequiredSupplies || burnPlan.getDay().getWeather().isColdFrontApproaching()
 					|| (burnPlan.getFuelType() == FuelType.HEAVY && weather.getRainChance() > 50) || !withinDateRange) {
 				return BurnDetermination.NOT_RECOMMENDED_OTHER;
@@ -223,10 +230,12 @@ public class BurnPlanEvaluationAlgorithm {
 			boolean temperatureIsDesired = weather.getTemperature() <= 80 && weather.getTemperature() >= 70;
 			boolean humidityIsDesired = weather.getHumidity() >= 25 && weather.getHumidity() <= 40;
 			boolean windSpeedIsDesired = weather.getWindSpeed() >= 8 && weather.getWindSpeed() <= 15;
-			LocalTime midDayStart = LocalTime.of(12, 0, 0, 0);
+			LocalTime midMorningStart = LocalTime.of(10, 0, 0, 0);
 			LocalTime lateAfternoonStart = LocalTime.of(16, 0, 0, 0);
-			boolean timeIsDesired = burnPlan.getDay().getTimeOfDay().isAfter(midDayStart)
-					&& burnPlan.getDay().getTimeOfDay().isBefore(lateAfternoonStart);
+			Instant instant = Instant.ofEpochMilli(burnPlan.getDay().getDate().getTime());
+			LocalTime timeOfBurnDate = LocalDateTime.ofInstant(instant, ZoneId.of("America/Chicago")).toLocalTime();
+			boolean timeIsDesired = timeOfBurnDate.isAfter(midMorningStart)
+					&& timeOfBurnDate.isBefore(lateAfternoonStart);
 			boolean windDirectionIsDesired = weather.getWindDirection() == Direction.SOUTHWEST;
 			if (temperatureIsDesired && humidityIsDesired && windSpeedIsDesired && timeIsDesired
 					&& windDirectionIsDesired) {
