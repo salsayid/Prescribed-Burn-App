@@ -48,8 +48,8 @@ The unit tests require JUnit 4.
 
 No UI testing, load/stress testing, security testing was performed for this milestone.
 
-[Temp Text. The app is passing all unit-level and system-level tests. The unit-level tests
-achieve 100% statement coverage of the code developed by our team.]
+The app is [not] passing all unit-level and system-level tests. The unit-level tests
+achieve 0% statement coverage of the code developed by our team.
 
 # This Info Might be Changed or Gotten Rid of from Testing
 The code [will] be tested through category-partition testing. These are the categories and partitions:
