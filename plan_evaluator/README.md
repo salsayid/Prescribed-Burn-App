@@ -17,7 +17,8 @@ Authors:
 ## Dependencies
 
 The burn plan evaluation app depends on [the OpenWeather REST connector](https://git.unl.edu/soft-core/soft-160/openweather-rest-and-file-connector).
-The REST connector must be in the project's build path during development (and the project's classpath?) when the app is run.
+
+The REST connector must be in the project's build path during development and the project's classpath when the app is run.
 
 To run, the REST connector requires a running instance of OpenWeather either
 on the same computer or accessible over a network.
