@@ -89,7 +89,7 @@ public class BurnPlanEvaluationApp {
 		return data;
 	}
 	static void printPlanOutput(BurnPlan burnPlan, BurnDetermination planEvaluation) {
-		System.out.print("Rachel will add this tommorrow!");
+		System.out.print("Report generated on "+ burnPlan.getCurrentDay().toString());
 	}
 
 
