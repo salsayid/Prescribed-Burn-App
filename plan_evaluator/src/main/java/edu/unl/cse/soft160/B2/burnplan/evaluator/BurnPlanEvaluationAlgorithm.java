@@ -1,16 +1,15 @@
 package edu.unl.cse.soft160.B2.burnplan.evaluator;
 
-import java.io.IOException;
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
-
-import edu.unl.cse.soft160.json_connections.connection.RestConnection;
-import edu.unl.cse.soft160.json_connections.connector.OpenWeatherConnector;
 
 public class BurnPlanEvaluationAlgorithm {
+	
+	private static final int SECONDS_PER_DAY = 86400;
 
 	static public boolean checkRedFlagConditions(Weather weather, Day day) {
 		int redFlags = 0;
@@ -115,8 +114,12 @@ public class BurnPlanEvaluationAlgorithm {
 		}
 
 		boolean hasRequiredSupplies = checkSupplies(burnPlan.getSupplies(), burnPlan.getAcresToBeBurned());
-		boolean withinDateRange = burnPlan.getDay().getDate().isAfter(burnPlan.getCurrentDay().plusDays(2))
-				&& burnPlan.getDay().getDate().isBefore(burnPlan.getCurrentDay().plusDays(5));
+		Date twoDaysLater = burnPlan.getCurrentDay();
+		Date fiveDaysLater = burnPlan.getCurrentDay();
+		twoDaysLater.setTime(burnPlan.getCurrentDay().getTime() + (SECONDS_PER_DAY * 2));
+		fiveDaysLater.setTime(burnPlan.getCurrentDay().getTime() * (SECONDS_PER_DAY * 5));
+		boolean withinDateRange = burnPlan.getDay().getDate().after(twoDaysLater)
+				&& burnPlan.getDay().getDate().before(fiveDaysLater);
 		if (!hasRequiredSupplies || burnPlan.getDay().getWeather().isColdFrontApproaching()
 				|| (burnPlan.getFuelType() == FuelType.HEAVY && weather.getRainChance() > 50) || !withinDateRange) {
 			return BurnDetermination.NOT_RECOMMENDED_OTHER;
@@ -151,8 +154,12 @@ public class BurnPlanEvaluationAlgorithm {
 			return BurnDetermination.NOT_RECOMMENDED_WIND;
 		}
 		boolean hasRequiredSupplies = checkSupplies(burnPlan.getSupplies(), burnPlan.getAcresToBeBurned());
-		boolean withinDateRange = burnPlan.getDay().getDate().isAfter(burnPlan.getCurrentDay().plusDays(2))
-				&& burnPlan.getDay().getDate().isBefore(burnPlan.getCurrentDay().plusDays(5));
+		Date twoDaysLater = burnPlan.getCurrentDay();
+		Date fiveDaysLater = burnPlan.getCurrentDay();
+		twoDaysLater.setTime(burnPlan.getCurrentDay().getTime() + (SECONDS_PER_DAY * 2));
+		fiveDaysLater.setTime(burnPlan.getCurrentDay().getTime() * (SECONDS_PER_DAY * 5));
+		boolean withinDateRange = burnPlan.getDay().getDate().after(twoDaysLater)
+				&& burnPlan.getDay().getDate().before(fiveDaysLater);
 		if (!hasRequiredSupplies || burnPlan.getDay().getWeather().isColdFrontApproaching()
 				|| (burnPlan.getFuelType() == FuelType.HEAVY && weather.getRainChance() > 50) || !withinDateRange) {
 			return BurnDetermination.NOT_RECOMMENDED_OTHER;
@@ -165,8 +172,10 @@ public class BurnPlanEvaluationAlgorithm {
 		boolean windSpeedIsDesired = weather.getWindSpeed() <= 8;
 		LocalTime midMorningStart = LocalTime.of(10, 0, 0, 0);
 		LocalTime lateAfternoonStart = LocalTime.of(16, 0, 0, 0);
-		boolean timeIsDesired = burnPlan.getDay().getTimeOfDay().isAfter(midMorningStart)
-				&& burnPlan.getDay().getTimeOfDay().isBefore(lateAfternoonStart);
+		Instant instant = Instant.ofEpochMilli(burnPlan.getDay().getDate().getTime());
+		LocalTime timeOfBurnDate = LocalDateTime.ofInstant(instant, ZoneId.of("America/Chicago")).toLocalTime();
+		boolean timeIsDesired = timeOfBurnDate.isAfter(midMorningStart)
+				&& timeOfBurnDate.isBefore(lateAfternoonStart);
 		boolean widthOfBlackLinesDesired = true;
 		if (burnPlan.isBlackLineVolatile() == null || burnPlan.isBlackLineVolatile()) {
 			widthOfBlackLinesDesired = burnPlan.getWidthOfBlacklines() >= 500;
@@ -205,8 +214,12 @@ public class BurnPlanEvaluationAlgorithm {
 				return BurnDetermination.NOT_RECOMMENDED_WIND;
 			}
 			boolean hasRequiredSupplies = checkSupplies(burnPlan.getSupplies(), burnPlan.getAcresToBeBurned());
-			boolean withinDateRange = burnPlan.getDay().getDate().isAfter(burnPlan.getCurrentDay().plusDays(2))
-					&& burnPlan.getDay().getDate().isBefore(burnPlan.getCurrentDay().plusDays(5));
+			Date twoDaysLater = burnPlan.getCurrentDay();
+			Date fiveDaysLater = burnPlan.getCurrentDay();
+			twoDaysLater.setTime(burnPlan.getCurrentDay().getTime() + (SECONDS_PER_DAY * 2));
+			fiveDaysLater.setTime(burnPlan.getCurrentDay().getTime() * (SECONDS_PER_DAY * 5));
+			boolean withinDateRange = burnPlan.getDay().getDate().after(twoDaysLater)
+					&& burnPlan.getDay().getDate().before(fiveDaysLater);
 			if (!hasRequiredSupplies || burnPlan.getDay().getWeather().isColdFrontApproaching()
 					|| (burnPlan.getFuelType() == FuelType.HEAVY && weather.getRainChance() > 50) || !withinDateRange) {
 				return BurnDetermination.NOT_RECOMMENDED_OTHER;
@@ -217,10 +230,12 @@ public class BurnPlanEvaluationAlgorithm {
 			boolean temperatureIsDesired = weather.getTemperature() <= 80 && weather.getTemperature() >= 70;
 			boolean humidityIsDesired = weather.getHumidity() >= 25 && weather.getHumidity() <= 40;
 			boolean windSpeedIsDesired = weather.getWindSpeed() >= 8 && weather.getWindSpeed() <= 15;
-			LocalTime midDayStart = LocalTime.of(12, 0, 0, 0);
+			LocalTime midMorningStart = LocalTime.of(10, 0, 0, 0);
 			LocalTime lateAfternoonStart = LocalTime.of(16, 0, 0, 0);
-			boolean timeIsDesired = burnPlan.getDay().getTimeOfDay().isAfter(midDayStart)
-					&& burnPlan.getDay().getTimeOfDay().isBefore(lateAfternoonStart);
+			Instant instant = Instant.ofEpochMilli(burnPlan.getDay().getDate().getTime());
+			LocalTime timeOfBurnDate = LocalDateTime.ofInstant(instant, ZoneId.of("America/Chicago")).toLocalTime();
+			boolean timeIsDesired = timeOfBurnDate.isAfter(midMorningStart)
+					&& timeOfBurnDate.isBefore(lateAfternoonStart);
 			boolean windDirectionIsDesired = weather.getWindDirection() == Direction.SOUTHWEST;
 			if (temperatureIsDesired && humidityIsDesired && windSpeedIsDesired && timeIsDesired
 					&& windDirectionIsDesired) {
@@ -252,92 +267,5 @@ public class BurnPlanEvaluationAlgorithm {
 		default:
 			return determineAllNonHeadOrBlacklineFires(burnPlan);
 		}
-	}
-
-	// determines the type of openweather date to get from the user
-	private static String getDataSet(Scanner scanner) {
-		List<String> dataSets = new ArrayList<>(OpenWeatherConnector.allowableDataSets);
-		for (int i = 0; i < dataSets.size(); ++i) {
-			System.out.println((i + 1) + ". " + dataSets.get(i));
-		}
-		System.out.print(System.lineSeparator() + "Please enter the desired data set: ");
-		int choice = scanner.nextInt();
-		scanner.nextLine();
-
-		return dataSets.get(choice - 1);
-	}
-
-	// calls the openweather api to get the weather data
-	private static String getData(OpenWeatherConnector weather, String dataSet, Instant now, Scanner scanner) {
-		String query;
-		switch (dataSet) {
-		case "weather":
-		case "forecast":
-			query = "zip=68588";
-			break;
-		case "onecall":
-		case "air_pollution":
-		case "air_pollution/forecast":
-			query = "lat=40.81506358&lon=-96.7048613";
-			break;
-		case "air_pollution/history":
-			Instant yesterday = now.minus(1, ChronoUnit.DAYS);
-			Instant twoDaysAgo = now.minus(2, ChronoUnit.DAYS);
-			query = "lat=40.81506358&lon=-96.7048613&start=" + twoDaysAgo.getEpochSecond() + "&end="
-					+ yesterday.getEpochSecond();
-			break;
-		default:
-			System.err.println("The " + dataSet + " dataset is not currently supported.");
-			query = "";
-		}
-
-		if (!query.equals("")) {
-			System.out.print("Enter query, or press the ENTER key to accept the example query (" + query + "): ");
-			String userQuery = scanner.nextLine();
-			if (!userQuery.equals("")) {
-				System.out.println("   " + "*".repeat(76));
-				System.out.println("   ***   The following example output strings assume default units.         ***");
-				System.out.println("   ***   If you specified other units, the values will be correct, but      ***");
-				System.out.println("   ***   the stated units will be the defaults, not your specified units.   ***");
-				System.out.println("   " + "*".repeat(76));
-				query = userQuery;
-			}
-		}
-
-		String data = null;
-		if (!query.equals("")) {
-			System.out.println("Requesting data at " + now);
-			try {
-				data = weather.retrieveData(query);
-			} catch (IOException ioException) {
-				System.err.println("IO Exception: " + ioException.getClass());
-				System.err.println("\t" + ioException.getMessage());
-				System.err.println("Caused by: " + ioException.getCause());
-				if (ioException.getCause() != null) {
-					System.err.println("\t" + ioException.getCause().getMessage());
-				}
-			}
-		} else {
-			System.err.println("Not requesting data at " + now + " due to empty query.");
-		}
-		return data;
-	}
-
-	public static void main(String[] args) {
-		Scanner scanner = new Scanner(System.in);
-		Instant now = Instant.now();
-		String apiKey = null;
-		try {
-			apiKey = RestConnection.getApiKey("openweathermap");
-		} catch (IOException ioException) {
-			System.err.println("IO Exception: " + ioException.getClass());
-			System.err.println("\t" + ioException.getMessage());
-			System.err.println("Caused by: " + ioException.getCause());
-			System.err.println("\t" + ioException.getCause().getMessage());
-			System.exit(1);
-		}
-		String dataSet = getDataSet(scanner);
-		OpenWeatherConnector openWeather = new OpenWeatherConnector(dataSet, apiKey);
-		String data = getData(openWeather, dataSet, now, scanner);
 	}
 }
