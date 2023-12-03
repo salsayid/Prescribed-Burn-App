@@ -2,7 +2,7 @@
 
 # Burn Plan Evaluation App
 
-The Burn Plan Evaluation app connects to OpenWeather. Upon taking; the date, if burning is banned, the coordinates in Latitude and Longitude, fuel type, fire pattern, width, if the fuel is volatile, acres, and a list of supplies. The app reports if the user, upon matching specifications, has a desired or acceptable burn. If the burn is outside of specifications, the app shall result in not recommending the burn along with the reason for the recommendation. If there are multiple reasons for the burn plan resulting in not recommended, the program will prioritize a specific reason. Should the burn be banned, the app will result in telling the user that the ban is prohibited. If the inputs are missing any information, the app should result in informing the user that the result is indeterminate.
+The Burn Plan Evaluation app connects to OpenWeather. Upon taking; the date, the coordinates in Latitude and Longitude, fuel type, fire pattern, width, if the fuel is volatile, acres, and a list of supplies. The app reports if the user, upon matching specifications, has a desired or acceptable burn. If the burn is outside of specifications, the app shall result in not recommending the burn along with the reason for the recommendation. If there are multiple reasons for the burn plan resulting in not recommended, the program will prioritize a specific reason. Should the burn be banned, the app will result in telling the user that the ban is prohibited. If the inputs are missing any information, the app should result in informing the user that the result is indeterminate.
 
 Project Status: **incomplete, not tested, no test failures, and no known bugs**
 
@@ -32,6 +32,10 @@ For development, JUnit 4 is required to run the project's unit tests.
 ## Running
 
 For development, 'BurnPlanEvaluationAlgorithm.java' can be run in Eclipse by right-clicking on it in the "Package Explorer" and selecting "Run As" → "Java Application".
+
+The burn plan evaluation app will prompt the user for the date, latitude and longitude, acres to be burned, fuel type, and fire pattern. Depending on the type of fire pattern the app will also will also ask for the width, and if the fuel is volatile. Enter this information as requested. 
+
+The app will then print to the user if the requested burn is possible. Under different outputs of being desired, acceptable, not recommended other, not recommended wind, not recommended temperature, or prohibited. If any information is left blank, the app will report indeterminate.
 
 ## Software Architecture
 
