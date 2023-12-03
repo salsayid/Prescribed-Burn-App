@@ -1,6 +1,7 @@
 package edu.unl.cse.soft160.B2.burnplan.evaluator;
 
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -12,6 +13,9 @@ import org.junit.Test;
 
 public class BurnPlanEvaluationAlgorithmTest {
 
+	
+	
+	
 @Test
 public void testCheckRedFlagConditions_AllMet() {
 	Weather weather = new Weather(21.0, Direction.NORTH, 19.0, 45.0, 51.0, 11.0, true, 81.0);
@@ -35,6 +39,15 @@ public void testCheckSupplies_InsufficentSupplies() {
 	List<Supply> supplies = new ArrayList<>();
 	supplies.add(new Supply("pumper", 1.0, 5.0, "units", FuelType.LIGHT));
 	assertFalse("supplies are insufficient", BurnPlanEvaluationAlgorithm.checkSupplies(supplies, 100));
+}
+@Test
+public void testDetermineAllNonHeadOrBlacklineFires_Acceptable() {
+	BurnPlan burnPlan = createBurnPlan(FirePattern.CONTROL_LINES, 70.0, 15.0, false);
+	assertEquals("the conditions are acceptable", BurnDetermination.ACCEPTABLE, BurnPlanEvaluationAlgorithm.determineAllNonHeadOrBlacklineFires(burnPlan));
+}
+private BurnPlan createBurnPlan(FirePattern controlLines, double d, double e, boolean b) {
+	// TODO Auto-generated method stub
+	return null;
 }
 
 
