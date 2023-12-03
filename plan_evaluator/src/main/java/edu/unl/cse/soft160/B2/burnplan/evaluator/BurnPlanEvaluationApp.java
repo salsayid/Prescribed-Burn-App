@@ -88,16 +88,18 @@ public class BurnPlanEvaluationApp {
 		}
 		return data;
 	}
+
 	static void printSuppliesOutput(List<Supply> supplies, BurnPlan burnPlan) {
-		//for what the user actually has available for the burn
+		// for what the user actually has available for the burn
 		String suppliesName = " ";
-		for (int supplyNumber =0; supplyNumber<supplies.size(); supplyNumber++) {
+		for (int supplyNumber = 0; supplyNumber < supplies.size(); supplyNumber++) {
 			suppliesName = suppliesName + " " + supplies.get(supplyNumber).getName();
 		}
-		System.out.print("Supplies available: "+suppliesName+"\n");
-		System.out.println("The following are the required supplies, if you have the right amount, they will be followed by the word true.");
+		System.out.print("Supplies available: " + suppliesName + "\n");
+		System.out.println(
+				"The following are the required supplies, if you have the right amount, they will be followed by the word true.");
 		System.out.println("If you do not have enough of an item, it will be followed by the word false.");
-		//for whether or not the user has the required supplies
+		// for whether or not the user has the required supplies
 		// makes all of the indexes return an error by default
 		int pumperIndex = -1;
 		int fuelIndex = -1;
@@ -123,53 +125,168 @@ public class BurnPlanEvaluationApp {
 			}
 			indexNumber++;
 		}
-		//catches any missing or lacking supplies
+		// catches any missing or lacking supplies
 		try {
-		System.out.print("Do the pumpers meet the required supply?: "+!((supplies.get(pumperIndex).getQuantity() / burnPlan.getAcresToBeBurned()) < 0.0125)+"\n");
-		} catch (Exception itemMissing){
-			System.out.print("Do the pumpers meet the required supply?: "+"false"+"\n");
+			System.out.print("Do the pumpers meet the required supply?: "
+					+ !((supplies.get(pumperIndex).getQuantity() / burnPlan.getAcresToBeBurned()) < 0.0125) + "\n");
+		} catch (Exception itemMissing) {
+			System.out.print("Do the pumpers meet the required supply?: " + "false" + "\n");
 		}
-		System.out.println("You need at least "+(burnPlan.getAcresToBeBurned()*0.0125)+" pumper(s).");
+		System.out.println("You need at least " + (burnPlan.getAcresToBeBurned() * 0.0125) + " pumper(s).");
 		try {
-		System.out.print("Does the fire starting fuel meet the required supply?: "+!((supplies.get(fuelIndex).getQuantity() / burnPlan.getAcresToBeBurned()) < 0.1)+"\n");
-		} catch (Exception itemMissing){
-			System.out.print("Does the fire starting fuel meet the required supply?: "+"false"+"\n");
+			System.out.print("Does the fire starting fuel meet the required supply?: "
+					+ !((supplies.get(fuelIndex).getQuantity() / burnPlan.getAcresToBeBurned()) < 0.1) + "\n");
+		} catch (Exception itemMissing) {
+			System.out.print("Does the fire starting fuel meet the required supply?: " + "false" + "\n");
 		}
-		System.out.println("You need at least "+(burnPlan.getAcresToBeBurned()*0.1)+" gallons of fire starting fuel.");
+		System.out.println(
+				"You need at least " + (burnPlan.getAcresToBeBurned() * 0.1) + " gallons of fire starting fuel.");
 		try {
-		System.out.print("Do the drip torches meet the required supply?: "+!((supplies.get(dripTorchIndex).getQuantity()/ supplies.get(fuelIndex).getQuantity()) < 0.1)+"\n");
-		} catch (Exception itemMissing){
-			System.out.print("Do the drip torches meet the required supply?: "+"false"+"\n");
+			System.out.print("Do the drip torches meet the required supply?: "
+					+ !((supplies.get(dripTorchIndex).getQuantity() / supplies.get(fuelIndex).getQuantity()) < 0.1)
+					+ "\n");
+		} catch (Exception itemMissing) {
+			System.out.print("Do the drip torches meet the required supply?: " + "false" + "\n");
 		}
-		System.out.println("You need at least "+(supplies.get(fuelIndex).getQuantity()*0.1)+" drip torch(es).");
+		System.out.println("You need at least " + (supplies.get(fuelIndex).getQuantity() * 0.1) + " drip torch(es).");
 		try {
-		System.out.print("Do the rakes or fire swatters meet the required supply?: "+!((supplies.get(fireSwatterIndex).getQuantity() / burnPlan.getAcresToBeBurned()) < 0.1)+"\n");
-		} catch (Exception itemMissing){
-			System.out.print("Do the rakes or fire swatters meet the required supply?: "+"false"+"\n");
+			System.out.print("Do the rakes or fire swatters meet the required supply?: "
+					+ !((supplies.get(fireSwatterIndex).getQuantity() / burnPlan.getAcresToBeBurned()) < 0.1) + "\n");
+		} catch (Exception itemMissing) {
+			System.out.print("Do the rakes or fire swatters meet the required supply?: " + "false" + "\n");
 		}
-		System.out.println("You need at least "+(burnPlan.getAcresToBeBurned()*0.1)+" rakes or fireSwatters(s).");
+		System.out.println("You need at least " + (burnPlan.getAcresToBeBurned() * 0.1) + " rakes or fireSwatters(s).");
 
 		try {
-		System.out.print("Is there at least one backpack pump?: "+(supplies.get(backpackPumpIndex).getQuantity()>0)+"\n");
-		} catch (Exception itemMissing){
-			System.out.print("Is there at least one backpack pump?: "+"false"+"\n");
+			System.out.print("Is there at least one backpack pump?: "
+					+ (supplies.get(backpackPumpIndex).getQuantity() > 0) + "\n");
+		} catch (Exception itemMissing) {
+			System.out.print("Is there at least one backpack pump?: " + "false" + "\n");
 		}
 		try {
-		System.out.print("Is there at least one dozer?: "+(supplies.get(dozerIndex).getQuantity()>0)+"\n");
-		} catch (Exception itemMissing){
-			System.out.print("Is there at least one dozer?: "+"false"+"\n");
+			System.out.print("Is there at least one dozer?: " + (supplies.get(dozerIndex).getQuantity() > 0) + "\n");
+		} catch (Exception itemMissing) {
+			System.out.print("Is there at least one dozer?: " + "false" + "\n");
 		}
 	}
+
+	static void printWeatherForecastInformation(FirePattern fireType, Weather weather) {
+		switch (fireType) {
+		case BLACK_LINES:
+			System.out.println("Temperature: " + weather.getTemperature());
+			System.out.println("Acceptable temperature range: 35-65 degrees");
+			System.out.println("Humidity: " + weather.getHumidity());
+			System.out.println("Acceptable humidity range: 30-65 precent");
+			System.out.println("WindSpeed: " + weather.getWindSpeed());
+			System.out.println("Acceptable wind speed range: 0-10 mph");
+			System.out.println("Wind direction: " + weather.getWindDirection());
+			System.out.println("Wind direction does not affect Black Line fires");
+			System.out.println("Relative Humidity: " + weather.getRelativeHumidity());
+			System.out.println("Acceptable relative humidity: above 20 percent");
+			System.out.println("Cold front to pass within twelve hours: " + weather.isColdFrontApproaching());
+			System.out.println("A cold front passing withing twelve hours is not acceptable");
+			System.out.println("Rain chance: " + weather.getRainChance());
+			System.out.println("Rain amount: " + weather.getRainAmount());
+			System.out.println(
+					"If the rain chance exceeds 50 percent and the anticipated rain amount meets at least 10 inches,\n then there is considered Bad Weather and burning is not reccommended.");
+		case HEADFIRES:
+			System.out.println("Temperature: " + weather.getTemperature());
+			System.out.println("Acceptable temperature range: 60-85 degrees");
+			System.out.println("Humidity: " + weather.getHumidity());
+			System.out.println("Acceptable humidity range: 20-45 precent");
+			System.out.println("WindSpeed: " + weather.getWindSpeed());
+			System.out.println("Acceptable wind speed range: 5-20 mph");
+			System.out.println("Wind direction: " + weather.getWindDirection());
+			System.out.println("Acceptable wind directions: any direction between and including South and West");
+			System.out.println("Relative Humidity: " + weather.getRelativeHumidity());
+			System.out.println("Acceptable relative humidity: above 20 percent");
+			System.out.println("Cold front to pass within twelve hours: " + weather.isColdFrontApproaching());
+			System.out.println("A cold front passing withing twelve hours is not acceptable");
+			System.out.println("Rain chance: " + weather.getRainChance());
+			System.out.println("Rain amount: " + weather.getRainAmount());
+			System.out.println(
+					"If the rain chance exceeds 50 percent and the anticipated rain amount meets at least 10 inches,\n then there is considered Bad Weather and burning is not reccommended.");
+
+		default:
+			System.out.println("Temperature: " + weather.getTemperature());
+			System.out.println("Acceptable temperature range: below 80 degrees");
+			System.out.println("Humidity: " + weather.getHumidity());
+			System.out.println("WindSpeed: " + weather.getWindSpeed());
+			System.out.println("Acceptable wind speed range: 0-20 mph");
+			System.out.println("Wind direction: " + weather.getWindDirection());
+			System.out.println("Relative Humidity: " + weather.getRelativeHumidity());
+			System.out.println("Acceptable relative humidity: above 20 percent");
+			System.out.println("Cold front to pass within twelve hours: " + weather.isColdFrontApproaching());
+			System.out.println("A cold front passing withing twelve hours is not acceptable");
+			System.out.println("Rain chance: " + weather.getRainChance());
+			System.out.println("Rain amount: " + weather.getRainAmount());
+			System.out.println(
+					"If the rain chance exceeds 50 percent and the anticipated rain amount meets at least 10 inches,\n then there is considered Bad Weather and burning is not reccommended.");
+		}
+	}
+	static void printMissingInformation(BurnPlan burnPlan) {
+		System.out.println("Missing Information:");
+		if (burnPlan.getDay().getWeather().getTemperature()== null) {
+			System.out.println("Temperature");
+		}
+		if(burnPlan.getDay().getWeather().getWindSpeed() == null) {
+			System.out.println("Wind Speed");
+		}
+		if(burnPlan.getDay().getWeather().getRelativeHumidity() == null) {
+			System.out.println("Relative Humidity");
+		}
+		if(burnPlan.getDay().getWeather().getHumidity() == null) {
+			System.out.println("Humidity");
+		}
+		if(burnPlan.getDay().getWeather().getWindDirection() == null) {
+			System.out.println("Wind Direction");
+		}
+		if(burnPlan.getDay().getWeather().isColdFrontApproaching() == null) {
+			System.out.println("Whether or not a cold front will pass within 12 hours");
+		}
+		if(burnPlan.getDay().getWeather().getRainChance() == null) {
+			System.out.println("Rain Chance");
+		}
+		if(burnPlan.getDay().getWeather().getRainAmount() == null) {
+			System.out.println("Rain Amount");
+		}
+		if(burnPlan.getDay().isOutdoorBuringBanned() == null) {
+			System.out.println("Whether or not outdoor burning is banned");
+		}
+		if(burnPlan.getAcresToBeBurned() == null) {
+			System.out.println("Acres to be burned");
+		}
+		if(burnPlan.getFirePattern() == null) {
+			System.out.println("Type of fire");
+		}
+		if(burnPlan.getFuelType() == null) {
+			System.out.println("Fuel type");
+		}
+		if(burnPlan.getLongitude() == null) {
+			System.out.println("Longitude");
+		}
+		if(burnPlan.getLatitude() == null) {
+			System.out.println("Latitude");
+		}
+	}
+
 	static void printPlanOutput(BurnPlan burnPlan, BurnDetermination planEvaluation) {
-		System.out.print("Report generated on: "+ burnPlan.getCurrentDay().toString()+"\n");
-		System.out.print("Location: "+burnPlan.getLatitude()+" Latitude, and "+burnPlan.getLongitude()+" Longitude\n");
-		System.out.print("Size of land to be burned: "+ burnPlan.getAcresToBeBurned()+"\n");
-		System.out.print("Land fuel type: "+burnPlan.getFuelType()+"\n");
-		System.out.print("Type of fire: "+ burnPlan.getFirePattern()+"\n");
+		System.out.print("Report generated on: " + burnPlan.getCurrentDay().toString() + "\n");
+		System.out.println("Intended burn date: " + burnPlan.getDay().getDate());
+		System.out.print(
+				"Location: " + burnPlan.getLatitude() + " Latitude, and " + burnPlan.getLongitude() + " Longitude\n");
+		System.out.print("Size of land to be burned: " + burnPlan.getAcresToBeBurned() + "\n");
+		System.out.print("Land fuel type: " + burnPlan.getFuelType() + "\n");
+		System.out.print("Type of fire: " + burnPlan.getFirePattern() + "\n");
 		printSuppliesOutput(burnPlan.getSupplies(), burnPlan);
-		System.out.print(""+"\n");
+		System.out.print("Weather Forecast\n");
+		printWeatherForecastInformation(burnPlan.getFirePattern(), burnPlan.getDay().getWeather());
+		System.out.println("Burn determination: "+ planEvaluation);
+		//lists missing information if INDETERMINATE is returned
+		if (planEvaluation == BurnDetermination.INDETERMINATE) {
+			printMissingInformation(burnPlan);
+		}
 	}
-
 
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
@@ -187,12 +304,12 @@ public class BurnPlanEvaluationApp {
 		String dataSet = getDataSet(scanner);
 		OpenWeatherConnector openWeather = new OpenWeatherConnector(dataSet, apiKey);
 		String data = getData(openWeather, dataSet, now, scanner);
-		
+
 		if (data == null) {
 			System.err.println("Unable to get data from OpenWeather");
 			System.exit(1);
 		}
-		
+
 		// get user input
 		String[] inputPrompts = { "What is the planed date for the burn (YYYY, MM, DD): ",
 				"Is Burning banned for the planed day (true/false): ", "What is the latitude for the burn: ",
@@ -241,7 +358,6 @@ public class BurnPlanEvaluationApp {
 			Day dayOfPlanedBurn = new Day(dayOfPlanedBurnDate, dayOfPlanedBurnWeather,
 					Boolean.parseBoolean(inputs.get(1)));
 
-
 			List<Supply> supplies = new ArrayList<>(Arrays.asList(new Supply(null, null, null, null, null)));
 
 			BurnPlan burnPlan = new BurnPlan(dayOfPlanedBurn, currentDay, Double.valueOf(inputs.get(2)),
@@ -249,10 +365,11 @@ public class BurnPlanEvaluationApp {
 					FirePattern.valueOf(inputs.get(5).toUpperCase()), Integer.valueOf(inputs.get(6)),
 					Boolean.parseBoolean(inputs.get(7)), Integer.valueOf(inputs.get(8)), supplies);
 			BurnDetermination planEvaluation = BurnPlanEvaluationAlgorithm.evaluate(burnPlan);
-			printPlanOutput(burnPlan,planEvaluation);
+			printPlanOutput(burnPlan, planEvaluation);
 			// BurnPlanEvaluationAlgorithm.evaluate(burnPlan);
 		} catch (NumberFormatException e) {
-			System.err.println("At least one input that required a number was not a valid number \nIf you meant for one of the true/false prompts to be true make sure to enter true, any other response will be seen as false");
+			System.err.println(
+					"At least one input that required a number was not a valid number \nIf you meant for one of the true/false prompts to be true make sure to enter true, any other response will be seen as false");
 			System.err.println();
 			System.err.println("Make sure to enter Fuel type and Fire pattern exactly as shown in the prompt");
 		}
