@@ -173,99 +173,198 @@ public class BurnPlanEvaluationApp {
 	static void printWeatherForecastInformation(FirePattern fireType, Weather weather) {
 		switch (fireType) {
 		case BLACK_LINES:
-			System.out.println("Temperature: " + weather.getTemperature());
+			if (weather.getTemperature() == null) {
+				System.out.println("Temperature: unknown");
+			} else {
+				System.out.println("Temperature: " + weather.getTemperature());
+			}
 			System.out.println("Acceptable temperature range: 35-65 degrees");
-			System.out.println("Humidity: " + weather.getHumidity());
+			if (weather.getHumidity() == null) {
+				System.out.println("Humidity: unknown");
+			} else {
+				System.out.println("Humidity: " + weather.getHumidity());
+			}
 			System.out.println("Acceptable humidity range: 30-65 precent");
-			System.out.println("WindSpeed: " + weather.getWindSpeed());
+			if (weather.getWindSpeed() == null) {
+				System.out.println("Wind speed: unknown");
+			} else {
+				System.out.println("WindSpeed: " + weather.getWindSpeed());
+			}
 			System.out.println("Acceptable wind speed range: 0-10 mph");
-			System.out.println("Wind direction: " + weather.getWindDirection());
+			if (weather.getWindDirection() == null) {
+				System.out.println("Wind direction: unknown");
+			} else {
+				System.out.println("Wind direction: " + weather.getWindDirection());
+			}
 			System.out.println("Wind direction does not affect Black Line fires");
-			System.out.println("Relative Humidity: " + weather.getRelativeHumidity());
+			if (weather.getRelativeHumidity() == null) {
+				System.out.println("Relative Humidity: unknown");
+			} else {
+				System.out.println("Relative Humidity: " + weather.getRelativeHumidity());
+			}
 			System.out.println("Acceptable relative humidity: above 20 percent");
-			System.out.println("Cold front to pass within twelve hours: " + weather.isColdFrontApproaching());
+			if (weather.isColdFrontApproaching() == null) {
+				System.out.println("Cold front to pass within twelve hours: unknown");
+			} else {
+				System.out.println("Cold front to pass within twelve hours: " + weather.isColdFrontApproaching());
+			}
 			System.out.println("A cold front passing withing twelve hours is not acceptable");
-			System.out.println("Rain chance: " + weather.getRainChance());
-			System.out.println("Rain amount: " + weather.getRainAmount());
+			if (weather.getRainChance() == null) {
+				System.out.println("Rain chance: unknown");
+			} else {
+				System.out.println("Rain chance: " + weather.getRainChance());
+			}
+			if (weather.getRainAmount() == null) {
+				System.out.println("Rain Amount: unknown");
+			} else {
+				System.out.println("Rain amount: " + weather.getRainAmount());
+			}
 			System.out.println(
 					"If the rain chance exceeds 50 percent and the anticipated rain amount meets at least 10 inches,\n then there is considered Bad Weather and burning is not reccommended.");
+
 		case HEADFIRES:
-			System.out.println("Temperature: " + weather.getTemperature());
+			if (weather.getTemperature() == null) {
+				System.out.println("Temperature: unknown");
+			} else {
+				System.out.println("Temperature: " + weather.getTemperature());
+			}
 			System.out.println("Acceptable temperature range: 60-85 degrees");
-			System.out.println("Humidity: " + weather.getHumidity());
+			if (weather.getHumidity() == null) {
+				System.out.println("Humidity: unknown");
+			} else {
+				System.out.println("Humidity: " + weather.getHumidity());
+			}
 			System.out.println("Acceptable humidity range: 20-45 precent");
-			System.out.println("WindSpeed: " + weather.getWindSpeed());
+			if (weather.getWindSpeed() == null) {
+				System.out.println("Wind speed: unknown");
+			} else {
+				System.out.println("WindSpeed: " + weather.getWindSpeed());
+			}
 			System.out.println("Acceptable wind speed range: 5-20 mph");
-			System.out.println("Wind direction: " + weather.getWindDirection());
+			if (weather.getWindDirection() == null) {
+				System.out.println("Wind direction: unknown");
+			} else {
+				System.out.println("Wind direction: " + weather.getWindDirection());
+			}
 			System.out.println("Acceptable wind directions: any direction between and including South and West");
-			System.out.println("Relative Humidity: " + weather.getRelativeHumidity());
+			if (weather.getRelativeHumidity() == null) {
+				System.out.println("Relative Humidity: unknown");
+			} else {
+				System.out.println("Relative Humidity: " + weather.getRelativeHumidity());
+			}
 			System.out.println("Acceptable relative humidity: above 20 percent");
-			System.out.println("Cold front to pass within twelve hours: " + weather.isColdFrontApproaching());
+			if (weather.isColdFrontApproaching() == null) {
+				System.out.println("Cold front to pass within twelve hours: unknown");
+			} else {
+				System.out.println("Cold front to pass within twelve hours: " + weather.isColdFrontApproaching());
+			}
 			System.out.println("A cold front passing withing twelve hours is not acceptable");
-			System.out.println("Rain chance: " + weather.getRainChance());
-			System.out.println("Rain amount: " + weather.getRainAmount());
+			if (weather.getRainChance() == null) {
+				System.out.println("Rain chance: unknown");
+			} else {
+				System.out.println("Rain chance: " + weather.getRainChance());
+			}
+			if (weather.getRainAmount() == null) {
+				System.out.println("Rain Amount: unknown");
+			} else {
+				System.out.println("Rain amount: " + weather.getRainAmount());
+			}
 			System.out.println(
 					"If the rain chance exceeds 50 percent and the anticipated rain amount meets at least 10 inches,\n then there is considered Bad Weather and burning is not reccommended.");
 
 		default:
-			System.out.println("Temperature: " + weather.getTemperature());
+			if (weather.getTemperature() == null) {
+				System.out.println("Temperature: unknown");
+			} else {
+				System.out.println("Temperature: " + weather.getTemperature());
+			}
 			System.out.println("Acceptable temperature range: below 80 degrees");
-			System.out.println("Humidity: " + weather.getHumidity());
-			System.out.println("WindSpeed: " + weather.getWindSpeed());
+			if (weather.getHumidity() == null) {
+				System.out.println("Humidity: unknown");
+			} else {
+				System.out.println("Humidity: " + weather.getHumidity());
+			}
+			if (weather.getWindSpeed() == null) {
+				System.out.println("Wind speed: unknown");
+			} else {
+				System.out.println("WindSpeed: " + weather.getWindSpeed());
+			}
 			System.out.println("Acceptable wind speed range: 0-20 mph");
-			System.out.println("Wind direction: " + weather.getWindDirection());
-			System.out.println("Relative Humidity: " + weather.getRelativeHumidity());
+			if (weather.getWindDirection() == null) {
+				System.out.println("Wind direction: unknown");
+			} else {
+				System.out.println("Wind direction: " + weather.getWindDirection());
+			}
+			if (weather.getRelativeHumidity() == null) {
+				System.out.println("Relative Humidity: unknown");
+			} else {
+				System.out.println("Relative Humidity: " + weather.getRelativeHumidity());
+			}
 			System.out.println("Acceptable relative humidity: above 20 percent");
-			System.out.println("Cold front to pass within twelve hours: " + weather.isColdFrontApproaching());
+			if (weather.isColdFrontApproaching() == null) {
+				System.out.println("Cold front to pass within twelve hours: unknown");
+			} else {
+				System.out.println("Cold front to pass within twelve hours: " + weather.isColdFrontApproaching());
+			}
 			System.out.println("A cold front passing withing twelve hours is not acceptable");
-			System.out.println("Rain chance: " + weather.getRainChance());
-			System.out.println("Rain amount: " + weather.getRainAmount());
+			if (weather.getRainChance() == null) {
+				System.out.println("Rain chance: unknown");
+			} else {
+				System.out.println("Rain chance: " + weather.getRainChance());
+			}
+			if (weather.getRainAmount() == null) {
+				System.out.println("Rain Amount: unknown");
+			} else {
+				System.out.println("Rain amount: " + weather.getRainAmount());
+			}
 			System.out.println(
 					"If the rain chance exceeds 50 percent and the anticipated rain amount meets at least 10 inches,\n then there is considered Bad Weather and burning is not reccommended.");
+
 		}
 	}
+
 	static void printMissingInformation(BurnPlan burnPlan) {
 		System.out.println("Missing Information:");
-		if (burnPlan.getDay().getWeather().getTemperature()== null) {
+		if (burnPlan.getDay().getWeather().getTemperature() == null) {
 			System.out.println("Temperature");
 		}
-		if(burnPlan.getDay().getWeather().getWindSpeed() == null) {
+		if (burnPlan.getDay().getWeather().getWindSpeed() == null) {
 			System.out.println("Wind Speed");
 		}
-		if(burnPlan.getDay().getWeather().getRelativeHumidity() == null) {
+		if (burnPlan.getDay().getWeather().getRelativeHumidity() == null) {
 			System.out.println("Relative Humidity");
 		}
-		if(burnPlan.getDay().getWeather().getHumidity() == null) {
+		if (burnPlan.getDay().getWeather().getHumidity() == null) {
 			System.out.println("Humidity");
 		}
-		if(burnPlan.getDay().getWeather().getWindDirection() == null) {
+		if (burnPlan.getDay().getWeather().getWindDirection() == null) {
 			System.out.println("Wind Direction");
 		}
-		if(burnPlan.getDay().getWeather().isColdFrontApproaching() == null) {
+		if (burnPlan.getDay().getWeather().isColdFrontApproaching() == null) {
 			System.out.println("Whether or not a cold front will pass within 12 hours");
 		}
-		if(burnPlan.getDay().getWeather().getRainChance() == null) {
+		if (burnPlan.getDay().getWeather().getRainChance() == null) {
 			System.out.println("Rain Chance");
 		}
-		if(burnPlan.getDay().getWeather().getRainAmount() == null) {
+		if (burnPlan.getDay().getWeather().getRainAmount() == null) {
 			System.out.println("Rain Amount");
 		}
-		if(burnPlan.getDay().isOutdoorBuringBanned() == null) {
+		if (burnPlan.getDay().isOutdoorBuringBanned() == null) {
 			System.out.println("Whether or not outdoor burning is banned");
 		}
-		if(burnPlan.getAcresToBeBurned() == null) {
+		if (burnPlan.getAcresToBeBurned() == null) {
 			System.out.println("Acres to be burned");
 		}
-		if(burnPlan.getFirePattern() == null) {
+		if (burnPlan.getFirePattern() == null) {
 			System.out.println("Type of fire");
 		}
-		if(burnPlan.getFuelType() == null) {
+		if (burnPlan.getFuelType() == null) {
 			System.out.println("Fuel type");
 		}
-		if(burnPlan.getLongitude() == null) {
+		if (burnPlan.getLongitude() == null) {
 			System.out.println("Longitude");
 		}
-		if(burnPlan.getLatitude() == null) {
+		if (burnPlan.getLatitude() == null) {
 			System.out.println("Latitude");
 		}
 	}
@@ -281,10 +380,13 @@ public class BurnPlanEvaluationApp {
 		printSuppliesOutput(burnPlan.getSupplies(), burnPlan);
 		System.out.print("Weather Forecast\n");
 		printWeatherForecastInformation(burnPlan.getFirePattern(), burnPlan.getDay().getWeather());
-		System.out.println("Burn determination: "+ planEvaluation);
-		//lists missing information if INDETERMINATE is returned
+		System.out.println("Burn determination: " + planEvaluation);
+		// lists missing information if INDETERMINATE is returned
 		if (planEvaluation == BurnDetermination.INDETERMINATE) {
 			printMissingInformation(burnPlan);
+		}
+		if (planEvaluation == BurnDetermination.BURNING_PROHIBITED) {
+			System.out.println("Outdoor burning is currently prohibited by the governor of Tennesse.");
 		}
 	}
 
