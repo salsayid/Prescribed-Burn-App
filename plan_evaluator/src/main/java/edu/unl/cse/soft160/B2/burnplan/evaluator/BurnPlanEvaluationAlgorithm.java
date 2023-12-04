@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 public class BurnPlanEvaluationAlgorithm {
-	
+
 	private static final int SECONDS_PER_DAY = 86400;
 
 	static public boolean checkRedFlagConditions(Weather weather, Day day) {
@@ -100,17 +100,18 @@ public class BurnPlanEvaluationAlgorithm {
 
 		try {
 			redFlagConditionsPreventBurn = checkRedFlagConditions(burnPlan.getDay().getWeather(), burnPlan.getDay());
+
+			if (redFlagConditionsPreventBurn || burnPlan.getDay().isOutdoorBuringBanned()) {
+				return BurnDetermination.BURNING_PROHIBITED;
+			}
+			if (weather.getTemperature() > 80) {
+				return BurnDetermination.NOT_RECOMMENDED_TEMPERATURE;
+			}
+			if (weather.getWindSpeed() > 20) {
+				return BurnDetermination.NOT_RECOMMENDED_WIND;
+			}
 		} catch (Exception anInputWasNotInput) {
 			return BurnDetermination.INDETERMINATE;
-		}
-		if (redFlagConditionsPreventBurn || burnPlan.getDay().isOutdoorBuringBanned()) {
-			return BurnDetermination.BURNING_PROHIBITED;
-		}
-		if (weather.getTemperature() > 80) {
-			return BurnDetermination.NOT_RECOMMENDED_TEMPERATURE;
-		}
-		if (weather.getWindSpeed() > 20) {
-			return BurnDetermination.NOT_RECOMMENDED_WIND;
 		}
 
 		boolean hasRequiredSupplies = checkSupplies(burnPlan.getSupplies(), burnPlan.getAcresToBeBurned());
@@ -174,8 +175,7 @@ public class BurnPlanEvaluationAlgorithm {
 		LocalTime lateAfternoonStart = LocalTime.of(16, 0, 0, 0);
 		Instant instant = Instant.ofEpochMilli(burnPlan.getDay().getDate().getTime());
 		LocalTime timeOfBurnDate = LocalDateTime.ofInstant(instant, ZoneId.of("America/Chicago")).toLocalTime();
-		boolean timeIsDesired = timeOfBurnDate.isAfter(midMorningStart)
-				&& timeOfBurnDate.isBefore(lateAfternoonStart);
+		boolean timeIsDesired = timeOfBurnDate.isAfter(midMorningStart) && timeOfBurnDate.isBefore(lateAfternoonStart);
 		boolean widthOfBlackLinesDesired = true;
 		if (burnPlan.isBlackLineVolatile() == null || burnPlan.isBlackLineVolatile()) {
 			widthOfBlackLinesDesired = burnPlan.getWidthOfBlacklines() >= 500;
