@@ -20,7 +20,7 @@ public void testHeadFires_RedFlagPreventsBurn() {
 	Weather weather = new Weather(25.0, Direction.SOUTH, 10.0, 15.0, 60.0, 11.0, true, 90.0);
 	Day day = new Day(new Date(), weather, true);
 	List<Supply> supplies = createDefaultSupplies();
-	BurnPlan burnPlan = new BurnPlan(day, new Date(), 40.81506358, -96.7048613, FuelType.LIGHT, FirePattern.HEADFIRES, 100, false, 100, supplies);
+	BurnPlan burnPlan = new BurnPlan(day, new Date(), day, 40.81506358, -96.7048613, FuelType.LIGHT, FirePattern.HEADFIRES, 100, false, 100, supplies);
 	assertEquals(BurnDetermination.BURNING_PROHIBITED, BurnPlanEvaluationAlgorithm.determineHeadFires(burnPlan));
 }
 
@@ -29,7 +29,7 @@ public void testHeadFires_WindSpeedNotSuitable() {
 	Weather weather = new Weather(21.0, Direction.SOUTHWEST, 30.0, 35.0, 20.0, 0.0, false, 70.0);
 	Day day = new Day(new Date(), weather, false);
 	List<Supply> supplies = createDefaultSupplies();
-	BurnPlan burnPlan = new BurnPlan(day, new Date(), 40.81506358, -96.7048613, FuelType.LIGHT, FirePattern.HEADFIRES, 100, false, 100, supplies);
+	BurnPlan burnPlan = new BurnPlan(day, new Date(), day, 40.81506358, -96.7048613, FuelType.LIGHT, FirePattern.HEADFIRES, 100, false, 100, supplies);
 	assertEquals(BurnDetermination.NOT_RECOMMENDED_WIND, BurnPlanEvaluationAlgorithm.determineHeadFires(burnPlan));
 }
 
@@ -42,7 +42,7 @@ public void  testHeadFires_ColdFrontComing() {
     Weather weather = new Weather(10.0, Direction.SOUTHWEST, 40.0, 45.0, 10.0, 0.0, true, 75.0);
     Day day = new Day(testDate, weather, false);
     List<Supply> supplies = Arrays.asList(new Supply("pumper", 2.0, 5.0, "units", FuelType.LIGHT));
-    BurnPlan burnPlan = new BurnPlan(day, testDate, 40.81506358, -96.7048613, FuelType.LIGHT, FirePattern.HEADFIRES, 100, false, 100, supplies);
+    BurnPlan burnPlan = new BurnPlan(day, testDate, day, 40.81506358, -96.7048613, FuelType.LIGHT, FirePattern.HEADFIRES, 100, false, 100, supplies);
     assertEquals(BurnDetermination.NOT_RECOMMENDED_OTHER, BurnPlanEvaluationAlgorithm.determineHeadFires(burnPlan));
 }
 	
@@ -50,7 +50,7 @@ public void  testHeadFires_ColdFrontComing() {
 public void testHeadFires_MissingData() {
 	Weather weather = new Weather(null, null, null, null, null, null, false, null);
 	Day day = new Day(new Date(), weather, false);
-	BurnPlan burnPlan = new BurnPlan(day, new Date(), null, null, null, FirePattern.HEADFIRES, null, false, null ,null);
+	BurnPlan burnPlan = new BurnPlan(day, new Date(), null, null, null, null, FirePattern.HEADFIRES, null, false, null ,null);
 	assertEquals(BurnDetermination.INDETERMINATE, BurnPlanEvaluationAlgorithm.determineHeadFires(burnPlan));
 }
 
@@ -111,7 +111,7 @@ public void testDetermineBlackLines_BurningNotAllowedCauseOfRedFlag() {
 	Weather weather = new Weather(25.0, Direction.SOUTHWEST, 15.0, 10.0, 60.0, 11.0, true, 85.0);
 	Day day = new Day(new Date(), weather, true);
 	List<Supply> supplies = createDefaultSupplies();
-	BurnPlan burnPlan = new BurnPlan(day, new Date(), 40.81506358, -96.7048613, FuelType.HEAVY, FirePattern.BLACK_LINES, 500, true, 100, supplies);
+	BurnPlan burnPlan = new BurnPlan(day, new Date(), day, 40.81506358, -96.7048613, FuelType.HEAVY, FirePattern.BLACK_LINES, 500, true, 100, supplies);
 	assertEquals(BurnDetermination.BURNING_PROHIBITED, BurnPlanEvaluationAlgorithm.determineBlackLines(burnPlan));
 }
 @Test
@@ -119,15 +119,16 @@ public void testDetermineBlackLines_NotRecommendedCauseOfTemperatures() {
 	Weather weather = new Weather(5.0, Direction.NORTHWEST, 45.0, 30.0, 10.0, 0.1, false, 34.0);
 	Day day = new Day(new Date(), weather, false);
 	List<Supply> supplies = createDefaultSupplies();
-	BurnPlan burnPlan = new BurnPlan(day, new Date(), 40.81506358, -96.7048613, FuelType.LIGHT, FirePattern.BLACK_LINES, 500, true, 100, supplies);
+	BurnPlan burnPlan = new BurnPlan(day, new Date(), day, 40.81506358, -96.7048613, FuelType.LIGHT, FirePattern.BLACK_LINES, 500, true, 100, supplies);
 	assertEquals(BurnDetermination.NOT_RECOMMENDED_TEMPERATURE, BurnPlanEvaluationAlgorithm.determineBlackLines(burnPlan));
 }
+
 @Test
 public void testDetermineBlackLines_NotRecommendedCauseOfWind() {
 	Weather weather = new Weather(11.0, Direction.NORTHWEST, 45.0, 30.0, 10.0, 0.1, false, 60.0);
 	Day day = new Day(new Date(), weather, false);
 	List<Supply> supplies = createDefaultSupplies();
-	BurnPlan burnPlan = new BurnPlan(day, new Date(), 40.81506358, -96.7048613, FuelType.LIGHT, FirePattern.BLACK_LINES, 500, true, 100, supplies); 
+	BurnPlan burnPlan = new BurnPlan(day, new Date(), day, 40.81506358, -96.7048613, FuelType.LIGHT, FirePattern.BLACK_LINES, 500, true, 100, supplies); 
 	assertEquals(BurnDetermination.NOT_RECOMMENDED_WIND, BurnPlanEvaluationAlgorithm.determineBlackLines(burnPlan));
 }
 private List<Supply> createDefaultSupplies() {
