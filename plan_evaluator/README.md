@@ -27,7 +27,7 @@ For development, JUnit 4 is required to run the project's unit tests.
 
 ## Building
 
-[Building Info Goes Here]
+The app can be built and packaged as a JAR by running `mvn package` from the `plan_evaluator` folder. The project can also be imported into Eclipse, in which case Eclipse will build the `.class` files, but not a JAR.
 
 ## Running
 
