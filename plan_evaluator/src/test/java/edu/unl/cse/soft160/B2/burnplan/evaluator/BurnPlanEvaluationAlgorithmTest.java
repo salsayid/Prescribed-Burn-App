@@ -30,7 +30,7 @@ public void testCheckRedFlagConditions_NoneMet() {
 	assertFalse("no red flag conditions met", BurnPlanEvaluationAlgorithm.checkRedFlagConditions(weather, day));
 }
 
-
+ 
 //redflag conditions tests
 
 
@@ -69,11 +69,36 @@ public void testRedFlagConditionsColdFrontComing() {
     assertTrue(BurnPlanEvaluationAlgorithm.checkRedFlagConditions(weather, day));
 }
 
+//Black Line Tests
 
 
-
-
-
+@Test
+public void testDetermineBlackLines_BurningNotAllowedCauseOfRedFlag() {
+	Weather weather = new Weather(25.0, Direction.SOUTHWEST, 15.0, 10.0, 60.0, 11.0, true, 85.0);
+	Day day = new Day(new Date(), weather, true);
+	List<Supply> supplies = createDefaultSupplies();
+	BurnPlan burnPlan = new BurnPlan(day, new Date(), 40.81506358, -96.7048613, FuelType.HEAVY, FirePattern.BLACK_LINES, 500, true, 100, supplies);
+	assertEquals(BurnDetermination.BURNING_PROHIBITED, BurnPlanEvaluationAlgorithm.determineBlackLines(burnPlan));
+}
+@Test
+public void testDetermineBlackLines_NotRecommendedCauseOfTemperatures() {
+	Weather weather = new Weather(5.0, Direction.NORTHWEST, 45.0, 30.0, 10.0, 0.1, false, 34.0);
+	Day day = new Day(new Date(), weather, false);
+	List<Supply> supplies = createDefaultSupplies();
+	BurnPlan burnPlan = new BurnPlan(day, new Date(), 40.81506358, -96.7048613, FuelType.LIGHT, FirePattern.BLACK_LINES, 500, true, 100, supplies);
+	assertEquals(BurnDetermination.NOT_RECOMMENDED_TEMPERATURE, BurnPlanEvaluationAlgorithm.determineBlackLines(burnPlan));
+}
+@Test
+public void testDetermineBlackLines_NotRecommendedCauseOfWind() {
+	Weather weather = new Weather(11.0, Direction.NORTHWEST, 45.0, 30.0, 10.0, 0.1, false, 60.0);
+	Day day = new Day(new Date(), weather, false);
+	List<Supply> supplies = createDefaultSupplies();
+	BurnPlan burnPlan = new BurnPlan(day, new Date(), 40.81506358, -96.7048613, FuelType.LIGHT, FirePattern.BLACK_LINES, 500, true, 100, supplies); 
+	assertEquals(BurnDetermination.NOT_RECOMMENDED_WIND, BurnPlanEvaluationAlgorithm.determineBlackLines(burnPlan));
+}
+private List<Supply> createDefaultSupplies() {
+	return null;
+}
 
 
 //Supplies tests
