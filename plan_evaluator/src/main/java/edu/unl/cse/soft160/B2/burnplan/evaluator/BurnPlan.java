@@ -15,8 +15,9 @@ public class BurnPlan {
 	private FirePattern firePattern;
 	private FuelType fuelType;
 	private Integer widthOfBlacklines;
+	private Day dayBeforeFire;
 
-	public BurnPlan(Day dayOf, Date currentDay, Double latitude, Double longitude, FuelType fuelType, FirePattern firePattern,
+	public BurnPlan(Day dayOf, Date currentDay, Day dayBefore, Double latitude, Double longitude, FuelType fuelType, FirePattern firePattern,
 			Integer widthOfBlacklines, Boolean isBlackLineVolatile, Integer acresToBeBurned, List<Supply> supplies) {
 		this.dayOfFire = dayOf;
 		this.latitude = latitude;
@@ -28,6 +29,7 @@ public class BurnPlan {
 		this.widthOfBlacklines = widthOfBlacklines;
 		this.acresToBeBurned = acresToBeBurned;
 		this.currentDay = currentDay;
+		this.setDayBeforeFire(dayBefore);
 	}
 
 	public Double getLatitude() {
@@ -107,6 +109,14 @@ public class BurnPlan {
 
 	public void setWidthOfBlacklines(int widthOfBlacklines) {
 		this.widthOfBlacklines = widthOfBlacklines;
+	}
+
+	public Day getDayBeforeFire() {
+		return dayBeforeFire;
+	}
+
+	public void setDayBeforeFire(Day dayBeforeFire) {
+		this.dayBeforeFire = dayBeforeFire;
 	}
 
 }
