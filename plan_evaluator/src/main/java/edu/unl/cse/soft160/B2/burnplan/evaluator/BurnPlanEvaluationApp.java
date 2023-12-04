@@ -392,25 +392,6 @@ public class BurnPlanEvaluationApp {
 
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
-		Instant now = Instant.now();
-		String apiKey = null;
-		try {
-			apiKey = RestConnection.getApiKey("openweathermap");
-		} catch (IOException ioException) {
-			System.err.println("IO Exception: " + ioException.getClass());
-			System.err.println("\t" + ioException.getMessage());
-			System.err.println("Caused by: " + ioException.getCause());
-			System.err.println("\t" + ioException.getCause().getMessage());
-			System.exit(1);
-		}
-		String dataSet = getDataSet(scanner);
-		OpenWeatherConnector openWeather = new OpenWeatherConnector(dataSet, apiKey);
-		String data = getData(openWeather, dataSet, now, scanner);
-
-		if (data == null) {
-			System.err.println("Unable to get data from OpenWeather");
-			System.exit(1);
-		}
 
 		// get user input
 		String[] inputPrompts = { "What is the planed date for the burn (YYYY, MM, DD): ",
@@ -441,6 +422,29 @@ public class BurnPlanEvaluationApp {
 				System.exit(1);
 			}
 		} while (!haveAllInputs);
+		
+		Instant now = Instant.now();
+		String apiKey = null;
+		try {
+			apiKey = RestConnection.getApiKey("openweathermap");
+		} catch (IOException ioException) {
+			System.err.println("IO Exception: " + ioException.getClass());
+			System.err.println("\t" + ioException.getMessage());
+			System.err.println("Caused by: " + ioException.getCause());
+			System.err.println("\t" + ioException.getCause().getMessage());
+			System.exit(1);
+		}
+		String dataSet = getDataSet(scanner);
+		if (dataSet.equals("exit")) {
+			System.exit(1);
+		}
+		OpenWeatherConnector openWeather = new OpenWeatherConnector(dataSet, apiKey);
+		String data = getData(openWeather, dataSet, now, scanner);
+
+		if (data == null) {
+			System.err.println("Unable to get data from OpenWeather");
+			System.exit(1);
+		}
 		scanner.close();
 
 		try {
