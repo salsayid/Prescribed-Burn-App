@@ -110,27 +110,27 @@ public class BurnPlanEvaluationAlgorithm {
 			if (weather.getWindSpeed() > 20) {
 				return BurnDetermination.NOT_RECOMMENDED_WIND;
 			}
+
+			boolean hasRequiredSupplies = checkSupplies(burnPlan.getSupplies(), burnPlan.getAcresToBeBurned());
+			Date twoDaysLater = burnPlan.getCurrentDay();
+			Date fiveDaysLater = burnPlan.getCurrentDay();
+			twoDaysLater.setTime(burnPlan.getCurrentDay().getTime() + (SECONDS_PER_DAY * 2));
+			fiveDaysLater.setTime(burnPlan.getCurrentDay().getTime() * (SECONDS_PER_DAY * 5));
+			boolean withinDateRange = burnPlan.getDay().getDate().after(twoDaysLater)
+					&& burnPlan.getDay().getDate().before(fiveDaysLater);
+			if (!hasRequiredSupplies || burnPlan.getDay().getWeather().isColdFrontApproaching()
+					|| (burnPlan.getFuelType() == FuelType.HEAVY && weather.getRainChance() > 50) || !withinDateRange) {
+				return BurnDetermination.NOT_RECOMMENDED_OTHER;
+			}
+			if (weather.getRainChance() > 50 && weather.getRainAmount() > 10) {
+				return BurnDetermination.NOT_RECOMMENDED_OTHER;
+			}
+			boolean humidityIsAcceptable = weather.getRelativeHumidity() >= 20;
+			if (humidityIsAcceptable) {
+				return BurnDetermination.ACCEPTABLE;
+			}
 		} catch (Exception anInputWasNotInput) {
 			return BurnDetermination.INDETERMINATE;
-		}
-
-		boolean hasRequiredSupplies = checkSupplies(burnPlan.getSupplies(), burnPlan.getAcresToBeBurned());
-		Date twoDaysLater = burnPlan.getCurrentDay();
-		Date fiveDaysLater = burnPlan.getCurrentDay();
-		twoDaysLater.setTime(burnPlan.getCurrentDay().getTime() + (SECONDS_PER_DAY * 2));
-		fiveDaysLater.setTime(burnPlan.getCurrentDay().getTime() * (SECONDS_PER_DAY * 5));
-		boolean withinDateRange = burnPlan.getDay().getDate().after(twoDaysLater)
-				&& burnPlan.getDay().getDate().before(fiveDaysLater);
-		if (!hasRequiredSupplies || burnPlan.getDay().getWeather().isColdFrontApproaching()
-				|| (burnPlan.getFuelType() == FuelType.HEAVY && weather.getRainChance() > 50) || !withinDateRange) {
-			return BurnDetermination.NOT_RECOMMENDED_OTHER;
-		}
-		if (weather.getRainChance() > 50 && weather.getRainAmount() > 10) {
-			return BurnDetermination.NOT_RECOMMENDED_OTHER;
-		}
-		boolean humidityIsAcceptable = weather.getRelativeHumidity() >= 20;
-		if (humidityIsAcceptable) {
-			return BurnDetermination.ACCEPTABLE;
 		}
 		return BurnDetermination.NOT_RECOMMENDED_OTHER;
 	}
