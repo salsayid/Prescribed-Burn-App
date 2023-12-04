@@ -45,53 +45,53 @@ There is one package for the app: the "burnplan evaluator" package
 
 1. The OpenWeather category of the package relates to one class: "BurnPlanEvaluationApp.java"
 
-	The class contains code to connect to OpenWeather, as well as code to make API calls for weather data
+The class contains code to connect to OpenWeather, as well as code to make API calls for weather data
 	
 2. The implementation of the burn plan evaluation algorithm: 
 
-	The class "BurnPlanEvaluationAlgorithm.java" contains the code that determines whether to recommend burning or not based 
-	on user input and OpenWeather data. It contains the algorithm itself.
+The class "BurnPlanEvaluationAlgorithm.java" contains the code that determines whether to recommend burning or not based 
+on user input and OpenWeather data. It contains the algorithm itself.
 	
-		- The evaluate() method calls one of three methods based on the type of fire recieved from the user
-		- The determineBlackLines(), the determineHeadFires(), and the determineAllNonHeadOrBlacklineFires() methods contain 
-		  conditional statements that determine the burn determination based on data recieved from the user and OpenWeather
-		- The checkSupplies() method determines whether the necessary supplies are present in order to burn
-		- The checkRedFlagConditions() method determines whether certain weather conditions are present that would
-		  prohibit a safe burn
+- The evaluate() method calls one of three methods based on the type of fire recieved from the user
+- The determineBlackLines(), the determineHeadFires(), and the determineAllNonHeadOrBlacklineFires() methods contain 
+conditional statements that determine the burn determination based on data recieved from the user and OpenWeather
+- The checkSupplies() method determines whether the necessary supplies are present in order to burn
+- The checkRedFlagConditions() method determines whether certain weather conditions are present that would
+prohibit a safe burn
 	
-	The class "BurnPlanEvaluationApp.java" is the main class. The previously mentioned classes have objects created 
-	for them and their methods called in this class.
+The class "BurnPlanEvaluationApp.java" is the main class. The previously mentioned classes have objects created 
+for them and their methods called in this class.
 	
-		- Objects of the Day, Weather, and Supply classes are created and data from OpeanWeather and the user passed into them
-		- An object of the "BurnPlanEvaluationAlgorithm.java" class is created and its evaluate() method is called
-		- Inputs from the user are determined
-		- Outputs are determined, formatted, and printed
+- Objects of the Day, Weather, and Supply classes are created and data from OpeanWeather and the user passed into them
+- An object of the "BurnPlanEvaluationAlgorithm.java" class is created and its evaluate() method is called
+- Inputs from the user are determined
+- Outputs are determined, formatted, and printed
 		
-	The following classes contain fields that are related to one another that are initialized with data
-	from the user and OpenWeather through their object creation
+The following classes contain fields that are related to one another that are initialized with data
+from the user and OpenWeather through their object creation
 	
-		- "Day.java"
-		- "Weather.java"
-		- "Supply.java"
+- "Day.java"
+- "Weather.java"
+- "Supply.java"
 		
-	The following are enums that contain information that are used by the Day, Weather, Supply, BurnPlanEvaluationApp, and 
-	BurnPlanEvaluationAlgorithm classes
+The following are enums that contain information that are used by the Day, Weather, Supply, BurnPlanEvaluationApp, and 
+BurnPlanEvaluationAlgorithm classes
 	
-		- "BurnDetermination.java"
-		- "Direction.java"
-		- "FirePattern.java"
-		- "FuelType.java"
-		- "Season.java"
+- "BurnDetermination.java"
+- "Direction.java"
+- "FirePattern.java"
+- "FuelType.java"
+- "Season.java"
 	
 3. The command-line interface contains the class "BurnPlanEvaluationApp.java"
 
-	The class is shared by the algorithm implementation category
+The class is shared by the algorithm implementation category
 	
-	The class determines the inputs from the user, as well as the outputs that are printed
+The class determines the inputs from the user, as well as the outputs that are printed
 	
 4. The test suite contains the classes "AppTest.java" and "BurnPlanEvaluationAlgorithmTest.java"
 
-	The code tests the algorithm in "BurnPlanEvaluationAlgorithm.java"
+The code tests the algorithm in "BurnPlanEvaluationAlgorithm.java"
 
 While not code, the Documentation folder contains a class diagram
 
