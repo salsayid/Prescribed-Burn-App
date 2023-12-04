@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -35,12 +36,16 @@ public void testHeadFires_WindSpeedNotSuitable() {
 }
 
 @Test
-public void testHeadFires_ColdFrontComing() {
-	Weather weather = new Weather(10.0, Direction.SOUTHWEST, 40.0, 45.0, 10.0, 0.0, true, 75.0);
-	Day day = new Day(new Date(), weather, false);
-	List<Supply> supplies = createDefaultSupplies();
-	BurnPlan burnPlan = new BurnPlan(day, new Date(), 40.81506358, -96.7048613, FuelType.LIGHT, FirePattern.HEADFIRES, 100, false, 100, supplies);
-	assertEquals(BurnDetermination.NOT_RECOMMENDED_OTHER, BurnPlanEvaluationAlgorithm.determineHeadFires(burnPlan));
+public void  testHeadFires_ColdFrontComing() {
+	Calendar calendar = Calendar.getInstance();
+    calendar.set(2023, Calendar.JANUARY, 15, 0, 0, 0);
+    calendar.set(Calendar.MILLISECOND, 0);
+    Date testDate = calendar.getTime();
+    Weather weather = new Weather(10.0, Direction.SOUTHWEST, 40.0, 45.0, 10.0, 0.0, true, 75.0);
+    Day day = new Day(testDate, weather, false);
+    List<Supply> supplies = Arrays.asList(new Supply("pumper", 2.0, 5.0, "units", FuelType.LIGHT));
+    BurnPlan burnPlan = new BurnPlan(day, testDate, 40.81506358, -96.7048613, FuelType.LIGHT, FirePattern.HEADFIRES, 100, false, 100, supplies);
+    assertEquals(BurnDetermination.NOT_RECOMMENDED_OTHER, BurnPlanEvaluationAlgorithm.determineHeadFires(burnPlan));
 }
 	
 @Test
@@ -50,7 +55,7 @@ public void testHeadFires_DesiredConditions() {
     List<Supply> supplies = createDefaultSupplies();
     BurnPlan burnPlan = new BurnPlan(day, new Date(), 40.81506358, -96.7048613, FuelType.LIGHT, FirePattern.HEADFIRES, 100, false, 100, supplies);
     assertEquals(BurnDetermination.DESIRED, BurnPlanEvaluationAlgorithm.determineHeadFires(burnPlan));
-}
+} 
 	
 @Test
 public void testHeadFires_MissingData() {
