@@ -43,7 +43,7 @@ The app will then print to the user if the requested burn is possible. Under dif
 
 ## Testing & Test Results
 
-[Description of tests Goes Here]
+The burn plan evaluation app has been verified with manual system tests of the app. The tests were designed using the specifications required to create category-partition testing. The test suites were made to achieve 100% code coverage. The categories and partitions chosen are documented in a seperate file we created called '[File Name]', which is found in the 'Documentation' folder.
 
 Unit tests are available in one class in the 'test' folder:
 * 'BurnPlanEvaluationAlgorithmTest.java'
