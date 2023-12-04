@@ -15,8 +15,56 @@ import org.junit.Test;
 public class BurnPlanEvaluationAlgorithmTest {
 
 	
+//determine head fires tests
+@Test
+public void testHeadFires_RedFlagPreventsBurn() {
+	Weather weather = new Weather(25.0, Direction.SOUTH, 10.0, 15.0, 60.0, 11.0, true, 90.0);
+	Day day = new Day(new Date(), weather, true);
+	List<Supply> supplies = createDefaultSupplies();
+	BurnPlan burnPlan = new BurnPlan(day, new Date(), 40.81506358, -96.7048613, FuelType.LIGHT, FirePattern.HEADFIRES, 100, false, 100, supplies);
+	assertEquals(BurnDetermination.BURNING_PROHIBITED, BurnPlanEvaluationAlgorithm.determineHeadFires(burnPlan));
+}
+
+@Test
+public void testHeadFires_WindSpeedNotSuitable() {
+	Weather weather = new Weather(21.0, Direction.SOUTHWEST, 30.0, 35.0, 20.0, 0.0, false, 70.0);
+	Day day = new Day(new Date(), weather, false);
+	List<Supply> supplies = createDefaultSupplies();
+	BurnPlan burnPlan = new BurnPlan(day, new Date(), 40.81506358, -96.7048613, FuelType.LIGHT, FirePattern.HEADFIRES, 100, false, 100, supplies);
+	assertEquals(BurnDetermination.NOT_RECOMMENDED_WIND, BurnPlanEvaluationAlgorithm.determineHeadFires(burnPlan));
+}
+
+@Test
+public void testHeadFires_ColdFrontComing() {
+	Weather weather = new Weather(10.0, Direction.SOUTHWEST, 40.0, 45.0, 10.0, 0.0, true, 75.0);
+	Day day = new Day(new Date(), weather, false);
+	List<Supply> supplies = createDefaultSupplies();
+	BurnPlan burnPlan = new BurnPlan(day, new Date(), 40.81506358, -96.7048613, FuelType.LIGHT, FirePattern.HEADFIRES, 100, false, 100, supplies);
+	assertEquals(BurnDetermination.NOT_RECOMMENDED_OTHER, BurnPlanEvaluationAlgorithm.determineHeadFires(burnPlan));
+}
+	
+@Test
+public void testHeadFires_DesiredConditions() {
+    Weather weather = new Weather(12.0, Direction.SOUTHWEST, 30.0, 40.0, 5.0, 0.0, false, 75.0);
+    Day day = new Day(new Date(), weather, false);
+    List<Supply> supplies = createDefaultSupplies();
+    BurnPlan burnPlan = new BurnPlan(day, new Date(), 40.81506358, -96.7048613, FuelType.LIGHT, FirePattern.HEADFIRES, 100, false, 100, supplies);
+    assertEquals(BurnDetermination.DESIRED, BurnPlanEvaluationAlgorithm.determineHeadFires(burnPlan));
+}
+	
+@Test
+public void testHeadFires_MissingData() {
+	Weather weather = new Weather(null, null, null, null, null, null, false, null);
+	Day day = new Day(new Date(), weather, false);
+	BurnPlan burnPlan = new BurnPlan(day, new Date(), null, null, null, FirePattern.HEADFIRES, null, false, null ,null);
+	assertEquals(BurnDetermination.INDETERMINATE, BurnPlanEvaluationAlgorithm.determineHeadFires(burnPlan));
+}
 	
 
+
+
+
+//red flag conditions tests
 @Test
 public void testCheckRedFlagConditions_AllMet() {
 	Weather weather = new Weather(21.0, Direction.NORTH, 19.0, 45.0, 51.0, 11.0, true, 81.0);
@@ -29,10 +77,6 @@ public void testCheckRedFlagConditions_NoneMet() {
 	Day day = new Day(new Date(), weather, false);
 	assertFalse("no red flag conditions met", BurnPlanEvaluationAlgorithm.checkRedFlagConditions(weather, day));
 }
-
- 
-//redflag conditions tests
-
 
 @Test
 public void testRedFlagConditionsWindSpeedsExceed() {
@@ -143,9 +187,6 @@ public void testCheckSuppliesNullSuppliesList() {
 public void testCheckSuppliesEmptySuppliesList() {
 	assertFalse("empty supplies list", BurnPlanEvaluationAlgorithm.checkSupplies(new ArrayList<>(), 100));
 }
-
-
-
 @Test
 public void testDetermineAllNonHeadOrBlacklineFires_Acceptable() {
 	BurnPlan burnPlan = createBurnPlan(FirePattern.CONTROL_LINES, 70.0, 15.0, false);
