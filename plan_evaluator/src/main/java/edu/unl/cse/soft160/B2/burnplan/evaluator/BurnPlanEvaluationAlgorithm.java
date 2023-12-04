@@ -49,17 +49,17 @@ public class BurnPlanEvaluationAlgorithm {
 		// gets indexes for all required items
 		int indexNumber = 0;
 		for (Supply supply : supplies) {
-			if (supply.getName() == "pumper") {
+			if (supply.getName().equals("pumper")) {
 				pumperIndex = indexNumber;
-			} else if (supply.getName() == "fire-starting fuel") {
+			} else if (supply.getName().equals("fire-starting fuel")) {
 				fuelIndex = indexNumber;
-			} else if (supply.getName() == "drip torches") {
+			} else if (supply.getName().equals("drip torches")) {
 				dripTorchIndex = indexNumber;
-			} else if (supply.getName() == "rakes" || supply.getName() == "fire swatters") {
+			} else if (supply.getName().equals("rakes")) {
 				fireSwatterIndex = indexNumber;
-			} else if (supply.getName() == "backpack pump") {
+			} else if (supply.getName().equals("backpack pump")) {
 				backpackPumpIndex = indexNumber;
-			} else if (supply.getName() == "dozer") {
+			} else if (supply.getName().equals("dozer")) {
 				dozerIndex = indexNumber;
 			}
 			indexNumber++;
