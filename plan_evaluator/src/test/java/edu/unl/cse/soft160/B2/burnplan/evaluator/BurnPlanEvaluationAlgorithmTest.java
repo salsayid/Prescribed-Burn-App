@@ -31,6 +31,49 @@ public void testCheckRedFlagConditions_NoneMet() {
 }
 
 
+//redflag conditions tests
+
+
+@Test
+public void testRedFlagConditionsWindSpeedsExceed() {
+    Weather weather = new Weather(21.0, Direction.NORTH, 30.0, 30.0, 10.0, 0.1, false, 70.0);
+    Day day = new Day(new Date(), weather, false);
+    assertTrue(BurnPlanEvaluationAlgorithm.checkRedFlagConditions(weather, day));
+}
+
+@Test
+public void testRedFlagConditionsLowHumidity() {
+    Weather weather = new Weather(10.0, Direction.NORTH, 19.0, 19.0, 10.0, 0.1, false, 70.0);
+    Day day = new Day(new Date(), weather, false);
+    assertTrue(BurnPlanEvaluationAlgorithm.checkRedFlagConditions(weather, day));
+}
+
+@Test
+public void testRedFlagConditionsHighTemperature() {
+    Weather weather = new Weather(10.0, Direction.NORTH, 30.0, 30.0, 10.0, 0.1, false, 81.0);
+    Day day = new Day(new Date(), weather, false);
+    assertTrue(BurnPlanEvaluationAlgorithm.checkRedFlagConditions(weather, day));
+}
+
+@Test
+public void testRedFlagConditionsHighRainChanceAndHighRainAmount() {
+    Weather weather = new Weather(10.0, Direction.NORTH, 30.0, 30.0, 51.0, 11.0, false, 70.0);
+    Day day = new Day(new Date(), weather, false);
+    assertTrue(BurnPlanEvaluationAlgorithm.checkRedFlagConditions(weather, day));
+}
+
+@Test
+public void testRedFlagConditionsColdFrontComing() {
+    Weather weather = new Weather(10.0, Direction.NORTH, 30.0, 30.0, 10.0, 0.1, true, 70.0);
+    Day day = new Day(new Date(), weather, false);
+    assertTrue(BurnPlanEvaluationAlgorithm.checkRedFlagConditions(weather, day));
+}
+
+
+
+
+
+
 
 
 //Supplies tests
