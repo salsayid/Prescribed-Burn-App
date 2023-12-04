@@ -110,17 +110,17 @@ public class BurnPlanEvaluationApp {
 		// gets indexes for all required items
 		int indexNumber = 0;
 		for (Supply supply : supplies) {
-			if (supply.getName() == "pumper") {
+			if (supply.getName().equals("pumper")) {
 				pumperIndex = indexNumber;
-			} else if (supply.getName() == "fire-starting fuel") {
+			} else if (supply.getName().equals("fire-starting fuel")) {
 				fuelIndex = indexNumber;
-			} else if (supply.getName() == "drip torches") {
+			} else if (supply.getName().equals("drip torches")) {
 				dripTorchIndex = indexNumber;
-			} else if (supply.getName() == "rakes" || supply.getName() == "fire swatters") {
+			} else if (supply.getName().equals("rakes")) {
 				fireSwatterIndex = indexNumber;
-			} else if (supply.getName() == "backpack pump") {
+			} else if (supply.getName().equals("backpack pump")) {
 				backpackPumpIndex = indexNumber;
-			} else if (supply.getName() == "dozer") {
+			} else if (supply.getName().equals("dozer")) {
 				dozerIndex = indexNumber;
 			}
 			indexNumber++;
@@ -407,11 +407,11 @@ public class BurnPlanEvaluationApp {
 		String input = "";
 		boolean haveAllInputs = false;
 
-		System.out.println("If at any point you wish to close the program type exit in one of the prompts");
+		System.out.println("If at any point you wish to close the program type exit for one of the prompts");
 		do {
 			input = "";
 			input = getInput(inputPrompts[prompt], scanner);
-			if (input != "") {
+			if (!input.equals("")) {
 				inputs.add(input);
 				prompt++;
 				if (prompt == inputPrompts.length) {
@@ -422,6 +422,43 @@ public class BurnPlanEvaluationApp {
 				System.exit(1);
 			}
 		} while (!haveAllInputs);
+		// inputs start at index 9 for supplies
+		String[] supplyPrompts = {"What is the capasity for each pumper: ",
+				"How many pumpers are needed: ",
+				"What unit do the pumpers belong to: ",
+				"What is the capasity for a barrel of fire starting fluid: ",
+				"How many barrels of fire starting fluid are needed: ",
+				"What unit do the fire starting fluid belongs to: ",
+				"How many drip torches are needed: ",
+				"What unit do the drip torches belong to: ",
+				"how many rakes or fire swatters are needed: ",
+				"What unit do the rakes or fire swatters belong to: ",
+				"How many backback pumps are needed: ",
+				"What unit do the backpack pumps belong to: ",
+				"How many dozers are needed: ",
+				"What unit do the dozers belong to: "
+				};
+		
+		prompt = 0;
+		haveAllInputs = false;
+		input = "";
+		
+		System.out.println("Please enter the supplies needed");
+		do {
+			input = "";
+			input = getInput(supplyPrompts[prompt], scanner);
+			if (!input.equals("")) {
+				inputs.add(input);
+				prompt++;
+				if (prompt == supplyPrompts.length) {
+					haveAllInputs = true;
+				}
+			}
+			if (input.equals("exit")) {
+				System.exit(1);
+			}
+		} while (!haveAllInputs);
+		
 		
 		Instant now = Instant.now();
 		String apiKey = null;
@@ -464,15 +501,22 @@ public class BurnPlanEvaluationApp {
 			Day dayOfPlanedBurn = new Day(dayOfPlanedBurnDate, dayOfPlanedBurnWeather,
 					Boolean.parseBoolean(inputs.get(1)));
 
-			List<Supply> supplies = new ArrayList<>(Arrays.asList(new Supply(null, null, null, null, null)));
+			List<Supply> supplies = new ArrayList<>(Arrays.asList(
+					new Supply("pumper", Double.valueOf(inputs.get(10)), Double.valueOf(inputs.get(9)), inputs.get(11)),
+					new Supply("fire-starting fuel", Double.valueOf(inputs.get(13)), Double.valueOf(inputs.get(12)), inputs.get(14)),
+					new Supply("drip torches", Double.valueOf(inputs.get(16)), Double.valueOf(inputs.get(15)), inputs.get(17)),
+					new Supply("rakes", Double.valueOf(inputs.get(19)), Double.valueOf(inputs.get(18)), inputs.get(20)),
+					new Supply("backpack pump", Double.valueOf(inputs.get(22)), Double.valueOf(inputs.get(21)), inputs.get(23)),
+					new Supply("dozer", Double.valueOf(inputs.get(25)), Double.valueOf(inputs.get(24)), inputs.get(26))
+					));
 
-			BurnPlan burnPlan = new BurnPlan(dayOfPlanedBurn, currentDay, Double.valueOf(inputs.get(2)),
+			BurnPlan burnPlan = new BurnPlan(dayOfPlanedBurn, currentDay, dayBeforePlanedBurn, Double.valueOf(inputs.get(2)),
 					Double.valueOf(inputs.get(3)), FuelType.valueOf(inputs.get(4).toUpperCase()),
 					FirePattern.valueOf(inputs.get(5).toUpperCase()), Integer.valueOf(inputs.get(6)),
 					Boolean.parseBoolean(inputs.get(7)), Integer.valueOf(inputs.get(8)), supplies);
 			BurnDetermination planEvaluation = BurnPlanEvaluationAlgorithm.evaluate(burnPlan);
 			printPlanOutput(burnPlan, planEvaluation);
-			// BurnPlanEvaluationAlgorithm.evaluate(burnPlan);
+			//BurnPlanEvaluationAlgorithm.evaluate(burnPlan);
 		} catch (NumberFormatException e) {
 			System.err.println(
 					"At least one input that required a number was not a valid number \nIf you meant for one of the true/false prompts to be true make sure to enter true, any other response will be seen as false");

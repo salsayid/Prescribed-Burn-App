@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 public class BurnPlanEvaluationAlgorithm {
-	
+
 	private static final int SECONDS_PER_DAY = 86400;
 
 	static public boolean checkRedFlagConditions(Weather weather, Day day) {
@@ -49,17 +49,17 @@ public class BurnPlanEvaluationAlgorithm {
 		// gets indexes for all required items
 		int indexNumber = 0;
 		for (Supply supply : supplies) {
-			if (supply.getName() == "pumper") {
+			if (supply.getName().equals("pumper")) {
 				pumperIndex = indexNumber;
-			} else if (supply.getName() == "fire-starting fuel") {
+			} else if (supply.getName().equals("fire-starting fuel")) {
 				fuelIndex = indexNumber;
-			} else if (supply.getName() == "drip torches") {
+			} else if (supply.getName().equals("drip torches")) {
 				dripTorchIndex = indexNumber;
-			} else if (supply.getName() == "rakes" || supply.getName() == "fire swatters") {
+			} else if (supply.getName().equals("rakes")) {
 				fireSwatterIndex = indexNumber;
-			} else if (supply.getName() == "backpack pump") {
+			} else if (supply.getName().equals("backpack pump")) {
 				backpackPumpIndex = indexNumber;
-			} else if (supply.getName() == "dozer") {
+			} else if (supply.getName().equals("dozer")) {
 				dozerIndex = indexNumber;
 			}
 			indexNumber++;
@@ -100,36 +100,37 @@ public class BurnPlanEvaluationAlgorithm {
 
 		try {
 			redFlagConditionsPreventBurn = checkRedFlagConditions(burnPlan.getDay().getWeather(), burnPlan.getDay());
+
+			if (redFlagConditionsPreventBurn || burnPlan.getDay().isOutdoorBuringBanned()) {
+				return BurnDetermination.BURNING_PROHIBITED;
+			}
+			if (weather.getTemperature() > 80) {
+				return BurnDetermination.NOT_RECOMMENDED_TEMPERATURE;
+			}
+			if (weather.getWindSpeed() > 20) {
+				return BurnDetermination.NOT_RECOMMENDED_WIND;
+			}
+
+			boolean hasRequiredSupplies = checkSupplies(burnPlan.getSupplies(), burnPlan.getAcresToBeBurned());
+			Date twoDaysLater = burnPlan.getCurrentDay();
+			Date fiveDaysLater = burnPlan.getCurrentDay();
+			twoDaysLater.setTime(burnPlan.getCurrentDay().getTime() + (SECONDS_PER_DAY * 2));
+			fiveDaysLater.setTime(burnPlan.getCurrentDay().getTime() * (SECONDS_PER_DAY * 5));
+			boolean withinDateRange = burnPlan.getDay().getDate().after(twoDaysLater)
+					&& burnPlan.getDay().getDate().before(fiveDaysLater);
+			if (!hasRequiredSupplies || burnPlan.getDay().getWeather().isColdFrontApproaching()
+					|| (burnPlan.getFuelType() == FuelType.HEAVY && weather.getRainChance() > 50) || !withinDateRange) {
+				return BurnDetermination.NOT_RECOMMENDED_OTHER;
+			}
+			if (weather.getRainChance() > 50 && weather.getRainAmount() > 10) {
+				return BurnDetermination.NOT_RECOMMENDED_OTHER;
+			}
+			boolean humidityIsAcceptable = weather.getRelativeHumidity() >= 20;
+			if (humidityIsAcceptable) {
+				return BurnDetermination.ACCEPTABLE;
+			}
 		} catch (Exception anInputWasNotInput) {
 			return BurnDetermination.INDETERMINATE;
-		}
-		if (redFlagConditionsPreventBurn || burnPlan.getDay().isOutdoorBuringBanned()) {
-			return BurnDetermination.BURNING_PROHIBITED;
-		}
-		if (weather.getTemperature() > 80) {
-			return BurnDetermination.NOT_RECOMMENDED_TEMPERATURE;
-		}
-		if (weather.getWindSpeed() > 20) {
-			return BurnDetermination.NOT_RECOMMENDED_WIND;
-		}
-
-		boolean hasRequiredSupplies = checkSupplies(burnPlan.getSupplies(), burnPlan.getAcresToBeBurned());
-		Date twoDaysLater = burnPlan.getCurrentDay();
-		Date fiveDaysLater = burnPlan.getCurrentDay();
-		twoDaysLater.setTime(burnPlan.getCurrentDay().getTime() + (SECONDS_PER_DAY * 2));
-		fiveDaysLater.setTime(burnPlan.getCurrentDay().getTime() * (SECONDS_PER_DAY * 5));
-		boolean withinDateRange = burnPlan.getDay().getDate().after(twoDaysLater)
-				&& burnPlan.getDay().getDate().before(fiveDaysLater);
-		if (!hasRequiredSupplies || burnPlan.getDay().getWeather().isColdFrontApproaching()
-				|| (burnPlan.getFuelType() == FuelType.HEAVY && weather.getRainChance() > 50) || !withinDateRange) {
-			return BurnDetermination.NOT_RECOMMENDED_OTHER;
-		}
-		if (weather.getRainChance() > 50 && weather.getRainAmount() > 10) {
-			return BurnDetermination.NOT_RECOMMENDED_OTHER;
-		}
-		boolean humidityIsAcceptable = weather.getRelativeHumidity() >= 20;
-		if (humidityIsAcceptable) {
-			return BurnDetermination.ACCEPTABLE;
 		}
 		return BurnDetermination.NOT_RECOMMENDED_OTHER;
 	}
@@ -143,10 +144,6 @@ public class BurnPlanEvaluationAlgorithm {
 			if (redFlagConditionsPreventBurn || burnPlan.getDay().isOutdoorBuringBanned()) {
 				return BurnDetermination.BURNING_PROHIBITED;
 			}
-		} catch (Exception anInputWasNotInput) {
-			return BurnDetermination.INDETERMINATE;
-		}
-
 		if (weather.getTemperature() > 65 || weather.getTemperature() < 35) {
 			return BurnDetermination.NOT_RECOMMENDED_TEMPERATURE;
 		}
@@ -174,8 +171,7 @@ public class BurnPlanEvaluationAlgorithm {
 		LocalTime lateAfternoonStart = LocalTime.of(16, 0, 0, 0);
 		Instant instant = Instant.ofEpochMilli(burnPlan.getDay().getDate().getTime());
 		LocalTime timeOfBurnDate = LocalDateTime.ofInstant(instant, ZoneId.of("America/Chicago")).toLocalTime();
-		boolean timeIsDesired = timeOfBurnDate.isAfter(midMorningStart)
-				&& timeOfBurnDate.isBefore(lateAfternoonStart);
+		boolean timeIsDesired = timeOfBurnDate.isAfter(midMorningStart) && timeOfBurnDate.isBefore(lateAfternoonStart);
 		boolean widthOfBlackLinesDesired = true;
 		if (burnPlan.isBlackLineVolatile() == null || burnPlan.isBlackLineVolatile()) {
 			widthOfBlackLinesDesired = burnPlan.getWidthOfBlacklines() >= 500;
@@ -192,21 +188,19 @@ public class BurnPlanEvaluationAlgorithm {
 			return BurnDetermination.ACCEPTABLE;
 		}
 		return BurnDetermination.NOT_RECOMMENDED_OTHER;
+		} catch (Exception anInputWasNotInput) {
+			return BurnDetermination.INDETERMINATE;
+		}
 	}
 
 	static public BurnDetermination determineHeadFires(BurnPlan burnPlan) {
 		Weather weather = burnPlan.getDay().getWeather();
-		boolean notEnoughData = false;
 		try {
 			boolean redFlagConditionsPreventBurn = checkRedFlagConditions(burnPlan.getDay().getWeather(),
 					burnPlan.getDay());
 			if (redFlagConditionsPreventBurn || burnPlan.getDay().isOutdoorBuringBanned()) {
 				return BurnDetermination.BURNING_PROHIBITED;
 			}
-		} catch (Exception anInputWasNotInput) {
-			notEnoughData = true;
-		}
-		if (!notEnoughData) {
 			if (weather.getTemperature() > 85 || weather.getTemperature() < 60) {
 				return BurnDetermination.NOT_RECOMMENDED_TEMPERATURE;
 			}
@@ -252,7 +246,7 @@ public class BurnPlanEvaluationAlgorithm {
 				return BurnDetermination.NOT_RECOMMENDED_WIND;
 			}
 			return BurnDetermination.NOT_RECOMMENDED_OTHER;
-		} else {
+		} catch (Exception anInputWasNotInput) {
 			return BurnDetermination.INDETERMINATE;
 		}
 	}
