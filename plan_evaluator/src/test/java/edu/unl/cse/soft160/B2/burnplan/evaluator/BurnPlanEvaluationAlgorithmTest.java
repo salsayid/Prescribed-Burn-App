@@ -16,7 +16,7 @@ public class BurnPlanEvaluationAlgorithmTest {
 
 	
 	
-	
+
 @Test
 public void testCheckRedFlagConditions_AllMet() {
 	Weather weather = new Weather(21.0, Direction.NORTH, 19.0, 45.0, 51.0, 11.0, true, 81.0);
@@ -29,6 +29,9 @@ public void testCheckRedFlagConditions_NoneMet() {
 	Day day = new Day(new Date(), weather, false);
 	assertFalse("no red flag conditions met", BurnPlanEvaluationAlgorithm.checkRedFlagConditions(weather, day));
 }
+
+
+
 
 //Supplies tests
 @Test
@@ -53,6 +56,19 @@ public void testCheckSuppliesPumperIsInsufficient() {
 	List<Supply> supplies = Arrays.asList(new Supply("pumper", 0.1, 5.0, "units", FuelType.LIGHT));
 	assertFalse("insufficient pumper supply", BurnPlanEvaluationAlgorithm.checkSupplies(supplies, 100));
 }
+@Test
+public void testCheckSuppliesFireStartingFuelIsSufficient() {
+	List<Supply> supplies = Arrays.asList(new Supply("fire starting fuel", 20.0, 40.0, "gallons", FuelType.LIGHT));
+	assertTrue("sufficient firestarting fuel supply", BurnPlanEvaluationAlgorithm.checkSupplies(supplies, 100));
+}
+@Test
+public void testCheckSuppliesFireStartinFuelIsInsufficient() {
+	List<Supply> supplies = Arrays.asList(new Supply("fire starting fuel", 5.0, 40.0, "gallons", FuelType.LIGHT));
+	assertFalse("insufficient firestarting fuel supply", BurnPlanEvaluationAlgorithm.checkSupplies(supplies, 100));
+}
+
+
+
 
 
 @Test
