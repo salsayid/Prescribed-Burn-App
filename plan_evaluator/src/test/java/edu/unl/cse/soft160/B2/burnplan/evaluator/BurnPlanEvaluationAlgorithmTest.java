@@ -66,8 +66,15 @@ public void testCheckSuppliesFireStartinFuelIsInsufficient() {
 	List<Supply> supplies = Arrays.asList(new Supply("fire starting fuel", 5.0, 40.0, "gallons", FuelType.LIGHT));
 	assertFalse("insufficient firestarting fuel supply", BurnPlanEvaluationAlgorithm.checkSupplies(supplies, 100));
 }
+@Test
+public void testCheckSuppliesNullSuppliesList() {
+	assertFalse("null supplies list", BurnPlanEvaluationAlgorithm.checkSupplies(null, 100));
+}
 
-
+@Test
+public void testCheckSuppliesEmptySuppliesList() {
+	assertFalse("empty supplies list", BurnPlanEvaluationAlgorithm.checkSupplies(new ArrayList<>(), 100));
+}
 
 
 
