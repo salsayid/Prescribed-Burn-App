@@ -6,6 +6,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +29,8 @@ public void testCheckRedFlagConditions_NoneMet() {
 	Day day = new Day(new Date(), weather, false);
 	assertFalse("no red flag conditions met", BurnPlanEvaluationAlgorithm.checkRedFlagConditions(weather, day));
 }
+
+//Supplies tests
 @Test
 public void testCheckSupplies_SufficientSupplies() {
 	List<Supply> supplies = new ArrayList<>();
@@ -40,6 +43,18 @@ public void testCheckSupplies_InsufficentSupplies() {
 	supplies.add(new Supply("pumper", 1.0, 5.0, "units", FuelType.LIGHT));
 	assertFalse("supplies are insufficient", BurnPlanEvaluationAlgorithm.checkSupplies(supplies, 100));
 }
+@Test
+public void testCheckSuppliesPumperIsSufficient() {
+	List<Supply> supplies = Arrays.asList(new Supply("pumper", 2.0, 5.0, "units", FuelType.LIGHT));
+	assertTrue("sufficient pumper supply", BurnPlanEvaluationAlgorithm.checkSupplies(supplies, 100));
+}
+@Test
+public void testCheckSuppliesPumperIsInsufficient() {
+	List<Supply> supplies = Arrays.asList(new Supply("pumper", 0.1, 5.0, "units", FuelType.LIGHT));
+	assertFalse("insufficient pumper supply", BurnPlanEvaluationAlgorithm.checkSupplies(supplies, 100));
+}
+
+
 @Test
 public void testDetermineAllNonHeadOrBlacklineFires_Acceptable() {
 	BurnPlan burnPlan = createBurnPlan(FirePattern.CONTROL_LINES, 70.0, 15.0, false);
