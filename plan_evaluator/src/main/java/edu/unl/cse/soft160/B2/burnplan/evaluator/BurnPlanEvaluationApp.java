@@ -466,13 +466,13 @@ public class BurnPlanEvaluationApp {
 
 			List<Supply> supplies = new ArrayList<>(Arrays.asList(new Supply(null, null, null, null, null)));
 
-			BurnPlan burnPlan = new BurnPlan(dayOfPlanedBurn, currentDay, Double.valueOf(inputs.get(2)),
+			BurnPlan burnPlan = new BurnPlan(dayOfPlanedBurn, currentDay, dayBeforePlanedBurn, Double.valueOf(inputs.get(2)),
 					Double.valueOf(inputs.get(3)), FuelType.valueOf(inputs.get(4).toUpperCase()),
 					FirePattern.valueOf(inputs.get(5).toUpperCase()), Integer.valueOf(inputs.get(6)),
 					Boolean.parseBoolean(inputs.get(7)), Integer.valueOf(inputs.get(8)), supplies);
 			BurnDetermination planEvaluation = BurnPlanEvaluationAlgorithm.evaluate(burnPlan);
 			printPlanOutput(burnPlan, planEvaluation);
-			// BurnPlanEvaluationAlgorithm.evaluate(burnPlan);
+			//BurnPlanEvaluationAlgorithm.evaluate(burnPlan);
 		} catch (NumberFormatException e) {
 			System.err.println(
 					"At least one input that required a number was not a valid number \nIf you meant for one of the true/false prompts to be true make sure to enter true, any other response will be seen as false");
