@@ -144,10 +144,6 @@ public class BurnPlanEvaluationAlgorithm {
 			if (redFlagConditionsPreventBurn || burnPlan.getDay().isOutdoorBuringBanned()) {
 				return BurnDetermination.BURNING_PROHIBITED;
 			}
-		} catch (Exception anInputWasNotInput) {
-			return BurnDetermination.INDETERMINATE;
-		}
-
 		if (weather.getTemperature() > 65 || weather.getTemperature() < 35) {
 			return BurnDetermination.NOT_RECOMMENDED_TEMPERATURE;
 		}
@@ -192,21 +188,19 @@ public class BurnPlanEvaluationAlgorithm {
 			return BurnDetermination.ACCEPTABLE;
 		}
 		return BurnDetermination.NOT_RECOMMENDED_OTHER;
+		} catch (Exception anInputWasNotInput) {
+			return BurnDetermination.INDETERMINATE;
+		}
 	}
 
 	static public BurnDetermination determineHeadFires(BurnPlan burnPlan) {
 		Weather weather = burnPlan.getDay().getWeather();
-		boolean notEnoughData = false;
 		try {
 			boolean redFlagConditionsPreventBurn = checkRedFlagConditions(burnPlan.getDay().getWeather(),
 					burnPlan.getDay());
 			if (redFlagConditionsPreventBurn || burnPlan.getDay().isOutdoorBuringBanned()) {
 				return BurnDetermination.BURNING_PROHIBITED;
 			}
-		} catch (Exception anInputWasNotInput) {
-			notEnoughData = true;
-		}
-		if (!notEnoughData) {
 			if (weather.getTemperature() > 85 || weather.getTemperature() < 60) {
 				return BurnDetermination.NOT_RECOMMENDED_TEMPERATURE;
 			}
@@ -252,7 +246,7 @@ public class BurnPlanEvaluationAlgorithm {
 				return BurnDetermination.NOT_RECOMMENDED_WIND;
 			}
 			return BurnDetermination.NOT_RECOMMENDED_OTHER;
-		} else {
+		} catch (Exception anInputWasNotInput) {
 			return BurnDetermination.INDETERMINATE;
 		}
 	}
