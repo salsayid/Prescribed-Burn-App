@@ -395,9 +395,11 @@ public class BurnPlanEvaluationApp {
 
 		// get user input
 		String[] inputPrompts = { "What is the planed date for the burn (YYYY, MM, DD): ",
-				"Is Burning banned for the planed day (true/false): ", "What is the latitude for the burn: ",
-				"What is the longitude for the burn: ", "What Fuel Type is going to be used (Light/Heavy): ",
-				"What Fire Pattern is going to be used (Headfire/Black_lines): ",
+				"Is Burning banned for the planed day (true/false): ", 
+				"What is the latitude for the burn: ",
+				"What is the longitude for the burn: ", 
+				"What Fuel Type is going to be used (Light/Heavy): ",
+				"What Fire Pattern is going to be used (Headfires/Black_lines): ",
 				"If using Black_lines what is the width (0 if NOT using Black_lines): ",
 				"If using Black_lines is the fuel volatile (true/false if NOT using Black_lines): ",
 				"How many acres are to be burned: " };
@@ -487,11 +489,11 @@ public class BurnPlanEvaluationApp {
 		try {
 			String[] planedDateStrs = inputs.get(0).split(",");
 			Date currentDay = new Date();
-			Date dayBeforePlanedBurnDate = new Calendar.Builder().setDate(Integer.valueOf(planedDateStrs[0]),
-					Integer.valueOf(planedDateStrs[1]) -1, Integer.valueOf(planedDateStrs[2])).setTimeOfDay(0, 0, 0)
+			Date dayBeforePlanedBurnDate = new Calendar.Builder().setDate(Integer.valueOf(planedDateStrs[0].strip()),
+					Integer.valueOf(planedDateStrs[1].strip()) -1, Integer.valueOf(planedDateStrs[2].strip())).setTimeOfDay(0, 0, 0)
 					.build().getTime();
-			Date dayOfPlanedBurnDate = new Calendar.Builder().setDate(Integer.valueOf(planedDateStrs[0]),
-					Integer.valueOf(planedDateStrs[1]), Integer.valueOf(planedDateStrs[2])).setTimeOfDay(0, 0, 0)
+			Date dayOfPlanedBurnDate = new Calendar.Builder().setDate(Integer.valueOf(planedDateStrs[0].strip()),
+					Integer.valueOf(planedDateStrs[1].strip()), Integer.valueOf(planedDateStrs[2].strip())).setTimeOfDay(0, 0, 0)
 					.build().getTime();
 
 			Weather dayOfPlanedBurnWeather = new Weather(null, null, null, null, null, null, false, null);
@@ -504,10 +506,10 @@ public class BurnPlanEvaluationApp {
 			List<Supply> supplies = new ArrayList<>(Arrays.asList(
 					new Supply("pumper", Double.valueOf(inputs.get(10)), Double.valueOf(inputs.get(9)), inputs.get(11)),
 					new Supply("fire-starting fuel", Double.valueOf(inputs.get(13)), Double.valueOf(inputs.get(12)), inputs.get(14)),
-					new Supply("drip torches", Double.valueOf(inputs.get(16)), Double.valueOf(inputs.get(15)), inputs.get(17)),
-					new Supply("rakes", Double.valueOf(inputs.get(19)), Double.valueOf(inputs.get(18)), inputs.get(20)),
-					new Supply("backpack pump", Double.valueOf(inputs.get(22)), Double.valueOf(inputs.get(21)), inputs.get(23)),
-					new Supply("dozer", Double.valueOf(inputs.get(25)), Double.valueOf(inputs.get(24)), inputs.get(26))
+					new Supply("drip torches", Double.valueOf(inputs.get(15)), 0.0, inputs.get(16)),
+					new Supply("rakes", Double.valueOf(inputs.get(17)), 0.0, inputs.get(18)),
+					new Supply("backpack pump", Double.valueOf(inputs.get(19)), 0.0, inputs.get(20)),
+					new Supply("dozer", Double.valueOf(inputs.get(21)), 0.0, inputs.get(22))
 					));
 
 			BurnPlan burnPlan = new BurnPlan(dayOfPlanedBurn, currentDay, dayBeforePlanedBurn, Double.valueOf(inputs.get(2)),
@@ -521,6 +523,7 @@ public class BurnPlanEvaluationApp {
 					"At least one input that required a number was not a valid number \nIf you meant for one of the true/false prompts to be true make sure to enter true, any other response will be seen as false");
 			System.err.println();
 			System.err.println("Make sure to enter Fuel type and Fire pattern exactly as shown in the prompt");
+			e.printStackTrace();
 		}
 
 	}
