@@ -488,7 +488,7 @@ public class BurnPlanEvaluationApp {
 			String[] planedDateStrs = inputs.get(0).split(",");
 			Date currentDay = new Date();
 			Date dayBeforePlanedBurnDate = new Calendar.Builder().setDate(Integer.valueOf(planedDateStrs[0]),
-					Integer.valueOf(planedDateStrs[1]), Integer.valueOf(planedDateStrs[2]) - 1).setTimeOfDay(0, 0, 0)
+					Integer.valueOf(planedDateStrs[1]) -1, Integer.valueOf(planedDateStrs[2])).setTimeOfDay(0, 0, 0)
 					.build().getTime();
 			Date dayOfPlanedBurnDate = new Calendar.Builder().setDate(Integer.valueOf(planedDateStrs[0]),
 					Integer.valueOf(planedDateStrs[1]), Integer.valueOf(planedDateStrs[2])).setTimeOfDay(0, 0, 0)
@@ -516,7 +516,6 @@ public class BurnPlanEvaluationApp {
 					Boolean.parseBoolean(inputs.get(7)), Integer.valueOf(inputs.get(8)), supplies);
 			BurnDetermination planEvaluation = BurnPlanEvaluationAlgorithm.evaluate(burnPlan);
 			printPlanOutput(burnPlan, planEvaluation);
-			//BurnPlanEvaluationAlgorithm.evaluate(burnPlan);
 		} catch (NumberFormatException e) {
 			System.err.println(
 					"At least one input that required a number was not a valid number \nIf you meant for one of the true/false prompts to be true make sure to enter true, any other response will be seen as false");
