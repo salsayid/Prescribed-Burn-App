@@ -20,7 +20,7 @@ public class BurnPlanEvaluationApp {
 	}
 
 	// determines the type of openweather data set
-	private static String getDataSet(Scanner scanner) {
+	static String getDataSet(Scanner scanner) {
 		List<String> dataSets = new ArrayList<>(OpenWeatherConnector.allowableDataSets);
 		for (int i = 0; i < dataSets.size(); ++i) {
 			System.out.println((i + 1) + ". " + dataSets.get(i));
