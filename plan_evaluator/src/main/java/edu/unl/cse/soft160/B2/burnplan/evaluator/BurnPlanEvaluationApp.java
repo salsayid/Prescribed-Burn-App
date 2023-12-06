@@ -402,6 +402,7 @@ public class BurnPlanEvaluationApp {
 				"What Fire Pattern is going to be used (Headfires/Black_lines): ",
 				"If using Black_lines what is the width (0 if NOT using Black_lines): ",
 				"If using Black_lines is the fuel volatile (true/false if NOT using Black_lines): ",
+				"Is there a cold front approaching (true/false): ",
 				"How many acres are to be burned: " };
 		int prompt = 0;
 
@@ -424,7 +425,7 @@ public class BurnPlanEvaluationApp {
 				System.exit(1);
 			}
 		} while (!haveAllInputs);
-		// inputs start at index 9 for supplies
+		// inputs start at index 10 for supplies
 		String[] supplyPrompts = {"What is the capasity for each pumper: ",
 				"How many pumpers do you have: ",
 				"What unit do the pumpers belong to: ",
@@ -495,27 +496,47 @@ public class BurnPlanEvaluationApp {
 			Date dayOfPlanedBurnDate = new Calendar.Builder().setDate(Integer.valueOf(planedDateStrs[0].strip()),
 					Integer.valueOf(planedDateStrs[1].strip()), Integer.valueOf(planedDateStrs[2].strip())).setTimeOfDay(0, 0, 0)
 					.build().getTime();
+			
+			Direction windDirection = Direction.NORTH;
+			long openWeatherWindDirection = 0;
+			if ((openWeatherWindDirection >= 0 && openWeatherWindDirection < 23) ||(openWeatherWindDirection <= 360 && openWeatherWindDirection > 337)) {
+				windDirection = Direction.NORTH;
+			} else if ((openWeatherWindDirection >= 23 && openWeatherWindDirection < 68)) {
+				windDirection = Direction.NORTHEAST;
+			} else if ((openWeatherWindDirection >= 68 && openWeatherWindDirection < 113)) {
+				windDirection = Direction.EAST;
+			} else if ((openWeatherWindDirection >= 113 && openWeatherWindDirection < 159)) {
+				windDirection = Direction.SOUTHEAST;
+			} else if ((openWeatherWindDirection >= 159 && openWeatherWindDirection < 203)) {
+				windDirection = Direction.SOUTH;
+			} else if ((openWeatherWindDirection >= 203 && openWeatherWindDirection < 249)) {
+				windDirection = Direction.SOUTHWEST;
+			} else if ((openWeatherWindDirection >= 249 && openWeatherWindDirection < 293)) {
+				windDirection = Direction.WEST;
+			} else if ((openWeatherWindDirection >= 293 && openWeatherWindDirection <= 337)) {
+				windDirection = Direction.NORTHWEST;
+			}
 
-			Weather dayOfPlanedBurnWeather = new Weather(null, null, null, null, null, null, false, null);
-			Weather dayBeforePlanedBurnWeather = new Weather(null, null, null, null, null, null, false, null);
+			Weather dayOfPlanedBurnWeather = new Weather(openWeather.getWindSpeed(dayOfPlanedBurnDate), windDirection, Double.valueOf(openWeather.getHumidity(dayOfPlanedBurnDate)), Double.valueOf(openWeather.getHumidity(dayOfPlanedBurnDate)), openWeather.getProbabilityOfPrecipitation(dayOfPlanedBurnDate), openWeather.getDailyRainfall(dayOfPlanedBurnDate), Boolean.valueOf(inputs.get(8)), openWeather.getTemperature(dayOfPlanedBurnDate));
+			Weather dayBeforePlanedBurnWeather = new Weather(openWeather.getWindSpeed(dayBeforePlanedBurnDate), windDirection, Double.valueOf(openWeather.getHumidity(dayBeforePlanedBurnDate)), Double.valueOf(openWeather.getHumidity(dayBeforePlanedBurnDate)), openWeather.getProbabilityOfPrecipitation(dayBeforePlanedBurnDate), openWeather.getDailyRainfall(dayBeforePlanedBurnDate), Boolean.valueOf(inputs.get(8)), openWeather.getTemperature(dayBeforePlanedBurnDate));
 
-			Day dayBeforePlanedBurn = new Day(dayBeforePlanedBurnDate, dayBeforePlanedBurnWeather, false);
+			Day dayBeforePlanedBurn = new Day(dayBeforePlanedBurnDate, dayBeforePlanedBurnWeather, Boolean.valueOf(inputs.get(1)));
 			Day dayOfPlanedBurn = new Day(dayOfPlanedBurnDate, dayOfPlanedBurnWeather,
-					Boolean.parseBoolean(inputs.get(1)));
+					Boolean.valueOf(inputs.get(1)));
 
 			List<Supply> supplies = new ArrayList<>(Arrays.asList(
-					new Supply("pumper", Double.valueOf(inputs.get(10)), Double.valueOf(inputs.get(9)), inputs.get(11)),
-					new Supply("fire-starting fuel", Double.valueOf(inputs.get(13)), Double.valueOf(inputs.get(12)), inputs.get(14)),
-					new Supply("drip torches", Double.valueOf(inputs.get(15)), 0.0, inputs.get(16)),
-					new Supply("rakes", Double.valueOf(inputs.get(17)), 0.0, inputs.get(18)),
-					new Supply("backpack pump", Double.valueOf(inputs.get(19)), 0.0, inputs.get(20)),
-					new Supply("dozer", Double.valueOf(inputs.get(21)), 0.0, inputs.get(22))
+					new Supply("pumper", Double.valueOf(inputs.get(11)), Double.valueOf(inputs.get(10)), inputs.get(12)),
+					new Supply("fire-starting fuel", Double.valueOf(inputs.get(14)), Double.valueOf(inputs.get(13)), inputs.get(15)),
+					new Supply("drip torches", Double.valueOf(inputs.get(16)), 0.0, inputs.get(17)),
+					new Supply("rakes", Double.valueOf(inputs.get(18)), 0.0, inputs.get(19)),
+					new Supply("backpack pump", Double.valueOf(inputs.get(20)), 0.0, inputs.get(21)),
+					new Supply("dozer", Double.valueOf(inputs.get(22)), 0.0, inputs.get(23))
 					));
 
 			BurnPlan burnPlan = new BurnPlan(dayOfPlanedBurn, currentDay, dayBeforePlanedBurn, Double.valueOf(inputs.get(2)),
 					Double.valueOf(inputs.get(3)), FuelType.valueOf(inputs.get(4).toUpperCase()),
 					FirePattern.valueOf(inputs.get(5).toUpperCase()), Integer.valueOf(inputs.get(6)),
-					Boolean.parseBoolean(inputs.get(7)), Integer.valueOf(inputs.get(8)), supplies);
+					Boolean.parseBoolean(inputs.get(7)), Integer.valueOf(inputs.get(9)), supplies);
 			BurnDetermination planEvaluation = BurnPlanEvaluationAlgorithm.evaluate(burnPlan);
 			printPlanOutput(burnPlan, planEvaluation);
 		} catch (NumberFormatException e) {
@@ -523,7 +544,6 @@ public class BurnPlanEvaluationApp {
 					"At least one input that required a number was not a valid number \nIf you meant for one of the true/false prompts to be true make sure to enter true, any other response will be seen as false");
 			System.err.println();
 			System.err.println("Make sure to enter Fuel type and Fire pattern exactly as shown in the prompt");
-			e.printStackTrace();
 		}
 
 	}
