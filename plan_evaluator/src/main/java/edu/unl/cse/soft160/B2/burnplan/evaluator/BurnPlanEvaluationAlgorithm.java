@@ -115,7 +115,7 @@ public class BurnPlanEvaluationAlgorithm {
 			Date twoDaysLater = burnPlan.getCurrentDay();
 			Date fiveDaysLater = burnPlan.getCurrentDay();
 			twoDaysLater.setTime(burnPlan.getCurrentDay().getTime() + (SECONDS_PER_DAY * 2));
-			fiveDaysLater.setTime(burnPlan.getCurrentDay().getTime() * (SECONDS_PER_DAY * 5));
+			fiveDaysLater.setTime(burnPlan.getCurrentDay().getTime() + (SECONDS_PER_DAY * 5));
 			boolean withinDateRange = burnPlan.getDay().getDate().after(twoDaysLater)
 					&& burnPlan.getDay().getDate().before(fiveDaysLater);
 			if (!hasRequiredSupplies || burnPlan.getDay().getWeather().isColdFrontApproaching()
@@ -154,7 +154,7 @@ public class BurnPlanEvaluationAlgorithm {
 		Date twoDaysLater = burnPlan.getCurrentDay();
 		Date fiveDaysLater = burnPlan.getCurrentDay();
 		twoDaysLater.setTime(burnPlan.getCurrentDay().getTime() + (SECONDS_PER_DAY * 2));
-		fiveDaysLater.setTime(burnPlan.getCurrentDay().getTime() * (SECONDS_PER_DAY * 5));
+		fiveDaysLater.setTime(burnPlan.getCurrentDay().getTime() + (SECONDS_PER_DAY * 5));
 		boolean withinDateRange = burnPlan.getDay().getDate().after(twoDaysLater)
 				&& burnPlan.getDay().getDate().before(fiveDaysLater);
 		if (!hasRequiredSupplies || burnPlan.getDay().getWeather().isColdFrontApproaching()
@@ -211,7 +211,7 @@ public class BurnPlanEvaluationAlgorithm {
 			Date twoDaysLater = burnPlan.getCurrentDay();
 			Date fiveDaysLater = burnPlan.getCurrentDay();
 			twoDaysLater.setTime(burnPlan.getCurrentDay().getTime() + (SECONDS_PER_DAY * 2));
-			fiveDaysLater.setTime(burnPlan.getCurrentDay().getTime() * (SECONDS_PER_DAY * 5));
+			fiveDaysLater.setTime(burnPlan.getCurrentDay().getTime() + (SECONDS_PER_DAY * 5));
 			boolean withinDateRange = burnPlan.getDay().getDate().after(twoDaysLater)
 					&& burnPlan.getDay().getDate().before(fiveDaysLater);
 			if (!hasRequiredSupplies || burnPlan.getDay().getWeather().isColdFrontApproaching()

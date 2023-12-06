@@ -427,7 +427,7 @@ public class BurnPlanEvaluationApp {
 				"How many pumpers do you have: ",
 				"What unit do the pumpers belong to: ",
 				"What is the capasity for a barrel of fire starting fluid: ",
-				"How many barrels of fire starting fluid are needed: ",
+				"How many barrels of fire starting fluid do you have: ",
 				"What unit do the fire starting fluid belongs to: ",
 				"How many drip torches do you have: ",
 				"What unit do the drip torches belong to: ",
