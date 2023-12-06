@@ -106,5 +106,5 @@ The unit tests require JUnit 4.
 
 No UI testing, load/stress testing, security testing was performed for this milestone.
 
-The app is [not] passing all unit-level and system-level tests. The unit-level tests
-achieve 0% statement coverage of the code developed by our team.
+The app is passing all unit-level and system-level tests. The unit-level tests
+achieve 100% statement coverage of the code developed by our team.
