@@ -544,7 +544,6 @@ public class BurnPlanEvaluationApp {
 					"At least one input that required a number was not a valid number \nIf you meant for one of the true/false prompts to be true make sure to enter true, any other response will be seen as false");
 			System.err.println();
 			System.err.println("Make sure to enter Fuel type and Fire pattern exactly as shown in the prompt");
-			e.printStackTrace();
 		}
 
 	}
