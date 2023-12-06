@@ -110,7 +110,7 @@ public class BurnPlanEvaluationAlgorithm {
 			if (weather.getWindSpeed() > 20) {
 				return BurnDetermination.NOT_RECOMMENDED_WIND;
 			}
-
+ 
 			boolean hasRequiredSupplies = checkSupplies(burnPlan.getSupplies(), burnPlan.getAcresToBeBurned());
 			Date twoDaysLater = burnPlan.getCurrentDay();
 			Date fiveDaysLater = burnPlan.getCurrentDay();
@@ -250,7 +250,7 @@ public class BurnPlanEvaluationAlgorithm {
 			return BurnDetermination.INDETERMINATE;
 		}
 	}
-
+ 
 	public static BurnDetermination evaluate(BurnPlan burnPlan) {
 
 		switch (burnPlan.getFirePattern()) {
