@@ -110,7 +110,7 @@ public class BurnPlanEvaluationAlgorithm {
 			if (weather.getWindSpeed() > 20) {
 				return BurnDetermination.NOT_RECOMMENDED_WIND;
 			}
-
+ 
 			boolean hasRequiredSupplies = checkSupplies(burnPlan.getSupplies(), burnPlan.getAcresToBeBurned());
 			Date twoDaysLater = burnPlan.getCurrentDay();
 			Date fiveDaysLater = burnPlan.getCurrentDay();
@@ -121,7 +121,7 @@ public class BurnPlanEvaluationAlgorithm {
 			if (!hasRequiredSupplies || burnPlan.getDay().getWeather().isColdFrontApproaching()
 					|| (burnPlan.getFuelType() == FuelType.HEAVY && weather.getRainChance() > 50) || !withinDateRange) {
 				return BurnDetermination.NOT_RECOMMENDED_OTHER;
-			}
+			} 
 			if (weather.getRainChance() > 50 && weather.getRainAmount() > 10) {
 				return BurnDetermination.NOT_RECOMMENDED_OTHER;
 			}
@@ -250,7 +250,7 @@ public class BurnPlanEvaluationAlgorithm {
 			return BurnDetermination.INDETERMINATE;
 		}
 	}
-
+ 
 	public static BurnDetermination evaluate(BurnPlan burnPlan) {
 
 		switch (burnPlan.getFirePattern()) {

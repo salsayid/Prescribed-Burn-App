@@ -14,14 +14,13 @@ import edu.unl.cse.soft160.json_connections.connection.RestConnection;
 import edu.unl.cse.soft160.json_connections.connector.OpenWeatherConnector;
 
 public class BurnPlanEvaluationApp {
-
 	private static String getInput(String msg, Scanner scanner) {
 		System.out.print(msg);
 		return scanner.nextLine();
 	}
 
-	// determines the type of openweather date to get from the user
-	private static String getDataSet(Scanner scanner) {
+	// determines the type of openweather data set
+	static String getDataSet(Scanner scanner) {
 		List<String> dataSets = new ArrayList<>(OpenWeatherConnector.allowableDataSets);
 		for (int i = 0; i < dataSets.size(); ++i) {
 			System.out.println((i + 1) + ". " + dataSets.get(i));
@@ -395,10 +394,8 @@ public class BurnPlanEvaluationApp {
 
 		// get user input
 		String[] inputPrompts = { "What is the planed date for the burn (YYYY, MM, DD): ",
-				"Is Burning banned for the planed day (true/false): ", 
-				"What is the latitude for the burn: ",
-				"What is the longitude for the burn: ", 
-				"What Fuel Type is going to be used (Light/Heavy): ",
+				"Is Burning banned for the planed day (true/false): ", "What is the latitude for the burn: ",
+				"What is the longitude for the burn: ", "What Fuel Type is going to be used (Light/Heavy): ",
 				"What Fire Pattern is going to be used (Headfires/Black_lines): ",
 				"If using Black_lines what is the width (0 if NOT using Black_lines): ",
 				"If using Black_lines is the fuel volatile (true/false if NOT using Black_lines): ",
@@ -425,27 +422,25 @@ public class BurnPlanEvaluationApp {
 				System.exit(1);
 			}
 		} while (!haveAllInputs);
+		// inputs start at index 9 for supplies
+		String[] supplyPrompts = { "What is the capasity for each pumper: ", "How many pumpers do you have: ",
+				"What unit do the pumpers belong to: ", "What is the capasity for a barrel of fire starting fluid: ",
 		// inputs start at index 10 for supplies
 		String[] supplyPrompts = {"What is the capasity for each pumper: ",
 				"How many pumpers do you have: ",
 				"What unit do the pumpers belong to: ",
 				"What is the capasity for a barrel of fire starting fluid: ",
 				"How many barrels of fire starting fluid do you have: ",
-				"What unit do the fire starting fluid belongs to: ",
-				"How many drip torches do you have: ",
-				"What unit do the drip torches belong to: ",
-				"how many rakes or fire swatters do you have: ",
-				"What unit do the rakes or fire swatters belong to: ",
-				"How many backback pumps do you have: ",
-				"What unit do the backpack pumps belong to: ",
-				"How many dozers do you have: ",
-				"What unit do the dozers belong to: "
-				};
-		
+				"What unit do the fire starting fluid belongs to: ", "How many drip torches do you have: ",
+				"What unit do the drip torches belong to: ", "how many rakes or fire swatters do you have: ",
+				"What unit do the rakes or fire swatters belong to: ", "How many backback pumps do you have: ",
+				"What unit do the backpack pumps belong to: ", "How many dozers do you have: ",
+				"What unit do the dozers belong to: " };
+
 		prompt = 0;
 		haveAllInputs = false;
 		input = "";
-		
+
 		System.out.println("Please enter the supplies needed");
 		do {
 			input = "";
@@ -461,8 +456,7 @@ public class BurnPlanEvaluationApp {
 				System.exit(1);
 			}
 		} while (!haveAllInputs);
-		
-		
+
 		Instant now = Instant.now();
 		String apiKey = null;
 		try {
@@ -478,8 +472,36 @@ public class BurnPlanEvaluationApp {
 		if (dataSet.equals("exit")) {
 			System.exit(1);
 		}
-		OpenWeatherConnector openWeather = new OpenWeatherConnector(dataSet, apiKey);
-		String data = getData(openWeather, dataSet, now, scanner);
+
+		OpenWeatherConnector openWeather;
+		String data;
+		
+		System.out.print("Do you want to use a JSON file to read weather date? (yes or no): ");
+		String useJson = scanner.next();		
+		String jsonFileName;
+		boolean isJsonTrue;
+		
+		if (useJson.toLowerCase().equals("yes")) {
+			System.out.print("What is the name of the json file? (ex. my-file.json): ");
+			jsonFileName = scanner.next();
+			isJsonTrue = true;
+		} else {
+			jsonFileName = null;
+			isJsonTrue = false;
+		}
+
+		if (isJsonTrue) {
+			openWeather = new OpenWeatherConnector(dataSet);
+			try {
+				data = openWeather.retrieveData(jsonFileName);
+			} catch (IOException error) {
+				data = null;
+				System.out.println(error);
+			}
+		} else {
+			openWeather = new OpenWeatherConnector(dataSet, apiKey);
+			data = getData(openWeather, dataSet, now, scanner);
+		}
 
 		if (data == null) {
 			System.err.println("Unable to get data from OpenWeather");
@@ -491,9 +513,11 @@ public class BurnPlanEvaluationApp {
 			String[] planedDateStrs = inputs.get(0).split(",");
 			Date currentDay = new Date();
 			Date dayBeforePlanedBurnDate = new Calendar.Builder().setDate(Integer.valueOf(planedDateStrs[0].strip()),
-					Integer.valueOf(planedDateStrs[1].strip()) -1, Integer.valueOf(planedDateStrs[2].strip())).setTimeOfDay(0, 0, 0)
-					.build().getTime();
+					Integer.valueOf(planedDateStrs[1].strip()) - 1, Integer.valueOf(planedDateStrs[2].strip()))
+					.setTimeOfDay(0, 0, 0).build().getTime();
 			Date dayOfPlanedBurnDate = new Calendar.Builder().setDate(Integer.valueOf(planedDateStrs[0].strip()),
+					Integer.valueOf(planedDateStrs[1].strip()), Integer.valueOf(planedDateStrs[2].strip()))
+					.setTimeOfDay(0, 0, 0).build().getTime();
 					Integer.valueOf(planedDateStrs[1].strip()), Integer.valueOf(planedDateStrs[2].strip())).setTimeOfDay(0, 0, 0)
 					.build().getTime();
 			
@@ -525,13 +549,25 @@ public class BurnPlanEvaluationApp {
 					Boolean.valueOf(inputs.get(1)));
 
 			List<Supply> supplies = new ArrayList<>(Arrays.asList(
-					new Supply("pumper", Double.valueOf(inputs.get(11)), Double.valueOf(inputs.get(10)), inputs.get(12)),
-					new Supply("fire-starting fuel", Double.valueOf(inputs.get(14)), Double.valueOf(inputs.get(13)), inputs.get(15)),
-					new Supply("drip torches", Double.valueOf(inputs.get(16)), 0.0, inputs.get(17)),
-					new Supply("rakes", Double.valueOf(inputs.get(18)), 0.0, inputs.get(19)),
-					new Supply("backpack pump", Double.valueOf(inputs.get(20)), 0.0, inputs.get(21)),
-					new Supply("dozer", Double.valueOf(inputs.get(22)), 0.0, inputs.get(23))
-					));
+					new Supply("pumper", Double.valueOf(inputs.get(10)), Double.valueOf(inputs.get(9)), inputs.get(11)),
+					new Supply("fire-starting fuel", Double.valueOf(inputs.get(13)), Double.valueOf(inputs.get(12)),
+							inputs.get(14)),
+					new Supply("drip torches", Double.valueOf(inputs.get(15)), 0.0, inputs.get(16)),
+					new Supply("rakes", Double.valueOf(inputs.get(17)), 0.0, inputs.get(18)),
+					new Supply("backpack pump", Double.valueOf(inputs.get(19)), 0.0, inputs.get(20)),
+					new Supply("dozer", Double.valueOf(inputs.get(21)), 0.0, inputs.get(22))));
+
+			BurnPlan burnPlan = new BurnPlan(dayOfPlanedBurn, currentDay, dayBeforePlanedBurn,
+					Double.valueOf(inputs.get(2)), Double.valueOf(inputs.get(3)),
+					FuelType.valueOf(inputs.get(4).toUpperCase()), FirePattern.valueOf(inputs.get(5).toUpperCase()),
+					Integer.valueOf(inputs.get(6)), Boolean.parseBoolean(inputs.get(7)), Integer.valueOf(inputs.get(8)),
+					supplies);
+					new Supply("pumper", Double.valueOf(inputs.get(11)), Double.valueOf(inputs.get(10)), inputs.get(12));
+					new Supply("fire-starting fuel", Double.valueOf(inputs.get(14)), Double.valueOf(inputs.get(13)), inputs.get(15));
+					new Supply("drip torches", Double.valueOf(inputs.get(16)), 0.0, inputs.get(17));
+					new Supply("rakes", Double.valueOf(inputs.get(18)), 0.0, inputs.get(19));
+					new Supply("backpack pump", Double.valueOf(inputs.get(20)), 0.0, inputs.get(21));
+					new Supply("dozer", Double.valueOf(inputs.get(22)), 0.0, inputs.get(23));
 
 			BurnPlan burnPlan = new BurnPlan(dayOfPlanedBurn, currentDay, dayBeforePlanedBurn, Double.valueOf(inputs.get(2)),
 					Double.valueOf(inputs.get(3)), FuelType.valueOf(inputs.get(4).toUpperCase()),
