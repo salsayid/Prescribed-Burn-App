@@ -396,7 +396,7 @@ public class BurnPlanEvaluationApp {
 		String[] inputPrompts = { "What is the planed date for the burn (YYYY, MM, DD): ",
 				"Is Burning banned for the planed day (true/false): ", "What is the latitude for the burn: ",
 				"What is the longitude for the burn: ", "What Fuel Type is going to be used (Light/Heavy): ",
-				"What Fire Pattern is going to be used (Headfires/Black_lines): ",
+				"What Fire Pattern is going to be used (Headfires/Black_lines/Backfires): ",
 				"If using Black_lines what is the width (0 if NOT using Black_lines): ",
 				"If using Black_lines is the fuel volatile (true/false if NOT using Black_lines): ",
 				"Is there a cold front approaching (true/false): ",
