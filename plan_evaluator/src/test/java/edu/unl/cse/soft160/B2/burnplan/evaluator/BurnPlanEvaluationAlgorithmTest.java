@@ -2,6 +2,7 @@ package edu.unl.cse.soft160.B2.burnplan.evaluator;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -418,4 +419,117 @@ public class BurnPlanEvaluationAlgorithmTest {
 		equals(30.0);
 	}
 
+	
+// remaining burnPlan tests
+
+	@Test
+	public void testSetAcresToBeBurned() {
+		BurnPlan burnPlan = new BurnPlan();
+		burnPlan.setAcresToBeBurned(100);
+		equals(100);
+	}
+
+	@Test
+	public void testGetFuelType() {
+		BurnPlan burnPlan = new BurnPlan();
+		FuelType fuelType = FuelType.LIGHT;
+		burnPlan.setFuelType(fuelType);
+		assertEquals(fuelType, burnPlan.getFuelType());
+	}
+
+	@Test
+	public void testSetFuelType() {
+		BurnPlan burnPlan = new BurnPlan();
+		FuelType fuelType = FuelType.HEAVY;
+		burnPlan.setFuelType(fuelType);
+		assertEquals(fuelType, burnPlan.getFuelType());
+	}
+
+	@Test
+	public void testSetWidthOfBlacklines() {
+		BurnPlan burnPlan = new BurnPlan();
+		burnPlan.setWidthOfBlacklines(5);
+		equals(5);
+	}
+
+	@Test
+	public void testSetDayBeforeFire() {
+		BurnPlan burnPlan = new BurnPlan();
+		Day dayBeforeFire = new Day(new Date(), new Weather(null, null, null, null, null, null, false, null), false);
+		burnPlan.setDayBeforeFire(dayBeforeFire);
+		assertEquals(dayBeforeFire, burnPlan.getDayBeforeFire());
+	}
+
+	@Test
+	public void testSetFirePattern() {
+		BurnPlan burnPlan = new BurnPlan();
+		FirePattern firePattern = FirePattern.CONTROL_LINES;
+		burnPlan.setFirePattern(firePattern);
+		assertEquals(firePattern, burnPlan.getFirePattern());
+	}
+
+	@Test
+	public void testSetLatitude() {
+		BurnPlan burnPlan = new BurnPlan();
+		burnPlan.setLatitude(42.0);
+		equals(42.0);
+	}
+
+	@Test
+	public void testSetLongitude() {
+		BurnPlan burnPlan = new BurnPlan();
+		burnPlan.setLongitude(-97.0);
+		equals(-97.0);
+	}
+
+	@Test
+	public void testIsBlackLineVolatile() {
+		BurnPlan burnPlan = new BurnPlan();
+		burnPlan.setBlackLineVolatile(true);
+		assertTrue(burnPlan.isBlackLineVolatile());
+	}
+
+	@Test
+	public void testSetBlackLineVolatile() {
+		BurnPlan burnPlan = new BurnPlan();
+		burnPlan.setBlackLineVolatile(true);
+		assertTrue(burnPlan.isBlackLineVolatile());
+	}
+
+	@Test
+	public void testSetCurrentDay() {
+		BurnPlan burnPlan = new BurnPlan();
+		Date currentDate = new Date();
+		burnPlan.setCurrentDay(currentDate);
+		assertEquals(currentDate, burnPlan.getCurrentDay());
+	}
+
+	@Test
+	public void testGetLongitude() {
+		BurnPlan burnPlan = new BurnPlan();
+		double expectedLongitude = -97.5;
+		burnPlan.setLongitude(expectedLongitude);
+
+		double actualLongitude = burnPlan.getLongitude();
+		equals(expectedLongitude);
+	}
+
+	@Test
+	public void testGetLatitude() {
+		BurnPlan burnPlan = new BurnPlan();
+		double expectedLatitude = 42.0;
+		burnPlan.setLatitude(expectedLatitude);
+
+		double actualLatitude = burnPlan.getLatitude();
+		equals(expectedLatitude);
+	}
+
+	@Test
+	public void testGetWidthOfBlacklines() {
+		BurnPlan burnPlan = new BurnPlan();
+		int expectedWidth = 10;
+		burnPlan.setWidthOfBlacklines(expectedWidth);
+		int actualWidth = burnPlan.getWidthOfBlacklines();
+		assertEquals(expectedWidth, actualWidth);
+	}
 }

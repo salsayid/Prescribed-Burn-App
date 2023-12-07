@@ -32,6 +32,10 @@ public class BurnPlan {
 		this.setDayBeforeFire(dayBefore);
 	}
 
+	public BurnPlan() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public Double getLatitude() {
 		return latitude;
 	}
