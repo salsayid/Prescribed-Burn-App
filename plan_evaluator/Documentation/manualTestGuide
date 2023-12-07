@@ -1,0 +1,29 @@
+## System Test: Exiting the Program
+
+### Preconditions
+
+- Repository exists on <git.unl.edu>.
+- The repository has been cloned on the local file system.
+- The local copy of the repository is up-to-date with the remote repository.
+- The tester has access to the repository and has an SSH public key associated
+  with their account on <git.unl.edu>.
+- the class "BurnPlanEvaluationApp" has been opened in Eclipse
+
+### Test
+1. In Eclipse, right click the class "BurnPlanEvaluationApp" and run it.
+The console should now display the words "If at any point you wish to close the program type exit for one of the prompts"
+the console will then prompt the user for the planned date for the burn.
+2. type "exit" into the console and hit the enter key
+the App should terminate.
+
+## System Test: Get Desirable Black Line Evaluation
+
+### Preconditions
+
+- see previous preconditions
+
+### Test
+1. In Eclipse, right click the class "BurnPlanEvaluationApp" and run it.
+the console should prompt the user to enter the year, month and day.
+
+(intended time 2023-12-23 12:00:00)
