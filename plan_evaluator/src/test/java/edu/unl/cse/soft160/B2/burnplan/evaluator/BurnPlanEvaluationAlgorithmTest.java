@@ -1,7 +1,6 @@
 package edu.unl.cse.soft160.B2.burnplan.evaluator;
 
-
-import static org.junit.Assert.assertEquals; 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 import java.util.ArrayList;
@@ -14,220 +13,318 @@ import org.junit.Test;
 
 public class BurnPlanEvaluationAlgorithmTest {
 	private Date createDate(int year, int month, int day) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, day, 0, 0, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        return calendar.getTime();
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(year, month, day, 0, 0, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		return calendar.getTime();
 	}
 
-		private Weather weather;
-		
-		
-	    //determine head fires tests
-@Test
-public void testHeadFires_RedFlagPreventsBurn() {
-	Weather weather = new Weather(25.0, Direction.SOUTH, 10.0, 15.0, 60.0, 11.0, true, 90.0);
-	Day day = new Day(new Date(), weather, true);
-	List<Supply> supplies = createDefaultSupplies();
-	BurnPlan burnPlan = new BurnPlan(day, new Date(), day, 40.81506358, -96.7048613, FuelType.LIGHT, FirePattern.HEADFIRES, 100, false, 100, supplies);
-	assertEquals(BurnDetermination.BURNING_PROHIBITED, BurnPlanEvaluationAlgorithm.determineHeadFires(burnPlan));
-}
+	private Weather weather;
+	private Day day;
+	private List<Supply> supplies;
+	private BurnPlan burnPlan;
 
-@Test
-public void testHeadFires_WindSpeedNotSuitable() {
-	Weather weather = new Weather(21.0, Direction.SOUTHWEST, 30.0, 35.0, 20.0, 0.0, false, 70.0);
-	Day day = new Day(new Date(), weather, false);
-	List<Supply> supplies = createDefaultSupplies();
-	BurnPlan burnPlan = new BurnPlan(day, new Date(), day, 40.81506358, -96.7048613, FuelType.LIGHT, FirePattern.HEADFIRES, 100, false, 100, supplies);
-	assertEquals(BurnDetermination.NOT_RECOMMENDED_WIND, BurnPlanEvaluationAlgorithm.determineHeadFires(burnPlan));
-}
+//determine head fires tests
+	@Test
+	public void testHeadFires_RedFlagPreventsBurn() {
+		Weather weather = new Weather(25.0, Direction.SOUTH, 10.0, 15.0, 60.0, 11.0, true, 90.0);
+		Day day = new Day(new Date(), weather, true);
+		List<Supply> supplies = createDefaultSupplies();
+		BurnPlan burnPlan = new BurnPlan(day, new Date(), day, 40.81506358, -96.7048613, FuelType.LIGHT,
+				FirePattern.HEADFIRES, 100, false, 100, supplies);
+		assertEquals(BurnDetermination.BURNING_PROHIBITED, BurnPlanEvaluationAlgorithm.determineHeadFires(burnPlan));
+	}
 
-@Before
-public void setUp() {
-    weather = new Weather(10.0, Direction.NORTH, 20.0, 30.0, 40.0, 0.1, false, 70.0);
-    Date fireDate = new Date();
-    new Day(fireDate, weather, false);
-    new Day(new Date(fireDate.getTime() - 86400000), weather, false);
-    Arrays.asList(new Supply("Pumper", 2.0, 2000.0, "gallons"));
-}
+	@Test
+	public void testHeadFires_WindSpeedNotSuitable() {
+		Weather weather = new Weather(21.0, Direction.SOUTHWEST, 30.0, 35.0, 20.0, 0.0, false, 70.0);
+		Day day = new Day(new Date(), weather, false);
+		List<Supply> supplies = createDefaultSupplies();
+		BurnPlan burnPlan = new BurnPlan(day, new Date(), day, 40.81506358, -96.7048613, FuelType.LIGHT,
+				FirePattern.HEADFIRES, 100, false, 100, supplies);
+		assertEquals(BurnDetermination.NOT_RECOMMENDED_WIND, BurnPlanEvaluationAlgorithm.determineHeadFires(burnPlan));
+	}
 
-@Test
-public void  testHeadFires_ColdFrontComing() {
-	Calendar calendar = Calendar.getInstance();
-    calendar.set(2023, Calendar.JANUARY, 15, 0, 0, 0);
-    calendar.set(Calendar.MILLISECOND, 0);
-    Date testDate = calendar.getTime();
-    Weather weather = new Weather(10.0, Direction.SOUTHWEST, 40.0, 45.0, 10.0, 0.0, true, 75.0);
-    Day day = new Day(testDate, weather, false);
-    List<Supply> supplies = Arrays.asList(new Supply("pumper", 2.0, 5.0, "units"));
-    BurnPlan burnPlan = new BurnPlan(day, testDate, day, 40.81506358, -96.7048613, FuelType.LIGHT, FirePattern.HEADFIRES, 100, false, 100, supplies);
-    assertEquals(BurnDetermination.NOT_RECOMMENDED_OTHER, BurnPlanEvaluationAlgorithm.determineHeadFires(burnPlan));
-}
-	
-@Test
-public void testHeadFires_MissingData() {
-	Weather weather = new Weather(null, null, null, null, null, null, false, null);
-	Day day = new Day(new Date(), weather, false);
-	BurnPlan burnPlan = new BurnPlan(day, new Date(), null, null, null, null, FirePattern.HEADFIRES, null, false, null ,null);
-	assertEquals(BurnDetermination.INDETERMINATE, BurnPlanEvaluationAlgorithm.determineHeadFires(burnPlan));
-}
+	@Before
+	public void setUp() {
+		weather = new Weather(10.0, Direction.NORTH, 20.0, 30.0, 40.0, 0.1, false, 70.0);
+		Date fireDate = new Date();
+		new Day(fireDate, weather, false);
+		new Day(new Date(fireDate.getTime() - 86400000), weather, false);
+		Arrays.asList(new Supply("Pumper", 2.0, 2000.0, "gallons"));
+	}
+
+	@Test
+	public void testHeadFires_ColdFrontComing() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(2023, Calendar.JANUARY, 15, 0, 0, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		Date testDate = calendar.getTime();
+		Weather weather = new Weather(10.0, Direction.SOUTHWEST, 40.0, 45.0, 10.0, 0.0, true, 75.0);
+		Day day = new Day(testDate, weather, false);
+		List<Supply> supplies = Arrays.asList(new Supply("pumper", 2.0, 5.0, "units"));
+		BurnPlan burnPlan = new BurnPlan(day, testDate, day, 40.81506358, -96.7048613, FuelType.LIGHT,
+				FirePattern.HEADFIRES, 100, false, 100, supplies);
+		assertEquals(BurnDetermination.NOT_RECOMMENDED_OTHER, BurnPlanEvaluationAlgorithm.determineHeadFires(burnPlan));
+	}
+
+	@Test
+	public void testHeadFires_MissingData() {
+		Weather weather = new Weather(null, null, null, null, null, null, false, null);
+		Day day = new Day(new Date(), weather, false);
+		BurnPlan burnPlan = new BurnPlan(day, new Date(), null, null, null, null, FirePattern.HEADFIRES, null, false,
+				null, null);
+		assertEquals(BurnDetermination.INDETERMINATE, BurnPlanEvaluationAlgorithm.determineHeadFires(burnPlan));
+	}
 
 //red flag conditions tests
-@Test
-public void testCheckRedFlagConditions_AllMet() {
-	Weather weather = new Weather(21.0, Direction.NORTH, 19.0, 45.0, 51.0, 11.0, true, 81.0);
-	Day day = new Day(new Date(), weather, true);
-	equals();
-}
-@Test
-public void testCheckRedFlagConditions_NoneMet() {
-	Weather weather = new Weather(19.0, Direction.NORTH, 21.0, 45.0, 49.0, 9.0, false, 79.0);
-	Day day = new Day(new Date(), weather, false);
-	assertFalse("no red flag conditions met", BurnPlanEvaluationAlgorithm.checkRedFlagConditions(weather, day));
-}
+	@Test
+	public void testCheckRedFlagConditions_AllMet() {
+		equals();
+	}
 
-@Test
-public void testRedFlagConditionsWindSpeedsExceed() {
-    Weather weather = new Weather(21.0, Direction.NORTH, 30.0, 30.0, 10.0, 0.1, false, 70.0);
-    Day day = new Day(new Date(), weather, false);
-    equals(BurnPlanEvaluationAlgorithm.checkRedFlagConditions(weather, day));
-}
+	@Test
+	public void testCheckRedFlagConditions_NoneMet() {
+		Weather weather = new Weather(19.0, Direction.NORTH, 21.0, 45.0, 49.0, 9.0, false, 79.0);
+		Day day = new Day(new Date(), weather, false);
+		assertFalse("no red flag conditions met", BurnPlanEvaluationAlgorithm.checkRedFlagConditions(weather, day));
+	}
 
-@Test
-public void testRedFlagConditionsLowHumidity() {
-    Weather weather = new Weather(10.0, Direction.NORTH, 19.0, 19.0, 10.0, 0.1, false, 70.0);
-    Day day = new Day(new Date(), weather, false);
-    equals(BurnPlanEvaluationAlgorithm.checkRedFlagConditions(weather, day));
-}
+	@Test
+	public void testRedFlagConditionsWindSpeedsExceed() {
+		Weather weather = new Weather(21.0, Direction.NORTH, 30.0, 30.0, 10.0, 0.1, false, 70.0);
+		Day day = new Day(new Date(), weather, false);
+		equals(BurnPlanEvaluationAlgorithm.checkRedFlagConditions(weather, day));
+	}
 
-@Test
-public void testRedFlagConditionsHighTemperature() {
-    Weather weather = new Weather(10.0, Direction.NORTH, 30.0, 30.0, 10.0, 0.1, false, 81.0);
-    Day day = new Day(new Date(), weather, false);
-    equals(BurnPlanEvaluationAlgorithm.checkRedFlagConditions(weather, day));
-}
+	@Test
+	public void testRedFlagConditionsLowHumidity() {
+		Weather weather = new Weather(10.0, Direction.NORTH, 19.0, 19.0, 10.0, 0.1, false, 70.0);
+		Day day = new Day(new Date(), weather, false);
+		equals(BurnPlanEvaluationAlgorithm.checkRedFlagConditions(weather, day));
+	}
 
-@Test
-public void testRedFlagConditionsHighRainChanceAndHighRainAmount() {
-    Weather weather = new Weather(10.0, Direction.NORTH, 30.0, 30.0, 51.0, 11.0, false, 70.0);
-    Day day = new Day(new Date(), weather, false);
-    equals(BurnPlanEvaluationAlgorithm.checkRedFlagConditions(weather, day));
-}
+	@Test
+	public void testRedFlagConditionsHighTemperature() {
+		Weather weather = new Weather(10.0, Direction.NORTH, 30.0, 30.0, 10.0, 0.1, false, 81.0);
+		Day day = new Day(new Date(), weather, false);
+		equals(BurnPlanEvaluationAlgorithm.checkRedFlagConditions(weather, day));
+	}
 
-@Test
-public void testRedFlagConditionsColdFrontComing() {
-    Weather weather = new Weather(10.0, Direction.NORTH, 30.0, 30.0, 10.0, 0.1, true, 70.0);
-    Day day = new Day(new Date(), weather, false);
-    equals(BurnPlanEvaluationAlgorithm.checkRedFlagConditions(weather, day));
-}
+	@Test
+	public void testRedFlagConditionsHighRainChanceAndHighRainAmount() {
+		Weather weather = new Weather(10.0, Direction.NORTH, 30.0, 30.0, 51.0, 11.0, false, 70.0);
+		Day day = new Day(new Date(), weather, false);
+		equals(BurnPlanEvaluationAlgorithm.checkRedFlagConditions(weather, day));
+	}
+
+	@Test
+	public void testRedFlagConditionsColdFrontComing() {
+		Weather weather = new Weather(10.0, Direction.NORTH, 30.0, 30.0, 10.0, 0.1, true, 70.0);
+		Day day = new Day(new Date(), weather, false);
+		equals(BurnPlanEvaluationAlgorithm.checkRedFlagConditions(weather, day));
+	}
 
 //Black Line Tests
 
+	@Test
+	public void testDetermineBlackLines_BurningNotAllowedCauseOfRedFlag() {
+		Weather weather = new Weather(25.0, Direction.SOUTHWEST, 15.0, 10.0, 60.0, 11.0, true, 85.0);
+		Day day = new Day(new Date(), weather, true);
+		List<Supply> supplies = createDefaultSupplies();
+		BurnPlan burnPlan = new BurnPlan(day, new Date(), day, 40.81506358, -96.7048613, FuelType.HEAVY,
+				FirePattern.BLACK_LINES, 500, true, 100, supplies);
+		assertEquals(BurnDetermination.BURNING_PROHIBITED, BurnPlanEvaluationAlgorithm.determineBlackLines(burnPlan));
+	}
 
-@Test
-public void testDetermineBlackLines_BurningNotAllowedCauseOfRedFlag() {
-	Weather weather = new Weather(25.0, Direction.SOUTHWEST, 15.0, 10.0, 60.0, 11.0, true, 85.0);
-	Day day = new Day(new Date(), weather, true);
-	List<Supply> supplies = createDefaultSupplies();
-	BurnPlan burnPlan = new BurnPlan(day, new Date(), day, 40.81506358, -96.7048613, FuelType.HEAVY, FirePattern.BLACK_LINES, 500, true, 100, supplies);
-	assertEquals(BurnDetermination.BURNING_PROHIBITED, BurnPlanEvaluationAlgorithm.determineBlackLines(burnPlan));
-}
-@Test
-public void testDetermineBlackLines_NotRecommendedCauseOfTemperatures() {
-	Weather weather = new Weather(5.0, Direction.NORTHWEST, 45.0, 30.0, 10.0, 0.1, false, 34.0);
-	Day day = new Day(new Date(), weather, false);
-	List<Supply> supplies = createDefaultSupplies();
-	BurnPlan burnPlan = new BurnPlan(day, new Date(), day, 40.81506358, -96.7048613, FuelType.LIGHT, FirePattern.BLACK_LINES, 500, true, 100, supplies);
-	assertEquals(BurnDetermination.NOT_RECOMMENDED_TEMPERATURE, BurnPlanEvaluationAlgorithm.determineBlackLines(burnPlan));
-}
+	@Test
+	public void testDetermineBlackLines_NotRecommendedCauseOfTemperatures() {
+		Weather weather = new Weather(5.0, Direction.NORTHWEST, 45.0, 30.0, 10.0, 0.1, false, 34.0);
+		Day day = new Day(new Date(), weather, false);
+		List<Supply> supplies = createDefaultSupplies();
+		BurnPlan burnPlan = new BurnPlan(day, new Date(), day, 40.81506358, -96.7048613, FuelType.LIGHT,
+				FirePattern.BLACK_LINES, 500, true, 100, supplies);
+		assertEquals(BurnDetermination.NOT_RECOMMENDED_TEMPERATURE,
+				BurnPlanEvaluationAlgorithm.determineBlackLines(burnPlan));
+	}
 
-@Test
-public void testDetermineBlackLines_NotRecommendedCauseOfWind() {
-	Weather weather = new Weather(11.0, Direction.NORTHWEST, 45.0, 30.0, 10.0, 0.1, false, 60.0);
-	Day day = new Day(new Date(), weather, false);
-	List<Supply> supplies = createDefaultSupplies();
-	BurnPlan burnPlan = new BurnPlan(day, new Date(), day, 40.81506358, -96.7048613, FuelType.LIGHT, FirePattern.BLACK_LINES, 500, true, 100, supplies); 
-	assertEquals(BurnDetermination.NOT_RECOMMENDED_WIND, BurnPlanEvaluationAlgorithm.determineBlackLines(burnPlan));
-}
-private List<Supply> createDefaultSupplies() {
-	return null;
-}
+	@Test
+	public void testDetermineBlackLines_NotRecommendedCauseOfWind() {
+		Weather weather = new Weather(11.0, Direction.NORTHWEST, 45.0, 30.0, 10.0, 0.1, false, 60.0);
+		Day day = new Day(new Date(), weather, false);
+		List<Supply> supplies = createDefaultSupplies();
+		BurnPlan burnPlan = new BurnPlan(day, new Date(), day, 40.81506358, -96.7048613, FuelType.LIGHT,
+				FirePattern.BLACK_LINES, 500, true, 100, supplies);
+		assertEquals(BurnDetermination.NOT_RECOMMENDED_WIND, BurnPlanEvaluationAlgorithm.determineBlackLines(burnPlan));
+	}
 
+	private List<Supply> createDefaultSupplies() {
+		return null;
+	}
 
 //Supplies tests
-@Test
-public void testCheckSupplies_SufficientSupplies() {
-	List<Supply> supplies = new ArrayList<>();
-	supplies.add(new Supply("pumper", 10.0, 20.0, "units"));
-	equals();
-}
-@Test
-public void testCheckSupplies_InsufficentSupplies() {
-	List<Supply> supplies = new ArrayList<>();
-	supplies.add(new Supply("pumper", 1.0, 5.0, "units"));
-	assertFalse("supplies are insufficient", BurnPlanEvaluationAlgorithm.checkSupplies(supplies, 100));
-}
-@Test
-public void testCheckSuppliesPumperIsSufficient() {
-	List<Supply> supplies = Arrays.asList(new Supply("pumper", 2.0, 5.0, "units"));
-	equals();
-}
-private void equals() {
-	// TODO Auto-generated method stub	
-} 
+	@Test
+	public void testCheckSupplies_SufficientSupplies() {
+		List<Supply> supplies = new ArrayList<>();
+		supplies.add(new Supply("pumper", 10.0, 20.0, "units"));
+		equals();
+	}
 
-@Test
-public void testCheckSuppliesPumperIsInsufficient() {
-	List<Supply> supplies = Arrays.asList(new Supply("pumper", 0.1, 5.0, "units"));
-	assertFalse("insufficient pumper supply", BurnPlanEvaluationAlgorithm.checkSupplies(supplies, 100));
-}
-@Test
-public void testCheckSuppliesFireStartingFuelIsSufficient() {
-	List<Supply> supplies = Arrays.asList(new Supply("fire starting fuel", 20.0, 40.0, "gallons"));
-	equals();
-}
-@Test 
-public void testCheckSuppliesFireStartinFuelIsInsufficient() {
-	List<Supply> supplies = Arrays.asList(new Supply("fire starting fuel", 5.0, 40.0, "gallons"));
-	assertFalse("insufficient firestarting fuel supply", BurnPlanEvaluationAlgorithm.checkSupplies(supplies, 100));
-}
+	@Test
+	public void testCheckSupplies_InsufficentSupplies() {
+		List<Supply> supplies = new ArrayList<>();
+		supplies.add(new Supply("pumper", 1.0, 5.0, "units"));
+		assertFalse("supplies are insufficient", BurnPlanEvaluationAlgorithm.checkSupplies(supplies, 100));
+	}
 
-@Test
-public void testCheckSuppliesEmptySuppliesList() {
-	assertFalse("empty supplies list", BurnPlanEvaluationAlgorithm.checkSupplies(new ArrayList<>(), 100));
-}
+	@Test
+	public void testCheckSuppliesPumperIsSufficient() {
+		equals();
+	}
 
-@Test
-public void testEvaluateNonHeadOrBlacklineFires() {
-    Day dayOfFire = new Day(createDate(2023, Calendar.JANUARY, 15), new Weather(10.0, Direction.NORTH, 30.0, 30.0, 10.0, 0.1, false, 70.0), false);
-    List<Supply> supplies = Arrays.asList(new Supply("pumper", 2.0, 5.0, "units"));
-    BurnPlan burnPlan = new BurnPlan(dayOfFire, createDate(2023, Calendar.JANUARY, 13), null, 40.0, -96.0, FuelType.LIGHT, FirePattern.FLANK_FIRING, 0, false, 100, supplies);
+	private void equals() {
+		// TODO Auto-generated method stub
+	}
 
-    BurnDetermination result = BurnPlanEvaluationAlgorithm.evaluate(burnPlan);
-    assertEquals(BurnDetermination.NOT_RECOMMENDED_OTHER, result);
-}
-private Date createDate() {
-	// TODO Auto-generated method stub
-	return null; 
-} 
-@Test
-public void testEvaluateHeadFires() {
-    Day dayOfFire = new Day(createDate(2023, Calendar.JANUARY, 15), new Weather(10.0, Direction.SOUTHWEST, 30.0, 35.0, 20.0, 0.0, false, 70.0), false);
-    List<Supply> supplies = Arrays.asList(new Supply("pumper", 2.0, 5.0, "units"));
-    BurnPlan burnPlan = new BurnPlan(dayOfFire, createDate(2023, Calendar.JANUARY, 13), null, 40.0, -96.0, FuelType.LIGHT, FirePattern.HEADFIRES, 0, false, 100, supplies);
+	@Test
+	public void testCheckSuppliesPumperIsInsufficient() {
+		List<Supply> supplies = Arrays.asList(new Supply("pumper", 0.1, 5.0, "units"));
+		assertFalse("insufficient pumper supply", BurnPlanEvaluationAlgorithm.checkSupplies(supplies, 100));
+	}
 
-    BurnDetermination result = BurnPlanEvaluationAlgorithm.evaluate(burnPlan);
-    equals();
-}
-private void equals1() {	
-}
+	@Test
+	public void testCheckSuppliesFireStartingFuelIsSufficient() {
+		List<Supply> supplies = Arrays.asList(new Supply("fire starting fuel", 20.0, 40.0, "gallons"));
+		equals();
+	}
 
-@Test
-public void testEvaluateBlackLines() {
-    Day dayOfFire = new Day(createDate(2023, Calendar.JANUARY, 15), new Weather(5.0, Direction.NORTH, 50.0, 60.0, 10.0, 0.1, false, 55.0), false);
-    List<Supply> supplies = Arrays.asList(new Supply("pumper", 2.0, 5.0, "units"));
-    BurnPlan burnPlan = new BurnPlan(dayOfFire, createDate(2023, Calendar.JANUARY, 13), null, 40.0, -96.0, FuelType.HEAVY, FirePattern.BLACK_LINES, 500, true, 100, supplies);
-    BurnDetermination result = BurnPlanEvaluationAlgorithm.evaluate(burnPlan);
-    equals();
-}
+	@Test
+	public void testCheckSuppliesFireStartinFuelIsInsufficient() {
+		List<Supply> supplies = Arrays.asList(new Supply("fire starting fuel", 5.0, 40.0, "gallons"));
+		assertFalse("insufficient firestarting fuel supply", BurnPlanEvaluationAlgorithm.checkSupplies(supplies, 100));
+	}
+
+	@Test
+	public void testCheckSuppliesEmptySuppliesList() {
+		assertFalse("empty supplies list", BurnPlanEvaluationAlgorithm.checkSupplies(new ArrayList<>(), 100));
+	}
+
+	@Test
+	public void testEvaluateNonHeadOrBlacklineFires() {
+		Day dayOfFire = new Day(createDate(2023, Calendar.JANUARY, 15),
+				new Weather(10.0, Direction.NORTH, 30.0, 30.0, 10.0, 0.1, false, 70.0), false);
+		List<Supply> supplies = Arrays.asList(new Supply("pumper", 2.0, 5.0, "units"));
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, createDate(2023, Calendar.JANUARY, 13), null, 40.0, -96.0,
+				FuelType.LIGHT, FirePattern.FLANK_FIRING, 0, false, 100, supplies);
+
+		BurnDetermination result = BurnPlanEvaluationAlgorithm.evaluate(burnPlan);
+		assertEquals(BurnDetermination.NOT_RECOMMENDED_OTHER, result);
+	}
+
+	private Date createDate() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Test
+	public void testEvaluateHeadFires() {
+		Day dayOfFire = new Day(createDate(2023, Calendar.JANUARY, 15),
+				new Weather(10.0, Direction.SOUTHWEST, 30.0, 35.0, 20.0, 0.0, false, 70.0), false);
+		List<Supply> supplies = Arrays.asList(new Supply("pumper", 2.0, 5.0, "units"));
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, createDate(2023, Calendar.JANUARY, 13), null, 40.0, -96.0,
+				FuelType.LIGHT, FirePattern.HEADFIRES, 0, false, 100, supplies);
+
+		BurnDetermination result = BurnPlanEvaluationAlgorithm.evaluate(burnPlan);
+		equals();
+	}
+
+	private void equals1() {
+	}
+
+	@Test
+	public void testEvaluateBlackLines() {
+		Day dayOfFire = new Day(createDate(2023, Calendar.JANUARY, 15),
+				new Weather(5.0, Direction.NORTH, 50.0, 60.0, 10.0, 0.1, false, 55.0), false);
+		List<Supply> supplies = Arrays.asList(new Supply("pumper", 2.0, 5.0, "units"));
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, createDate(2023, Calendar.JANUARY, 13), null, 40.0, -96.0,
+				FuelType.HEAVY, FirePattern.BLACK_LINES, 500, true, 100, supplies);
+		BurnDetermination result = BurnPlanEvaluationAlgorithm.evaluate(burnPlan);
+		equals();
+	}
+
+	@Before
+	public void setUp1() {
+		weather = new Weather(10.0, Direction.NORTH, 30.0, 25.0, 45.0, 0.5, false, 75.0);
+		day = new Day(new Date(), weather, false);
+		supplies = Arrays.asList(new Supply("pumper", 2.0, 5.0, "units"));
+		burnPlan = new BurnPlan(day, new Date(), null, 40.81506358, -96.7048613, FuelType.LIGHT,
+				FirePattern.EDGE_FIRING, 0, false, 100, supplies);
+	}
+
+	@Test
+	public void testBurningProhibitedByRedFlagAndBan() {
+		day.setOutdoorBuringBanned(true);
+		Weather highRiskWeather = new Weather(30.0, Direction.NORTH, 10.0, 10.0, 55.0, 0.5, true, 90.0);
+		day.setWeather(highRiskWeather);
+		burnPlan.setDay(day);
+		assertEquals(BurnDetermination.BURNING_PROHIBITED,
+				BurnPlanEvaluationAlgorithm.determineAllNonHeadOrBlacklineFires(burnPlan));
+	}
+
+	@Test
+	public void testNotRecommendedDueToTemperature() {
+		weather.setTemperature(85.0);
+		burnPlan.setDay(day);
+		assertEquals(BurnDetermination.NOT_RECOMMENDED_TEMPERATURE,
+				BurnPlanEvaluationAlgorithm.determineAllNonHeadOrBlacklineFires(burnPlan));
+	}
+
+	@Test
+	public void testNotRecommendedDueToWind() {
+		weather.setWindSpeed(25.0);
+		burnPlan.setDay(day);
+		assertEquals(BurnDetermination.NOT_RECOMMENDED_WIND,
+				BurnPlanEvaluationAlgorithm.determineAllNonHeadOrBlacklineFires(burnPlan));
+	}
+
+	@Test
+	public void testNotRecommendedDueToLackOfSupplies() {
+		supplies = Arrays.asList(new Supply("pumper", 0.1, 5.0, "units"));
+		burnPlan.setSupplies(null, supplies);
+		burnPlan.setDay(day);
+		assertEquals(BurnDetermination.NOT_RECOMMENDED_OTHER,
+				BurnPlanEvaluationAlgorithm.determineAllNonHeadOrBlacklineFires(burnPlan));
+	}
+
+	@Test
+	public void testNotRecommendedDueToColdFront() {
+		weather.setColdFrontApproaching(true);
+		burnPlan.setDay(day);
+		assertEquals(BurnDetermination.NOT_RECOMMENDED_OTHER,
+				BurnPlanEvaluationAlgorithm.determineAllNonHeadOrBlacklineFires(burnPlan));
+	}
+
+	@Test
+	public void testAcceptableDueToHumidity() {
+		weather.setRelativeHumidity(30.0);
+		burnPlan.setDay(day);
+		equals(BurnDetermination.ACCEPTABLE);
+	}
+
+	@Test
+	public void testIndeterminateDueToException() {
+		burnPlan.setSupplies(null, supplies);
+		equals(BurnDetermination.INDETERMINATE);
+	}
+
+	@Test
+	public void testNotRecommendedDueToTimeRange() {
+		Date currentDate = new Date();
+		Date burnDate = new Date();
+		day.setDate(burnDate);
+		burnPlan.setDay(day);
+		assertEquals(BurnDetermination.NOT_RECOMMENDED_OTHER,
+				BurnPlanEvaluationAlgorithm.determineAllNonHeadOrBlacklineFires(burnPlan));
+	}
+
 }
