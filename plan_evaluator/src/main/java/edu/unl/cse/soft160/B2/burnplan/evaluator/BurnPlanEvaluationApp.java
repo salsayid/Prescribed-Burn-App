@@ -410,7 +410,7 @@ public class BurnPlanEvaluationApp {
 		String input = "";
 		boolean haveAllInputs = false;
 
-		System.out.println("If at any point you wish to close the program type exit for any of the prompts.");
+		System.out.println("If at any point you wish to close the program type [exit] for any of the prompts.");
 		do {
 			input = "";
 			input = getInput(inputPrompts[prompt], scanner);
