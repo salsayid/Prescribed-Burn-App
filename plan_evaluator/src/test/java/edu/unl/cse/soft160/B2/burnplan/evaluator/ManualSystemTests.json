@@ -2,46 +2,71 @@ Preconditions
 * Code compiles
 * Code runs
 
-Test
-	1. Start the program
-	2. input: 2023, 11, 4 for the prompt - What is the planed date for the burn (YYYY, MM, DD):
-	3. input: true for the prompt - Is Burning banned for the planed day (true/false): 
-	4. input: 90 for the prompt - What is the latitude for the burn:
-	5. input: 90 for the prompt - What is the longitude for the burn: 
-	6. input: light for the prompt - What Fuel Type is going to be used (Light/Heavy): 
-	7. input: headfire for the prompt - What Fire Pattern is going to be used (Headfire/Black_lines): 
-	8. input: 0 for the prompt - If using Black_lines what is the width (0 if NOT using Black_lines):
-	9. input: false for the input - If using Black_lines is the fuel volatile (true/false if NOT using Black_lines): 
-	10. input: 200 for the prompt - How many acres are to be burned: 
+TEST
 
-Next Enter the supplies needed
-	1. input: 50 for the prompt - What is the capasity for each pumper:
-	2. input: 2 for the prompt - How many pumpers are needed: 
-	3. input: some string (it doesn’t really matter) in this case “blah” was used for the prompt - What unit do the pumpers belong to: 
-	4. input: 10 for the prompt - What is the capasity for a barrel of fire starting fluid: 
-	5. input: 10 for the prompt - How many barrels of fire starting fluid are needed: 
-	6. input: some string (it doesn’t really matter) in this case “blah” was used for the prompt - What unit do the fire starting fluid belongs to:
-	7. input: 10 for the prompt - How many drip torches are needed: 
-	8. input: some string (it doesn’t really matter) in this case “blah” was used for the prompt - What unit do the drip torches belong to: 
-	9. input: 10 for the prompt - how many rakes or fire swatters are needed:
-	10. input: some string (it doesn’t really matter) in this case “blah” was used for the prompt - What unit do the rakes or fire swatters belong to: 
-	11. input: 1 for the prompt - How many backback pumps are needed: 
-	13. input: some string (it doesn’t really matter) in this case “blah” was used for the prompt - What unit do the backpack pumps belong to: 
-	14. input: 1 for the prompt - How many dozers are needed: 
-	15.input: some string (it doesn’t really matter) in this case “blah” was used for the prompt - What unit do the dozers belong to: 
+Firstly : Start the program
 
-Then Enter the which data set to be used out of these options
-	1. air_pollution
-	2. air_pollution/forecast
-	3. weather
-	4. forecast
-	5. onecall/timemachine
-	6. reverse
-	7. direct
-	8. air_pollution/history
-	9. onecall
+1. Input: “2023, 11, 4“ for the prompt - What is the planned date for the burn(YYY, MM, DD):
+
+2. Input: “0100“ for the prompt - What time is the burn for the planned day (hour in military time):
+
+3. Input “true” for the prompt - Is burning banned for the planned day (true/false):
+
+4. Input: “90“ for the prompt - What is the latitude for the burn:
+
+5. Input: “90“ for the prompt - What is the longitude for the burn:
+
+6. Input: “Light” for the prompt - What Fuel Type is going to be used (Light/Heavy):
+
+7. Input: “Headfires” for the prompt - What Fire Pattern is going to be used (Headfires/Black_liens):
+
+8. Input: “0“ for the prompt - If using Black_lines is the fuel volatile (true/false if NOT using Black_lines):
+
+9. Input: “false” for the prompt: - If using Black_lines is the fuel volatile (true/false if NOT using Black_lines):
+
+10. Input: “false” for the prompt - Is there a cold front approaching (true/false):
+
+11. Input: “200“ for the prompt - How many acres are to burned:
+
+
+NEXT ENTER THE SUPPLIES NEEDED
+
+1. Input: “50” for the prompt - What is the capacity for each pumper:
+
+2. Input: “2” for the prompt - How many pumpers do you have: 
+
+3. Input: “some string” (it doesn’t really matter) in this case “blah” was used for 
+the prompt - What unit do the pumpers belong to: 
+
+4. Input: “10“ for the prompt - What is the capacity for a barrel of fire starting fluid: 
+
+5. Input: “10“ for the prompt - How many barrels of fire starting fluid do you have: 
+
+6. Input: “some string” (it doesn’t really matter) in this case “blah” was used for 
+the prompt - What unit do the fire starting fluid belongs to:
+
+7. Input: “10“ for the prompt - How many drip torches do you have: 
+
+8. Input: “some string” (it doesn’t really matter) in this case “blah” was used for the prompt - What unit do the drip torches belong to: 
+
+9. Input: “10“ for the prompt - How many rakes or fire swatters do you have:
+
+10. Input: “some string” (it doesn’t really matter) in this case “blah” was used for the prompt - What unit do the rakes or fire swatters belong to: 
+
+11. Input: “1“ for the prompt - How many backpack pumps do you have: 
+
+13. Input: “some string” (it doesn’t really matter) in this case “blah” was used for the prompt - What unit do the backpack pumps belong to: 
+
+14. Input: “1“ for the prompt - How many dozers do you have: 
+
+15. Input: “some string” (it doesn’t really matter) in this case “blah” was used for the prompt - What unit do the dozers belong to: 
+
 
 Use option 3 for the prompt - “Please enter the desired data set:" given the options 1-9 from above
+
+Input: “yes” for the prompt - Do you want to use a JSON file to read the weather date? (yes or no): 
+
+Input: “some string” (it doesn’t really matter) in this case “blah” was used for the prompt fp What is the name of the json file? (ex. my-file.json):
 
 Simply press enter for the next prompt - Enter query, or press the ENTER key to accept the example query (zip=68588): 
 Requesting data at 2023-12-04T22:44:40.322255619Z

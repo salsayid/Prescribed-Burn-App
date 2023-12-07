@@ -29,6 +29,7 @@ public class BurnPlanEvaluationAlgorithmTest {
 	private BurnPlan burnPlan;
 
 //determine head fires tests
+	
 	@Test
 	public void testHeadFires_RedFlagPreventsBurn() {
 		Weather weather = new Weather(25.0, Direction.SOUTH, 10.0, 15.0, 60.0, 11.0, true, 90.0);
@@ -82,6 +83,8 @@ public class BurnPlanEvaluationAlgorithmTest {
 	}
 
 //red flag conditions tests
+	
+	
 	@Test
 	public void testCheckRedFlagConditions_AllMet() {
 		equals();
@@ -384,7 +387,7 @@ public class BurnPlanEvaluationAlgorithmTest {
 		assertEquals("kilograms", supply.getUnit());
 	}
 
-	// remaining weather tests
+// remaining weather tests
 
 	@Test
 	public void testGetHumidity() {
@@ -512,7 +515,6 @@ public class BurnPlanEvaluationAlgorithmTest {
 		BurnPlan burnPlan = new BurnPlan();
 		double expectedLongitude = -97.5;
 		burnPlan.setLongitude(expectedLongitude);
-
 		double actualLongitude = burnPlan.getLongitude();
 		equals(expectedLongitude);
 	}
@@ -522,7 +524,6 @@ public class BurnPlanEvaluationAlgorithmTest {
 		BurnPlan burnPlan = new BurnPlan();
 		double expectedLatitude = 42.0;
 		burnPlan.setLatitude(expectedLatitude);
-
 		double actualLatitude = burnPlan.getLatitude();
 		equals(expectedLatitude);
 	}
