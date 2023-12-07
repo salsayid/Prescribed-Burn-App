@@ -393,9 +393,9 @@ public class BurnPlanEvaluationApp {
 		Scanner scanner = new Scanner(System.in);
 
 		// get user input
-		String[] inputPrompts = { "What is the planed date for the burn (YYYY, MM, DD): ",
-				"What time is the burn for the planed day (hour in military time): ",
-				"Is Burning banned for the planed day (true/false): ", 
+		String[] inputPrompts = { "What is the planned date for the burn (YYYY, MM, DD): ",
+				"What time is the burn for the planned day (hour in military time): ",
+				"Is Burning banned for the planned day (true/false): ", 
 				"What is the latitude for the burn: ",
 				"What is the longitude for the burn: ", 
 				"What Fuel Type is going to be used (Light/Heavy): ",
@@ -410,7 +410,7 @@ public class BurnPlanEvaluationApp {
 		String input = "";
 		boolean haveAllInputs = false;
 
-		System.out.println("If at any point you wish to close the program type exit for one of the prompts");
+		System.out.println("If at any point you wish to close the program type [exit] for any of the prompts.");
 		do {
 			input = "";
 			input = getInput(inputPrompts[prompt], scanner);
@@ -422,17 +422,18 @@ public class BurnPlanEvaluationApp {
 				}
 			}
 			if (input.equals("exit")) {
+				System.out.println("Successfully exited.");
 				System.exit(1);
 			}
 		} while (!haveAllInputs);
 		// inputs start at index 10 for supplies
-		String[] supplyPrompts = {"What is the capasity for each pumper: ",
+		String[] supplyPrompts = {"What is the capacity for each pumper: ",
 				"How many pumpers do you have: ",
 				"What unit do the pumpers belong to: ",
-				"What is the capasity for a barrel of fire starting fluid: ",
+				"What is the capacity for a barrel of fire starting fluid: ",
 				"How many barrels of fire starting fluid do you have: ",
-				"What unit do the fire starting fluid belongs to: ", "How many drip torches do you have: ",
-				"What unit do the drip torches belong to: ", "how many rakes or fire swatters do you have: ",
+				"What unit does the fire starting fluid belongs to (e.g., gallons): ", "How many drip torches do you have: ",
+				"What unit do the drip torches belong to: ", "How many rakes or fire swatters do you have: ",
 				"What unit do the rakes or fire swatters belong to: ", "How many backback pumps do you have: ",
 				"What unit do the backpack pumps belong to: ", "How many dozers do you have: ",
 				"What unit do the dozers belong to: " };
@@ -441,7 +442,7 @@ public class BurnPlanEvaluationApp {
 		haveAllInputs = false;
 		input = "";
 
-		System.out.println("Please enter the supplies needed");
+		System.out.println("Please enter the supplies needed.");
 		do {
 			input = "";
 			input = getInput(supplyPrompts[prompt], scanner);
@@ -453,6 +454,7 @@ public class BurnPlanEvaluationApp {
 				}
 			}
 			if (input.equals("exit")) {
+				System.out.println("Successfully exited.");
 				System.exit(1);
 			}
 		} while (!haveAllInputs);

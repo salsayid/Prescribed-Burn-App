@@ -25,5 +25,6 @@ the App should terminate.
 ### Test
 1. In Eclipse, right click the class "BurnPlanEvaluationApp" and run it.
 the console should prompt the user to enter the year, month and day.
+2. type 2023,12,23 into the console and hit enter.
 
 (intended time 2023-12-23 12:00:00)
