@@ -454,6 +454,7 @@ public class BurnPlanEvaluationApp {
 				}
 			}
 			if (input.equals("exit")) {
+				System.out.println("Successfully exited.");
 				System.exit(1);
 			}
 		} while (!haveAllInputs);
