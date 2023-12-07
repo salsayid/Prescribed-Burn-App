@@ -327,4 +327,95 @@ public class BurnPlanEvaluationAlgorithmTest {
 				BurnPlanEvaluationAlgorithm.determineAllNonHeadOrBlacklineFires(burnPlan));
 	}
 
+//Season tests
+	@Test
+	public void testSummer() {
+		Season season = Season.SUMMER;
+		assertEquals(Season.SUMMER, season);
+	}
+
+	@Test
+	public void testFall() {
+		Season season = Season.FALL;
+		assertEquals(Season.FALL, season);
+	}
+
+	@Test
+	public void testWinter() {
+		Season season = Season.WINTER;
+		assertEquals(Season.WINTER, season);
+	}
+
+	@Test
+	public void testSpring() {
+		Season season = Season.SPRING;
+		assertEquals(Season.SPRING, season);
+	}
+
+//supply tests
+
+	@Test
+	public void testConstructorAndGetters() {
+		String name = "Water";
+		Double quantity = 100.0;
+		Double capacity = 200.0;
+		String unit = "liters";
+		Supply supply = new Supply(name, quantity, capacity, unit);
+		assertEquals(name, supply.getName());
+		assertEquals(quantity, supply.getQuantity());
+		assertEquals(capacity, supply.getCapacity());
+		assertEquals(unit, supply.getUnit());
+	}
+
+	@Test
+	public void testSetters() {
+		Supply supply = new Supply("Food", 50.0, 100.0, "grams");
+		supply.setName("Rice");
+		supply.setQuantity(75.0);
+		supply.setCapacity(150.0);
+		supply.setUnit("kilograms");
+		assertEquals("Rice", supply.getName());
+		equals(75.0);
+		equals(150.0);
+		assertEquals("kilograms", supply.getUnit());
+	}
+
+	// remaining weather tests
+
+	@Test
+	public void testGetHumidity() {
+		Double expectedHumidity = 60.0;
+		Weather weather = new Weather(10.0, Direction.NORTH, expectedHumidity, 65.0, 20.0, 0.1, false, 75.0);
+		Double actualHumidity = weather.getHumidity();
+		assertEquals(expectedHumidity, actualHumidity);
+	}
+
+	@Test
+	public void testSetWindDirection() {
+		Weather weather = new Weather(10.0, Direction.NORTH, 60.0, 65.0, 20.0, 0.1, false, 75.0);
+		weather.setWindDirection(Direction.SOUTH);
+		assertEquals(Direction.SOUTH, weather.getWindDirection());
+	}
+
+	@Test
+	public void testSetHumidity() {
+		Weather weather = new Weather(10.0, Direction.NORTH, 60.0, 65.0, 20.0, 0.1, false, 75.0);
+		weather.setHumidity(70.0);
+		equals(70.0);
+	}
+
+	@Test
+	public void testSetRainAmount() {
+		Weather weather = new Weather(10.0, Direction.NORTH, 60.0, 65.0, 20.0, 0.1, false, 75.0);
+		weather.setRainAmount(0.2);
+		equals(0.2);
+	}
+
+	@Test
+	public void testSetRainChance() {
+		Weather weather = new Weather(10.0, Direction.NORTH, 60.0, 65.0, 20.0, 0.1, false, 75.0);
+		weather.setRainChance(30.0);
+		equals(30.0);
+	}
+
 }
