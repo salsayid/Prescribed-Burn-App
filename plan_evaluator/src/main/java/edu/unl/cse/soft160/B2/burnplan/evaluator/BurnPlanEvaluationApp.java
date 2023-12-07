@@ -432,8 +432,8 @@ public class BurnPlanEvaluationApp {
 				"What unit do the pumpers belong to: ",
 				"What is the capacity for a barrel of fire starting fluid: ",
 				"How many barrels of fire starting fluid do you have: ",
-				"What unit do the fire starting fluid belongs to: ", "How many drip torches do you have: ",
-				"What unit do the drip torches belong to: ", "how many rakes or fire swatters do you have: ",
+				"What unit does the fire starting fluid belongs to (e.g., gallons): ", "How many drip torches do you have: ",
+				"What unit do the drip torches belong to: ", "How many rakes or fire swatters do you have: ",
 				"What unit do the rakes or fire swatters belong to: ", "How many backback pumps do you have: ",
 				"What unit do the backpack pumps belong to: ", "How many dozers do you have: ",
 				"What unit do the dozers belong to: " };
