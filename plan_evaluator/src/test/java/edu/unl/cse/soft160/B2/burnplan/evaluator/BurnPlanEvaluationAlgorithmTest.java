@@ -14,7 +14,6 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-
 public class BurnPlanEvaluationAlgorithmTest {
 	private Date createDate(int year, int month, int day) {
 		Calendar calendar = Calendar.getInstance();
@@ -29,7 +28,7 @@ public class BurnPlanEvaluationAlgorithmTest {
 	private BurnPlan burnPlan;
 
 //determine head fires tests
-	
+
 	@Test
 	public void testHeadFires_RedFlagPreventsBurn() {
 		Weather weather = new Weather(25.0, Direction.SOUTH, 10.0, 15.0, 60.0, 11.0, true, 90.0);
@@ -83,8 +82,7 @@ public class BurnPlanEvaluationAlgorithmTest {
 	}
 
 //red flag conditions tests
-	
-	
+
 	@Test
 	public void testCheckRedFlagConditions_AllMet() {
 		equals();
@@ -425,7 +423,6 @@ public class BurnPlanEvaluationAlgorithmTest {
 		equals(30.0);
 	}
 
-	
 // remaining burnPlan tests
 
 	@Test
@@ -536,6 +533,7 @@ public class BurnPlanEvaluationAlgorithmTest {
 		int actualWidth = burnPlan.getWidthOfBlacklines();
 		assertEquals(expectedWidth, actualWidth);
 	}
+
 	@Test
 	public void testDesiredBlackLinesNonVolatile() {
 
@@ -543,9 +541,9 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double longitude = 20.8;
 		boolean isBlackLineVolatile = false;
 		int acresToBeBurned = 10;
-		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
-		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
-		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		Date currentDayDate = new Calendar.Builder().setDate(2023, 11, 19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023, 11, 22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023, 11, 23).setTimeOfDay(12, 0, 0).build().getTime();
 		FuelType fuelType = FuelType.LIGHT;
 		Integer widthOfBlacklines = 101;
 		FirePattern firePattern = FirePattern.BLACK_LINES;
@@ -558,11 +556,11 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double rainAmount = 0;
 		boolean isColdFrontApproaching = false;
 		double temperature = 55;
-		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+		Weather weather = new Weather(windSpeed, windDirection, humidity, relativeHumidity, rainChance, rainAmount,
 				isColdFrontApproaching, temperature);
 		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
 		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
-		
+
 		// set up the supplies: name, quantity, capacity, unit
 		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
 		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
@@ -577,10 +575,12 @@ public class BurnPlanEvaluationAlgorithmTest {
 		supplies.add(supply4);
 		supplies.add(supply5);
 		supplies.add(supply6);
-		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType,
+				firePattern, widthOfBlacklines, isBlackLineVolatile, acresToBeBurned, supplies);
 		BurnDetermination expectedResult = BurnDetermination.DESIRED;
 		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
 	}
+
 	@Test
 	public void testBlackLinesBadWeather() {
 
@@ -588,9 +588,9 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double longitude = 20.8;
 		boolean isBlackLineVolatile = false;
 		int acresToBeBurned = 10;
-		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
-		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
-		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		Date currentDayDate = new Calendar.Builder().setDate(2023, 11, 19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023, 11, 22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023, 11, 23).setTimeOfDay(12, 0, 0).build().getTime();
 		FuelType fuelType = FuelType.LIGHT;
 		Integer widthOfBlacklines = 101;
 		FirePattern firePattern = FirePattern.BLACK_LINES;
@@ -603,11 +603,11 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double rainAmount = 300;
 		boolean isColdFrontApproaching = false;
 		double temperature = 55;
-		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+		Weather weather = new Weather(windSpeed, windDirection, humidity, relativeHumidity, rainChance, rainAmount,
 				isColdFrontApproaching, temperature);
 		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
 		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
-		
+
 		// set up the supplies: name, quantity, capacity, unit
 		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
 		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
@@ -622,10 +622,12 @@ public class BurnPlanEvaluationAlgorithmTest {
 		supplies.add(supply4);
 		supplies.add(supply5);
 		supplies.add(supply6);
-		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType,
+				firePattern, widthOfBlacklines, isBlackLineVolatile, acresToBeBurned, supplies);
 		BurnDetermination expectedResult = BurnDetermination.NOT_RECOMMENDED_OTHER;
 		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
 	}
+
 	@Test
 	public void testAcceptableBlackLinesVolatile() {
 
@@ -633,9 +635,9 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double longitude = 20.8;
 		boolean isBlackLineVolatile = true;
 		int acresToBeBurned = 10;
-		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
-		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
-		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		Date currentDayDate = new Calendar.Builder().setDate(2023, 11, 19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023, 11, 22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023, 11, 23).setTimeOfDay(12, 0, 0).build().getTime();
 		FuelType fuelType = FuelType.LIGHT;
 		Integer widthOfBlacklines = 101;
 		FirePattern firePattern = FirePattern.BLACK_LINES;
@@ -648,11 +650,11 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double rainAmount = 0;
 		boolean isColdFrontApproaching = false;
 		double temperature = 55;
-		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+		Weather weather = new Weather(windSpeed, windDirection, humidity, relativeHumidity, rainChance, rainAmount,
 				isColdFrontApproaching, temperature);
 		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
 		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
-		
+
 		// set up the supplies: name, quantity, capacity, unit
 		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
 		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
@@ -667,10 +669,12 @@ public class BurnPlanEvaluationAlgorithmTest {
 		supplies.add(supply4);
 		supplies.add(supply5);
 		supplies.add(supply6);
-		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType,
+				firePattern, widthOfBlacklines, isBlackLineVolatile, acresToBeBurned, supplies);
 		BurnDetermination expectedResult = BurnDetermination.ACCEPTABLE;
 		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
 	}
+
 	@Test
 	public void testTooHighHumidityBlackLines() {
 
@@ -678,9 +682,9 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double longitude = 20.8;
 		boolean isBlackLineVolatile = true;
 		int acresToBeBurned = 10;
-		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
-		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
-		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		Date currentDayDate = new Calendar.Builder().setDate(2023, 11, 19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023, 11, 22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023, 11, 23).setTimeOfDay(12, 0, 0).build().getTime();
 		FuelType fuelType = FuelType.LIGHT;
 		Integer widthOfBlacklines = 101;
 		FirePattern firePattern = FirePattern.BLACK_LINES;
@@ -693,11 +697,11 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double rainAmount = 0;
 		boolean isColdFrontApproaching = false;
 		double temperature = 55;
-		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+		Weather weather = new Weather(windSpeed, windDirection, humidity, relativeHumidity, rainChance, rainAmount,
 				isColdFrontApproaching, temperature);
 		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
 		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
-		
+
 		// set up the supplies: name, quantity, capacity, unit
 		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
 		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
@@ -712,10 +716,12 @@ public class BurnPlanEvaluationAlgorithmTest {
 		supplies.add(supply4);
 		supplies.add(supply5);
 		supplies.add(supply6);
-		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType,
+				firePattern, widthOfBlacklines, isBlackLineVolatile, acresToBeBurned, supplies);
 		BurnDetermination expectedResult = BurnDetermination.NOT_RECOMMENDED_OTHER;
 		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
 	}
+
 	@Test
 	public void testBlacklinesMissingData() {
 
@@ -723,9 +729,9 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double longitude = 20.8;
 		boolean isBlackLineVolatile = true;
 		int acresToBeBurned = 10;
-		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
-		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
-		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		Date currentDayDate = new Calendar.Builder().setDate(2023, 11, 19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023, 11, 22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023, 11, 23).setTimeOfDay(12, 0, 0).build().getTime();
 		FuelType fuelType = FuelType.LIGHT;
 		Integer widthOfBlacklines = 101;
 		FirePattern firePattern = FirePattern.BLACK_LINES;
@@ -738,11 +744,11 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double rainAmount = 0;
 		boolean isColdFrontApproaching = false;
 		double temperature = 55;
-		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+		Weather weather = new Weather(windSpeed, windDirection, humidity, relativeHumidity, rainChance, rainAmount,
 				isColdFrontApproaching, temperature);
 		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
 		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
-		
+
 		// set up the supplies: name, quantity, capacity, unit
 		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
 		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
@@ -757,11 +763,12 @@ public class BurnPlanEvaluationAlgorithmTest {
 		supplies.add(supply4);
 		supplies.add(supply5);
 		supplies.add(supply6);
-		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType,
+				firePattern, widthOfBlacklines, isBlackLineVolatile, acresToBeBurned, supplies);
 		BurnDetermination expectedResult = BurnDetermination.INDETERMINATE;
 		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
 	}
-	
+
 	@Test
 	public void testBackFireAcceptable() {
 
@@ -769,9 +776,9 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double longitude = 20.8;
 		boolean isBlackLineVolatile = false;
 		int acresToBeBurned = 10;
-		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
-		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
-		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		Date currentDayDate = new Calendar.Builder().setDate(2023, 11, 19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023, 11, 22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023, 11, 23).setTimeOfDay(12, 0, 0).build().getTime();
 		FuelType fuelType = FuelType.LIGHT;
 		Integer widthOfBlacklines = 101;
 		FirePattern firePattern = FirePattern.BACKFIRES;
@@ -784,11 +791,11 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double rainAmount = 0;
 		boolean isColdFrontApproaching = false;
 		double temperature = 55;
-		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+		Weather weather = new Weather(windSpeed, windDirection, humidity, relativeHumidity, rainChance, rainAmount,
 				isColdFrontApproaching, temperature);
 		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
 		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
-		
+
 		// set up the supplies: name, quantity, capacity, unit
 		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
 		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
@@ -803,10 +810,12 @@ public class BurnPlanEvaluationAlgorithmTest {
 		supplies.add(supply4);
 		supplies.add(supply5);
 		supplies.add(supply6);
-		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType,
+				firePattern, widthOfBlacklines, isBlackLineVolatile, acresToBeBurned, supplies);
 		BurnDetermination expectedResult = BurnDetermination.ACCEPTABLE;
 		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
 	}
+
 	@Test
 	public void testBackFireBadWeather() {
 
@@ -814,9 +823,9 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double longitude = 20.8;
 		boolean isBlackLineVolatile = false;
 		int acresToBeBurned = 10;
-		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
-		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
-		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		Date currentDayDate = new Calendar.Builder().setDate(2023, 11, 19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023, 11, 22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023, 11, 23).setTimeOfDay(12, 0, 0).build().getTime();
 		FuelType fuelType = FuelType.LIGHT;
 		Integer widthOfBlacklines = 101;
 		FirePattern firePattern = FirePattern.BACKFIRES;
@@ -829,11 +838,11 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double rainAmount = 200;
 		boolean isColdFrontApproaching = false;
 		double temperature = 55;
-		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+		Weather weather = new Weather(windSpeed, windDirection, humidity, relativeHumidity, rainChance, rainAmount,
 				isColdFrontApproaching, temperature);
 		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
 		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
-		
+
 		// set up the supplies: name, quantity, capacity, unit
 		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
 		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
@@ -848,10 +857,12 @@ public class BurnPlanEvaluationAlgorithmTest {
 		supplies.add(supply4);
 		supplies.add(supply5);
 		supplies.add(supply6);
-		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType,
+				firePattern, widthOfBlacklines, isBlackLineVolatile, acresToBeBurned, supplies);
 		BurnDetermination expectedResult = BurnDetermination.NOT_RECOMMENDED_OTHER;
 		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
 	}
+
 	@Test
 	public void testBackFireTooEarlyInWeek() {
 
@@ -859,9 +870,9 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double longitude = 20.8;
 		boolean isBlackLineVolatile = false;
 		int acresToBeBurned = 10;
-		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
-		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(12, 0, 0).build().getTime();
-		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,20).setTimeOfDay(12, 0, 0).build().getTime();
+		Date currentDayDate = new Calendar.Builder().setDate(2023, 11, 19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023, 11, 19).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023, 11, 20).setTimeOfDay(12, 0, 0).build().getTime();
 		FuelType fuelType = FuelType.LIGHT;
 		Integer widthOfBlacklines = 101;
 		FirePattern firePattern = FirePattern.BLACK_LINES;
@@ -874,11 +885,11 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double rainAmount = 300;
 		boolean isColdFrontApproaching = false;
 		double temperature = 55;
-		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+		Weather weather = new Weather(windSpeed, windDirection, humidity, relativeHumidity, rainChance, rainAmount,
 				isColdFrontApproaching, temperature);
 		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
 		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
-		
+
 		// set up the supplies: name, quantity, capacity, unit
 		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
 		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
@@ -893,10 +904,12 @@ public class BurnPlanEvaluationAlgorithmTest {
 		supplies.add(supply4);
 		supplies.add(supply5);
 		supplies.add(supply6);
-		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType,
+				firePattern, widthOfBlacklines, isBlackLineVolatile, acresToBeBurned, supplies);
 		BurnDetermination expectedResult = BurnDetermination.NOT_RECOMMENDED_OTHER;
 		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
 	}
+
 	@Test
 	public void testBackFireLowHumidity() {
 
@@ -904,9 +917,9 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double longitude = 20.8;
 		boolean isBlackLineVolatile = false;
 		int acresToBeBurned = 10;
-		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
-		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
-		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		Date currentDayDate = new Calendar.Builder().setDate(2023, 11, 19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023, 11, 22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023, 11, 23).setTimeOfDay(12, 0, 0).build().getTime();
 		FuelType fuelType = FuelType.LIGHT;
 		Integer widthOfBlacklines = 101;
 		FirePattern firePattern = FirePattern.BACKFIRES;
@@ -919,11 +932,11 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double rainAmount = 0;
 		boolean isColdFrontApproaching = false;
 		double temperature = 55;
-		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+		Weather weather = new Weather(windSpeed, windDirection, humidity, relativeHumidity, rainChance, rainAmount,
 				isColdFrontApproaching, temperature);
 		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
 		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
-		
+
 		// set up the supplies: name, quantity, capacity, unit
 		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
 		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
@@ -938,10 +951,12 @@ public class BurnPlanEvaluationAlgorithmTest {
 		supplies.add(supply4);
 		supplies.add(supply5);
 		supplies.add(supply6);
-		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType,
+				firePattern, widthOfBlacklines, isBlackLineVolatile, acresToBeBurned, supplies);
 		BurnDetermination expectedResult = BurnDetermination.NOT_RECOMMENDED_OTHER;
 		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
 	}
+
 	@Test
 	public void testHeadFiresDesired() {
 
@@ -949,9 +964,9 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double longitude = 20.8;
 		boolean isBlackLineVolatile = false;
 		int acresToBeBurned = 10;
-		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
-		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
-		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		Date currentDayDate = new Calendar.Builder().setDate(2023, 11, 19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023, 11, 22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023, 11, 23).setTimeOfDay(12, 0, 0).build().getTime();
 		FuelType fuelType = FuelType.LIGHT;
 		Integer widthOfBlacklines = 101;
 		FirePattern firePattern = FirePattern.HEADFIRES;
@@ -964,11 +979,11 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double rainAmount = 0;
 		boolean isColdFrontApproaching = false;
 		double temperature = 75;
-		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+		Weather weather = new Weather(windSpeed, windDirection, humidity, relativeHumidity, rainChance, rainAmount,
 				isColdFrontApproaching, temperature);
 		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
 		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
-		
+
 		// set up the supplies: name, quantity, capacity, unit
 		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
 		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
@@ -983,10 +998,12 @@ public class BurnPlanEvaluationAlgorithmTest {
 		supplies.add(supply4);
 		supplies.add(supply5);
 		supplies.add(supply6);
-		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType,
+				firePattern, widthOfBlacklines, isBlackLineVolatile, acresToBeBurned, supplies);
 		BurnDetermination expectedResult = BurnDetermination.DESIRED;
 		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
 	}
+
 	@Test
 	public void testHeadFiresAcceptable() {
 
@@ -994,9 +1011,9 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double longitude = 20.8;
 		boolean isBlackLineVolatile = false;
 		int acresToBeBurned = 10;
-		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
-		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
-		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		Date currentDayDate = new Calendar.Builder().setDate(2023, 11, 19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023, 11, 22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023, 11, 23).setTimeOfDay(12, 0, 0).build().getTime();
 		FuelType fuelType = FuelType.LIGHT;
 		Integer widthOfBlacklines = 101;
 		FirePattern firePattern = FirePattern.HEADFIRES;
@@ -1009,11 +1026,11 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double rainAmount = 0;
 		boolean isColdFrontApproaching = false;
 		double temperature = 84;
-		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+		Weather weather = new Weather(windSpeed, windDirection, humidity, relativeHumidity, rainChance, rainAmount,
 				isColdFrontApproaching, temperature);
 		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
 		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
-		
+
 		// set up the supplies: name, quantity, capacity, unit
 		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
 		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
@@ -1028,10 +1045,12 @@ public class BurnPlanEvaluationAlgorithmTest {
 		supplies.add(supply4);
 		supplies.add(supply5);
 		supplies.add(supply6);
-		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType,
+				firePattern, widthOfBlacklines, isBlackLineVolatile, acresToBeBurned, supplies);
 		BurnDetermination expectedResult = BurnDetermination.ACCEPTABLE;
 		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
 	}
+
 	@Test
 	public void testHeadFireTooHotTemperature() {
 
@@ -1039,9 +1058,9 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double longitude = 20.8;
 		boolean isBlackLineVolatile = false;
 		int acresToBeBurned = 10;
-		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
-		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
-		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		Date currentDayDate = new Calendar.Builder().setDate(2023, 11, 19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023, 11, 22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023, 11, 23).setTimeOfDay(12, 0, 0).build().getTime();
 		FuelType fuelType = FuelType.LIGHT;
 		Integer widthOfBlacklines = 101;
 		FirePattern firePattern = FirePattern.HEADFIRES;
@@ -1054,11 +1073,11 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double rainAmount = 0;
 		boolean isColdFrontApproaching = false;
 		double temperature = 300;
-		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+		Weather weather = new Weather(windSpeed, windDirection, humidity, relativeHumidity, rainChance, rainAmount,
 				isColdFrontApproaching, temperature);
 		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
 		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
-		
+
 		// set up the supplies: name, quantity, capacity, unit
 		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
 		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
@@ -1073,10 +1092,12 @@ public class BurnPlanEvaluationAlgorithmTest {
 		supplies.add(supply4);
 		supplies.add(supply5);
 		supplies.add(supply6);
-		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType,
+				firePattern, widthOfBlacklines, isBlackLineVolatile, acresToBeBurned, supplies);
 		BurnDetermination expectedResult = BurnDetermination.NOT_RECOMMENDED_TEMPERATURE;
 		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
 	}
+
 	@Test
 	public void testHeadFireFloodThePreviousDay() {
 
@@ -1084,9 +1105,9 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double longitude = 20.8;
 		boolean isBlackLineVolatile = false;
 		int acresToBeBurned = 10;
-		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
-		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
-		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		Date currentDayDate = new Calendar.Builder().setDate(2023, 11, 19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023, 11, 22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023, 11, 23).setTimeOfDay(12, 0, 0).build().getTime();
 		FuelType fuelType = FuelType.LIGHT;
 		Integer widthOfBlacklines = 101;
 		FirePattern firePattern = FirePattern.HEADFIRES;
@@ -1099,11 +1120,11 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double rainAmount = 20000;
 		boolean isColdFrontApproaching = false;
 		double temperature = 75;
-		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+		Weather weather = new Weather(windSpeed, windDirection, humidity, relativeHumidity, rainChance, rainAmount,
 				isColdFrontApproaching, temperature);
 		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
 		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
-		
+
 		// set up the supplies: name, quantity, capacity, unit
 		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
 		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
@@ -1118,10 +1139,12 @@ public class BurnPlanEvaluationAlgorithmTest {
 		supplies.add(supply4);
 		supplies.add(supply5);
 		supplies.add(supply6);
-		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType,
+				firePattern, widthOfBlacklines, isBlackLineVolatile, acresToBeBurned, supplies);
 		BurnDetermination expectedResult = BurnDetermination.NOT_RECOMMENDED_OTHER;
 		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
 	}
+
 	@Test
 	public void HeadFireWithWestWind() {
 
@@ -1129,9 +1152,9 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double longitude = 20.8;
 		boolean isBlackLineVolatile = false;
 		int acresToBeBurned = 10;
-		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
-		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
-		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		Date currentDayDate = new Calendar.Builder().setDate(2023, 11, 19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023, 11, 22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023, 11, 23).setTimeOfDay(12, 0, 0).build().getTime();
 		FuelType fuelType = FuelType.LIGHT;
 		Integer widthOfBlacklines = 101;
 		FirePattern firePattern = FirePattern.HEADFIRES;
@@ -1144,11 +1167,11 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double rainAmount = 0;
 		boolean isColdFrontApproaching = false;
 		double temperature = 75;
-		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+		Weather weather = new Weather(windSpeed, windDirection, humidity, relativeHumidity, rainChance, rainAmount,
 				isColdFrontApproaching, temperature);
 		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
 		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
-		
+
 		// set up the supplies: name, quantity, capacity, unit
 		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
 		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
@@ -1163,10 +1186,12 @@ public class BurnPlanEvaluationAlgorithmTest {
 		supplies.add(supply4);
 		supplies.add(supply5);
 		supplies.add(supply6);
-		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType,
+				firePattern, widthOfBlacklines, isBlackLineVolatile, acresToBeBurned, supplies);
 		BurnDetermination expectedResult = BurnDetermination.ACCEPTABLE;
 		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
 	}
+
 	@Test
 	public void testHeadFiresWindWrong() {
 
@@ -1174,9 +1199,9 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double longitude = 20.8;
 		boolean isBlackLineVolatile = false;
 		int acresToBeBurned = 10;
-		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
-		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
-		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		Date currentDayDate = new Calendar.Builder().setDate(2023, 11, 19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023, 11, 22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023, 11, 23).setTimeOfDay(12, 0, 0).build().getTime();
 		FuelType fuelType = FuelType.LIGHT;
 		Integer widthOfBlacklines = 101;
 		FirePattern firePattern = FirePattern.HEADFIRES;
@@ -1189,11 +1214,11 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double rainAmount = 0;
 		boolean isColdFrontApproaching = false;
 		double temperature = 75;
-		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+		Weather weather = new Weather(windSpeed, windDirection, humidity, relativeHumidity, rainChance, rainAmount,
 				isColdFrontApproaching, temperature);
 		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
 		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
-		
+
 		// set up the supplies: name, quantity, capacity, unit
 		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
 		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
@@ -1208,10 +1233,12 @@ public class BurnPlanEvaluationAlgorithmTest {
 		supplies.add(supply4);
 		supplies.add(supply5);
 		supplies.add(supply6);
-		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType,
+				firePattern, widthOfBlacklines, isBlackLineVolatile, acresToBeBurned, supplies);
 		BurnDetermination expectedResult = BurnDetermination.NOT_RECOMMENDED_WIND;
 		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
 	}
+
 	@Test
 	public void testHeadFiresHumidityIsUnAcceptable() {
 
@@ -1219,9 +1246,9 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double longitude = 20.8;
 		boolean isBlackLineVolatile = false;
 		int acresToBeBurned = 10;
-		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
-		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
-		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		Date currentDayDate = new Calendar.Builder().setDate(2023, 11, 19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023, 11, 22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023, 11, 23).setTimeOfDay(12, 0, 0).build().getTime();
 		FuelType fuelType = FuelType.LIGHT;
 		Integer widthOfBlacklines = 101;
 		FirePattern firePattern = FirePattern.HEADFIRES;
@@ -1234,11 +1261,11 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double rainAmount = 0;
 		boolean isColdFrontApproaching = false;
 		double temperature = 75;
-		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+		Weather weather = new Weather(windSpeed, windDirection, humidity, relativeHumidity, rainChance, rainAmount,
 				isColdFrontApproaching, temperature);
 		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
 		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
-		
+
 		// set up the supplies: name, quantity, capacity, unit
 		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
 		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
@@ -1253,10 +1280,12 @@ public class BurnPlanEvaluationAlgorithmTest {
 		supplies.add(supply4);
 		supplies.add(supply5);
 		supplies.add(supply6);
-		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType,
+				firePattern, widthOfBlacklines, isBlackLineVolatile, acresToBeBurned, supplies);
 		BurnDetermination expectedResult = BurnDetermination.NOT_RECOMMENDED_OTHER;
 		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
 	}
+
 	@Test
 	public void testBackFireMissingInfo() {
 
@@ -1264,9 +1293,9 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double longitude = 20.8;
 		boolean isBlackLineVolatile = false;
 		int acresToBeBurned = 10;
-		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
-		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
-		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		Date currentDayDate = new Calendar.Builder().setDate(2023, 11, 19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023, 11, 22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023, 11, 23).setTimeOfDay(12, 0, 0).build().getTime();
 		FuelType fuelType = FuelType.LIGHT;
 		Integer widthOfBlacklines = 101;
 		FirePattern firePattern = FirePattern.BACKFIRES;
@@ -1279,11 +1308,11 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double rainAmount = 0;
 		boolean isColdFrontApproaching = false;
 		double temperature = 75;
-		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+		Weather weather = new Weather(windSpeed, windDirection, humidity, relativeHumidity, rainChance, rainAmount,
 				isColdFrontApproaching, temperature);
 		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
 		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
-		
+
 		// set up the supplies: name, quantity, capacity, unit
 		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
 		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
@@ -1298,10 +1327,12 @@ public class BurnPlanEvaluationAlgorithmTest {
 		supplies.add(supply4);
 		supplies.add(supply5);
 		supplies.add(supply6);
-		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType,
+				firePattern, widthOfBlacklines, isBlackLineVolatile, acresToBeBurned, supplies);
 		BurnDetermination expectedResult = BurnDetermination.INDETERMINATE;
 		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
 	}
+
 	@Test
 	public void testMissingAllSupplies() {
 
@@ -1309,9 +1340,9 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double longitude = 20.8;
 		boolean isBlackLineVolatile = false;
 		int acresToBeBurned = 10;
-		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
-		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
-		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		Date currentDayDate = new Calendar.Builder().setDate(2023, 11, 19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023, 11, 22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023, 11, 23).setTimeOfDay(12, 0, 0).build().getTime();
 		FuelType fuelType = FuelType.LIGHT;
 		Integer widthOfBlacklines = 101;
 		FirePattern firePattern = FirePattern.HEADFIRES;
@@ -1324,11 +1355,11 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double rainAmount = 0;
 		boolean isColdFrontApproaching = false;
 		double temperature = 75;
-		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+		Weather weather = new Weather(windSpeed, windDirection, humidity, relativeHumidity, rainChance, rainAmount,
 				isColdFrontApproaching, temperature);
 		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
 		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
-		
+
 		// set up the supplies: name, quantity, capacity, unit
 		Supply supply1 = new Supply("fire-starting fuel", 0.0, 20.0, "pumpers");
 		Supply supply2 = new Supply("pumper", 1.0, 0.0, "gallon");
@@ -1343,10 +1374,12 @@ public class BurnPlanEvaluationAlgorithmTest {
 		supplies.add(supply4);
 		supplies.add(supply5);
 		supplies.add(supply6);
-		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType,
+				firePattern, widthOfBlacklines, isBlackLineVolatile, acresToBeBurned, supplies);
 		BurnDetermination expectedResult = BurnDetermination.NOT_RECOMMENDED_OTHER;
 		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
 	}
+
 	@Test
 	public void testMissingSomeSupplies() {
 
@@ -1354,9 +1387,9 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double longitude = 20.8;
 		boolean isBlackLineVolatile = false;
 		int acresToBeBurned = 10;
-		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
-		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
-		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		Date currentDayDate = new Calendar.Builder().setDate(2023, 11, 19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023, 11, 22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023, 11, 23).setTimeOfDay(12, 0, 0).build().getTime();
 		FuelType fuelType = FuelType.LIGHT;
 		Integer widthOfBlacklines = 101;
 		FirePattern firePattern = FirePattern.HEADFIRES;
@@ -1369,11 +1402,11 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double rainAmount = 0;
 		boolean isColdFrontApproaching = false;
 		double temperature = 75;
-		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+		Weather weather = new Weather(windSpeed, windDirection, humidity, relativeHumidity, rainChance, rainAmount,
 				isColdFrontApproaching, temperature);
 		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
 		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
-		
+
 		// set up the supplies: name, quantity, capacity, unit
 		Supply supply1 = new Supply("fire-starting fuel", 200.0, 20.0, "pumpers");
 		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
@@ -1388,10 +1421,12 @@ public class BurnPlanEvaluationAlgorithmTest {
 		supplies.add(supply4);
 		supplies.add(supply5);
 		supplies.add(supply6);
-		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType,
+				firePattern, widthOfBlacklines, isBlackLineVolatile, acresToBeBurned, supplies);
 		BurnDetermination expectedResult = BurnDetermination.NOT_RECOMMENDED_OTHER;
 		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
 	}
+
 	@Test
 	public void testMissingFireSwatters() {
 
@@ -1399,9 +1434,9 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double longitude = 20.8;
 		boolean isBlackLineVolatile = false;
 		int acresToBeBurned = 10;
-		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
-		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
-		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		Date currentDayDate = new Calendar.Builder().setDate(2023, 11, 19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023, 11, 22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023, 11, 23).setTimeOfDay(12, 0, 0).build().getTime();
 		FuelType fuelType = FuelType.LIGHT;
 		Integer widthOfBlacklines = 101;
 		FirePattern firePattern = FirePattern.HEADFIRES;
@@ -1414,11 +1449,11 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double rainAmount = 0;
 		boolean isColdFrontApproaching = false;
 		double temperature = 75;
-		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+		Weather weather = new Weather(windSpeed, windDirection, humidity, relativeHumidity, rainChance, rainAmount,
 				isColdFrontApproaching, temperature);
 		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
 		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
-		
+
 		// set up the supplies: name, quantity, capacity, unit
 		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
 		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
@@ -1433,10 +1468,12 @@ public class BurnPlanEvaluationAlgorithmTest {
 		supplies.add(supply4);
 		supplies.add(supply5);
 		supplies.add(supply6);
-		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType,
+				firePattern, widthOfBlacklines, isBlackLineVolatile, acresToBeBurned, supplies);
 		BurnDetermination expectedResult = BurnDetermination.NOT_RECOMMENDED_OTHER;
 		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
 	}
+
 	@Test
 	public void testMissingBackPackPump() {
 
@@ -1444,9 +1481,9 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double longitude = 20.8;
 		boolean isBlackLineVolatile = false;
 		int acresToBeBurned = 10;
-		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
-		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
-		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		Date currentDayDate = new Calendar.Builder().setDate(2023, 11, 19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023, 11, 22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023, 11, 23).setTimeOfDay(12, 0, 0).build().getTime();
 		FuelType fuelType = FuelType.LIGHT;
 		Integer widthOfBlacklines = 101;
 		FirePattern firePattern = FirePattern.HEADFIRES;
@@ -1459,11 +1496,11 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double rainAmount = 0;
 		boolean isColdFrontApproaching = false;
 		double temperature = 75;
-		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+		Weather weather = new Weather(windSpeed, windDirection, humidity, relativeHumidity, rainChance, rainAmount,
 				isColdFrontApproaching, temperature);
 		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
 		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
-		
+
 		// set up the supplies: name, quantity, capacity, unit
 		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
 		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
@@ -1478,10 +1515,12 @@ public class BurnPlanEvaluationAlgorithmTest {
 		supplies.add(supply4);
 		supplies.add(supply5);
 		supplies.add(supply6);
-		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType,
+				firePattern, widthOfBlacklines, isBlackLineVolatile, acresToBeBurned, supplies);
 		BurnDetermination expectedResult = BurnDetermination.NOT_RECOMMENDED_OTHER;
 		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
 	}
+
 	@Test
 	public void testMissingDozer() {
 
@@ -1489,9 +1528,9 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double longitude = 20.8;
 		boolean isBlackLineVolatile = false;
 		int acresToBeBurned = 10;
-		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
-		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
-		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		Date currentDayDate = new Calendar.Builder().setDate(2023, 11, 19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023, 11, 22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023, 11, 23).setTimeOfDay(12, 0, 0).build().getTime();
 		FuelType fuelType = FuelType.LIGHT;
 		Integer widthOfBlacklines = 101;
 		FirePattern firePattern = FirePattern.HEADFIRES;
@@ -1504,11 +1543,11 @@ public class BurnPlanEvaluationAlgorithmTest {
 		double rainAmount = 0;
 		boolean isColdFrontApproaching = false;
 		double temperature = 75;
-		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+		Weather weather = new Weather(windSpeed, windDirection, humidity, relativeHumidity, rainChance, rainAmount,
 				isColdFrontApproaching, temperature);
 		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
 		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
-		
+
 		// set up the supplies: name, quantity, capacity, unit
 		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
 		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
@@ -1523,7 +1562,8 @@ public class BurnPlanEvaluationAlgorithmTest {
 		supplies.add(supply4);
 		supplies.add(supply5);
 		supplies.add(supply6);
-		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType,
+				firePattern, widthOfBlacklines, isBlackLineVolatile, acresToBeBurned, supplies);
 		BurnDetermination expectedResult = BurnDetermination.NOT_RECOMMENDED_OTHER;
 		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
 	}

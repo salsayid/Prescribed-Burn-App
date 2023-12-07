@@ -169,7 +169,8 @@ public class BurnPlanEvaluationAlgorithm {
 					|| (burnPlan.getFuelType() == FuelType.HEAVY && weather.getRainChance() > 50) || !withinDateRange) {
 				return BurnDetermination.NOT_RECOMMENDED_OTHER;
 			}
-			if (burnPlan.getDayBeforeFire().getWeather().getRainChance() > 50 && burnPlan.getDayBeforeFire().getWeather().getRainAmount() > 10) {
+			if (burnPlan.getDayBeforeFire().getWeather().getRainChance() > 50
+					&& burnPlan.getDayBeforeFire().getWeather().getRainAmount() > 10) {
 				return BurnDetermination.NOT_RECOMMENDED_OTHER;
 			}
 			boolean temperatureIsDesired = weather.getTemperature() <= 60 && weather.getTemperature() >= 40;

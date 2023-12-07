@@ -2,12 +2,11 @@ package edu.unl.cse.soft160.B2.burnplan.evaluator;
 
 import java.util.Date;
 
-
 public class Day {
 	private Boolean isOutdoorBuringBanned;
 	private Weather weather;
 	private Date date;
-		
+
 	public Day(Date date, Weather weather, Boolean isOutdoorBurningBanned) {
 		this.weather = weather;
 		this.isOutdoorBuringBanned = isOutdoorBurningBanned;
@@ -37,6 +36,5 @@ public class Day {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	
 
 }

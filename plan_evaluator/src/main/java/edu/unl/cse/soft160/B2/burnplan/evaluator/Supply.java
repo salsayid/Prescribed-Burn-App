@@ -5,8 +5,8 @@ public class Supply {
 	private Double quantity;
 	private Double capacity;
 	private String unit;
-	
-	public Supply (String name, Double quantity, Double capacity, String unit) {
+
+	public Supply(String name, Double quantity, Double capacity, String unit) {
 		this.name = name;
 		this.quantity = quantity;
 		this.capacity = capacity;
