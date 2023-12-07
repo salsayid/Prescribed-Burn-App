@@ -11,10 +11,6 @@ import java.util.List;
 
 public class BurnPlanEvaluationAlgorithm {
 
-	private static final long SECONDS_PER_DAY = 86400;
-	private static final long SECONDS_PER_TWO_DAYS = 172800;
-	private static final long SECONDS_PER_FIVE_DAYS = 432000;
-
 	static public boolean checkRedFlagConditions(Weather weather, Day day) {
 		int redFlags = 0;
 		if (weather.getWindSpeed() > 20) {
@@ -132,7 +128,7 @@ public class BurnPlanEvaluationAlgorithm {
 			if (weather.getRainChance() > 50 && weather.getRainAmount() > 10) {
 				return BurnDetermination.NOT_RECOMMENDED_OTHER;
 			}
-			boolean humidityIsAcceptable = weather.getRelativeHumidity() >= 20;
+			boolean humidityIsAcceptable = weather.getHumidity() >= 20;
 			if (humidityIsAcceptable) {
 				return BurnDetermination.ACCEPTABLE;
 			}
@@ -151,6 +147,7 @@ public class BurnPlanEvaluationAlgorithm {
 			if (redFlagConditionsPreventBurn || burnPlan.getDay().isOutdoorBuringBanned()) {
 				return BurnDetermination.BURNING_PROHIBITED;
 			}
+
 			if (weather.getTemperature() > 65 || weather.getTemperature() < 35) {
 				return BurnDetermination.NOT_RECOMMENDED_TEMPERATURE;
 			}
@@ -253,8 +250,8 @@ public class BurnPlanEvaluationAlgorithm {
 			}
 			boolean humidityIsAcceptable = weather.getHumidity() >= 20 && weather.getHumidity() <= 45;
 			boolean windSpeedIsAcceptable = weather.getWindSpeed() >= 5 && weather.getWindSpeed() <= 20;
-			boolean windDirectionIsAcceptable = weather.getWindDirection() == Direction.SOUTHWEST
-					|| weather.getWindDirection() == Direction.SOUTH || weather.getWindDirection() == Direction.WEST;
+			boolean windDirectionIsAcceptable = (weather.getWindDirection() == Direction.SOUTHWEST
+					|| weather.getWindDirection() == Direction.SOUTH || weather.getWindDirection() == Direction.WEST);
 			if (windDirectionIsAcceptable && humidityIsAcceptable && windSpeedIsAcceptable && timeIsDesired) {
 				return BurnDetermination.ACCEPTABLE;
 			}

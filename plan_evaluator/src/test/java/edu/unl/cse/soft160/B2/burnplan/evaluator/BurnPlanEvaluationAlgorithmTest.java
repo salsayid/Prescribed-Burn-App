@@ -716,4 +716,815 @@ public class BurnPlanEvaluationAlgorithmTest {
 		BurnDetermination expectedResult = BurnDetermination.NOT_RECOMMENDED_OTHER;
 		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
 	}
+	@Test
+	public void testBlacklinesMissingData() {
+
+		double latitude = 20.0;
+		double longitude = 20.8;
+		boolean isBlackLineVolatile = true;
+		int acresToBeBurned = 10;
+		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		FuelType fuelType = FuelType.LIGHT;
+		Integer widthOfBlacklines = 101;
+		FirePattern firePattern = FirePattern.BLACK_LINES;
+		boolean isOutdoorBurningBanned = false;
+		Double windSpeed = null;
+		double humidity = 50;
+		double relativeHumidity = 50;
+		Direction windDirection = Direction.SOUTHWEST;
+		double rainChance = 0;
+		double rainAmount = 0;
+		boolean isColdFrontApproaching = false;
+		double temperature = 55;
+		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+				isColdFrontApproaching, temperature);
+		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
+		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
+		
+		// set up the supplies: name, quantity, capacity, unit
+		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
+		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
+		Supply supply3 = new Supply("drip torches", 1.0, 20.0, "N/A");
+		Supply supply4 = new Supply("rakes", 3.0, 20.0, "N/A");
+		Supply supply5 = new Supply("backpack pump", 1.0, 20.0, "N/A");
+		Supply supply6 = new Supply("dozer", 1.0, 20.0, "N/A");
+		List<Supply> supplies = new ArrayList<Supply>();
+		supplies.add(supply1);
+		supplies.add(supply2);
+		supplies.add(supply3);
+		supplies.add(supply4);
+		supplies.add(supply5);
+		supplies.add(supply6);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnDetermination expectedResult = BurnDetermination.INDETERMINATE;
+		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
+	}
+	
+	@Test
+	public void testBackFireAcceptable() {
+
+		double latitude = 20.0;
+		double longitude = 20.8;
+		boolean isBlackLineVolatile = false;
+		int acresToBeBurned = 10;
+		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		FuelType fuelType = FuelType.LIGHT;
+		Integer widthOfBlacklines = 101;
+		FirePattern firePattern = FirePattern.BACKFIRES;
+		boolean isOutdoorBurningBanned = false;
+		double windSpeed = 5;
+		double humidity = 50;
+		double relativeHumidity = 50;
+		Direction windDirection = Direction.SOUTHWEST;
+		double rainChance = 0;
+		double rainAmount = 0;
+		boolean isColdFrontApproaching = false;
+		double temperature = 55;
+		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+				isColdFrontApproaching, temperature);
+		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
+		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
+		
+		// set up the supplies: name, quantity, capacity, unit
+		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
+		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
+		Supply supply3 = new Supply("drip torches", 1.0, 20.0, "N/A");
+		Supply supply4 = new Supply("rakes", 3.0, 20.0, "N/A");
+		Supply supply5 = new Supply("backpack pump", 1.0, 20.0, "N/A");
+		Supply supply6 = new Supply("dozer", 1.0, 20.0, "N/A");
+		List<Supply> supplies = new ArrayList<Supply>();
+		supplies.add(supply1);
+		supplies.add(supply2);
+		supplies.add(supply3);
+		supplies.add(supply4);
+		supplies.add(supply5);
+		supplies.add(supply6);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnDetermination expectedResult = BurnDetermination.ACCEPTABLE;
+		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
+	}
+	@Test
+	public void testBackFireBadWeather() {
+
+		double latitude = 20.0;
+		double longitude = 20.8;
+		boolean isBlackLineVolatile = false;
+		int acresToBeBurned = 10;
+		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		FuelType fuelType = FuelType.LIGHT;
+		Integer widthOfBlacklines = 101;
+		FirePattern firePattern = FirePattern.BACKFIRES;
+		boolean isOutdoorBurningBanned = false;
+		double windSpeed = 5;
+		double humidity = 50;
+		double relativeHumidity = 50;
+		Direction windDirection = Direction.SOUTHWEST;
+		double rainChance = 100;
+		double rainAmount = 200;
+		boolean isColdFrontApproaching = false;
+		double temperature = 55;
+		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+				isColdFrontApproaching, temperature);
+		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
+		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
+		
+		// set up the supplies: name, quantity, capacity, unit
+		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
+		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
+		Supply supply3 = new Supply("drip torches", 1.0, 20.0, "N/A");
+		Supply supply4 = new Supply("rakes", 3.0, 20.0, "N/A");
+		Supply supply5 = new Supply("backpack pump", 1.0, 20.0, "N/A");
+		Supply supply6 = new Supply("dozer", 1.0, 20.0, "N/A");
+		List<Supply> supplies = new ArrayList<Supply>();
+		supplies.add(supply1);
+		supplies.add(supply2);
+		supplies.add(supply3);
+		supplies.add(supply4);
+		supplies.add(supply5);
+		supplies.add(supply6);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnDetermination expectedResult = BurnDetermination.NOT_RECOMMENDED_OTHER;
+		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
+	}
+	@Test
+	public void testBackFireTooEarlyInWeek() {
+
+		double latitude = 20.0;
+		double longitude = 20.8;
+		boolean isBlackLineVolatile = false;
+		int acresToBeBurned = 10;
+		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,20).setTimeOfDay(12, 0, 0).build().getTime();
+		FuelType fuelType = FuelType.LIGHT;
+		Integer widthOfBlacklines = 101;
+		FirePattern firePattern = FirePattern.BLACK_LINES;
+		boolean isOutdoorBurningBanned = false;
+		double windSpeed = 5;
+		double humidity = 50;
+		double relativeHumidity = 50;
+		Direction windDirection = Direction.SOUTHWEST;
+		double rainChance = 100;
+		double rainAmount = 300;
+		boolean isColdFrontApproaching = false;
+		double temperature = 55;
+		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+				isColdFrontApproaching, temperature);
+		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
+		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
+		
+		// set up the supplies: name, quantity, capacity, unit
+		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
+		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
+		Supply supply3 = new Supply("drip torches", 1.0, 20.0, "N/A");
+		Supply supply4 = new Supply("rakes", 3.0, 20.0, "N/A");
+		Supply supply5 = new Supply("backpack pump", 1.0, 20.0, "N/A");
+		Supply supply6 = new Supply("dozer", 1.0, 20.0, "N/A");
+		List<Supply> supplies = new ArrayList<Supply>();
+		supplies.add(supply1);
+		supplies.add(supply2);
+		supplies.add(supply3);
+		supplies.add(supply4);
+		supplies.add(supply5);
+		supplies.add(supply6);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnDetermination expectedResult = BurnDetermination.NOT_RECOMMENDED_OTHER;
+		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
+	}
+	@Test
+	public void testBackFireLowHumidity() {
+
+		double latitude = 20.0;
+		double longitude = 20.8;
+		boolean isBlackLineVolatile = false;
+		int acresToBeBurned = 10;
+		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		FuelType fuelType = FuelType.LIGHT;
+		Integer widthOfBlacklines = 101;
+		FirePattern firePattern = FirePattern.BACKFIRES;
+		boolean isOutdoorBurningBanned = false;
+		double windSpeed = 5;
+		double humidity = 2;
+		double relativeHumidity = 50;
+		Direction windDirection = Direction.SOUTHWEST;
+		double rainChance = 0;
+		double rainAmount = 0;
+		boolean isColdFrontApproaching = false;
+		double temperature = 55;
+		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+				isColdFrontApproaching, temperature);
+		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
+		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
+		
+		// set up the supplies: name, quantity, capacity, unit
+		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
+		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
+		Supply supply3 = new Supply("drip torches", 1.0, 20.0, "N/A");
+		Supply supply4 = new Supply("rakes", 3.0, 20.0, "N/A");
+		Supply supply5 = new Supply("backpack pump", 1.0, 20.0, "N/A");
+		Supply supply6 = new Supply("dozer", 1.0, 20.0, "N/A");
+		List<Supply> supplies = new ArrayList<Supply>();
+		supplies.add(supply1);
+		supplies.add(supply2);
+		supplies.add(supply3);
+		supplies.add(supply4);
+		supplies.add(supply5);
+		supplies.add(supply6);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnDetermination expectedResult = BurnDetermination.NOT_RECOMMENDED_OTHER;
+		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
+	}
+	@Test
+	public void testHeadFiresDesired() {
+
+		double latitude = 20.0;
+		double longitude = 20.8;
+		boolean isBlackLineVolatile = false;
+		int acresToBeBurned = 10;
+		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		FuelType fuelType = FuelType.LIGHT;
+		Integer widthOfBlacklines = 101;
+		FirePattern firePattern = FirePattern.HEADFIRES;
+		boolean isOutdoorBurningBanned = false;
+		double windSpeed = 10;
+		double humidity = 35;
+		double relativeHumidity = 50;
+		Direction windDirection = Direction.SOUTHWEST;
+		double rainChance = 0;
+		double rainAmount = 0;
+		boolean isColdFrontApproaching = false;
+		double temperature = 75;
+		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+				isColdFrontApproaching, temperature);
+		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
+		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
+		
+		// set up the supplies: name, quantity, capacity, unit
+		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
+		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
+		Supply supply3 = new Supply("drip torches", 1.0, 20.0, "N/A");
+		Supply supply4 = new Supply("rakes", 3.0, 20.0, "N/A");
+		Supply supply5 = new Supply("backpack pump", 1.0, 20.0, "N/A");
+		Supply supply6 = new Supply("dozer", 1.0, 20.0, "N/A");
+		List<Supply> supplies = new ArrayList<Supply>();
+		supplies.add(supply1);
+		supplies.add(supply2);
+		supplies.add(supply3);
+		supplies.add(supply4);
+		supplies.add(supply5);
+		supplies.add(supply6);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnDetermination expectedResult = BurnDetermination.DESIRED;
+		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
+	}
+	@Test
+	public void testHeadFiresAcceptable() {
+
+		double latitude = 20.0;
+		double longitude = 20.8;
+		boolean isBlackLineVolatile = false;
+		int acresToBeBurned = 10;
+		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		FuelType fuelType = FuelType.LIGHT;
+		Integer widthOfBlacklines = 101;
+		FirePattern firePattern = FirePattern.HEADFIRES;
+		boolean isOutdoorBurningBanned = false;
+		double windSpeed = 10;
+		double humidity = 35;
+		double relativeHumidity = 50;
+		Direction windDirection = Direction.SOUTHWEST;
+		double rainChance = 0;
+		double rainAmount = 0;
+		boolean isColdFrontApproaching = false;
+		double temperature = 84;
+		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+				isColdFrontApproaching, temperature);
+		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
+		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
+		
+		// set up the supplies: name, quantity, capacity, unit
+		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
+		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
+		Supply supply3 = new Supply("drip torches", 1.0, 20.0, "N/A");
+		Supply supply4 = new Supply("rakes", 3.0, 20.0, "N/A");
+		Supply supply5 = new Supply("backpack pump", 1.0, 20.0, "N/A");
+		Supply supply6 = new Supply("dozer", 1.0, 20.0, "N/A");
+		List<Supply> supplies = new ArrayList<Supply>();
+		supplies.add(supply1);
+		supplies.add(supply2);
+		supplies.add(supply3);
+		supplies.add(supply4);
+		supplies.add(supply5);
+		supplies.add(supply6);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnDetermination expectedResult = BurnDetermination.ACCEPTABLE;
+		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
+	}
+	@Test
+	public void testHeadFireTooHotTemperature() {
+
+		double latitude = 20.0;
+		double longitude = 20.8;
+		boolean isBlackLineVolatile = false;
+		int acresToBeBurned = 10;
+		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		FuelType fuelType = FuelType.LIGHT;
+		Integer widthOfBlacklines = 101;
+		FirePattern firePattern = FirePattern.HEADFIRES;
+		boolean isOutdoorBurningBanned = false;
+		double windSpeed = 10;
+		double humidity = 35;
+		double relativeHumidity = 50;
+		Direction windDirection = Direction.SOUTHWEST;
+		double rainChance = 0;
+		double rainAmount = 0;
+		boolean isColdFrontApproaching = false;
+		double temperature = 300;
+		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+				isColdFrontApproaching, temperature);
+		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
+		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
+		
+		// set up the supplies: name, quantity, capacity, unit
+		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
+		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
+		Supply supply3 = new Supply("drip torches", 1.0, 20.0, "N/A");
+		Supply supply4 = new Supply("rakes", 3.0, 20.0, "N/A");
+		Supply supply5 = new Supply("backpack pump", 1.0, 20.0, "N/A");
+		Supply supply6 = new Supply("dozer", 1.0, 20.0, "N/A");
+		List<Supply> supplies = new ArrayList<Supply>();
+		supplies.add(supply1);
+		supplies.add(supply2);
+		supplies.add(supply3);
+		supplies.add(supply4);
+		supplies.add(supply5);
+		supplies.add(supply6);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnDetermination expectedResult = BurnDetermination.NOT_RECOMMENDED_TEMPERATURE;
+		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
+	}
+	@Test
+	public void testHeadFireFloodThePreviousDay() {
+
+		double latitude = 20.0;
+		double longitude = 20.8;
+		boolean isBlackLineVolatile = false;
+		int acresToBeBurned = 10;
+		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		FuelType fuelType = FuelType.LIGHT;
+		Integer widthOfBlacklines = 101;
+		FirePattern firePattern = FirePattern.HEADFIRES;
+		boolean isOutdoorBurningBanned = false;
+		double windSpeed = 10;
+		double humidity = 35;
+		double relativeHumidity = 50;
+		Direction windDirection = Direction.SOUTHWEST;
+		double rainChance = 100;
+		double rainAmount = 20000;
+		boolean isColdFrontApproaching = false;
+		double temperature = 75;
+		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+				isColdFrontApproaching, temperature);
+		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
+		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
+		
+		// set up the supplies: name, quantity, capacity, unit
+		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
+		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
+		Supply supply3 = new Supply("drip torches", 1.0, 20.0, "N/A");
+		Supply supply4 = new Supply("rakes", 3.0, 20.0, "N/A");
+		Supply supply5 = new Supply("backpack pump", 1.0, 20.0, "N/A");
+		Supply supply6 = new Supply("dozer", 1.0, 20.0, "N/A");
+		List<Supply> supplies = new ArrayList<Supply>();
+		supplies.add(supply1);
+		supplies.add(supply2);
+		supplies.add(supply3);
+		supplies.add(supply4);
+		supplies.add(supply5);
+		supplies.add(supply6);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnDetermination expectedResult = BurnDetermination.NOT_RECOMMENDED_OTHER;
+		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
+	}
+	@Test
+	public void HeadFireWithWestWind() {
+
+		double latitude = 20.0;
+		double longitude = 20.8;
+		boolean isBlackLineVolatile = false;
+		int acresToBeBurned = 10;
+		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		FuelType fuelType = FuelType.LIGHT;
+		Integer widthOfBlacklines = 101;
+		FirePattern firePattern = FirePattern.HEADFIRES;
+		boolean isOutdoorBurningBanned = false;
+		double windSpeed = 10;
+		double humidity = 35;
+		double relativeHumidity = 50;
+		Direction windDirection = Direction.WEST;
+		double rainChance = 0;
+		double rainAmount = 0;
+		boolean isColdFrontApproaching = false;
+		double temperature = 75;
+		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+				isColdFrontApproaching, temperature);
+		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
+		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
+		
+		// set up the supplies: name, quantity, capacity, unit
+		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
+		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
+		Supply supply3 = new Supply("drip torches", 1.0, 20.0, "N/A");
+		Supply supply4 = new Supply("rakes", 3.0, 20.0, "N/A");
+		Supply supply5 = new Supply("backpack pump", 1.0, 20.0, "N/A");
+		Supply supply6 = new Supply("dozer", 1.0, 20.0, "N/A");
+		List<Supply> supplies = new ArrayList<Supply>();
+		supplies.add(supply1);
+		supplies.add(supply2);
+		supplies.add(supply3);
+		supplies.add(supply4);
+		supplies.add(supply5);
+		supplies.add(supply6);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnDetermination expectedResult = BurnDetermination.ACCEPTABLE;
+		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
+	}
+	@Test
+	public void testHeadFiresWindWrong() {
+
+		double latitude = 20.0;
+		double longitude = 20.8;
+		boolean isBlackLineVolatile = false;
+		int acresToBeBurned = 10;
+		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		FuelType fuelType = FuelType.LIGHT;
+		Integer widthOfBlacklines = 101;
+		FirePattern firePattern = FirePattern.HEADFIRES;
+		boolean isOutdoorBurningBanned = false;
+		double windSpeed = 10;
+		double humidity = 35;
+		double relativeHumidity = 50;
+		Direction windDirection = Direction.NORTH;
+		double rainChance = 0;
+		double rainAmount = 0;
+		boolean isColdFrontApproaching = false;
+		double temperature = 75;
+		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+				isColdFrontApproaching, temperature);
+		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
+		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
+		
+		// set up the supplies: name, quantity, capacity, unit
+		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
+		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
+		Supply supply3 = new Supply("drip torches", 1.0, 20.0, "N/A");
+		Supply supply4 = new Supply("rakes", 3.0, 20.0, "N/A");
+		Supply supply5 = new Supply("backpack pump", 1.0, 20.0, "N/A");
+		Supply supply6 = new Supply("dozer", 1.0, 20.0, "N/A");
+		List<Supply> supplies = new ArrayList<Supply>();
+		supplies.add(supply1);
+		supplies.add(supply2);
+		supplies.add(supply3);
+		supplies.add(supply4);
+		supplies.add(supply5);
+		supplies.add(supply6);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnDetermination expectedResult = BurnDetermination.NOT_RECOMMENDED_WIND;
+		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
+	}
+	@Test
+	public void testHeadFiresHumidityIsUnAcceptable() {
+
+		double latitude = 20.0;
+		double longitude = 20.8;
+		boolean isBlackLineVolatile = false;
+		int acresToBeBurned = 10;
+		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		FuelType fuelType = FuelType.LIGHT;
+		Integer widthOfBlacklines = 101;
+		FirePattern firePattern = FirePattern.HEADFIRES;
+		boolean isOutdoorBurningBanned = false;
+		double windSpeed = 10;
+		double humidity = 0;
+		double relativeHumidity = 50;
+		Direction windDirection = Direction.SOUTHWEST;
+		double rainChance = 0;
+		double rainAmount = 0;
+		boolean isColdFrontApproaching = false;
+		double temperature = 75;
+		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+				isColdFrontApproaching, temperature);
+		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
+		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
+		
+		// set up the supplies: name, quantity, capacity, unit
+		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
+		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
+		Supply supply3 = new Supply("drip torches", 1.0, 20.0, "N/A");
+		Supply supply4 = new Supply("rakes", 3.0, 20.0, "N/A");
+		Supply supply5 = new Supply("backpack pump", 1.0, 20.0, "N/A");
+		Supply supply6 = new Supply("dozer", 1.0, 20.0, "N/A");
+		List<Supply> supplies = new ArrayList<Supply>();
+		supplies.add(supply1);
+		supplies.add(supply2);
+		supplies.add(supply3);
+		supplies.add(supply4);
+		supplies.add(supply5);
+		supplies.add(supply6);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnDetermination expectedResult = BurnDetermination.NOT_RECOMMENDED_OTHER;
+		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
+	}
+	@Test
+	public void testBackFireMissingInfo() {
+
+		double latitude = 20.0;
+		double longitude = 20.8;
+		boolean isBlackLineVolatile = false;
+		int acresToBeBurned = 10;
+		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		FuelType fuelType = FuelType.LIGHT;
+		Integer widthOfBlacklines = 101;
+		FirePattern firePattern = FirePattern.BACKFIRES;
+		boolean isOutdoorBurningBanned = false;
+		Double windSpeed = null;
+		double humidity = 35;
+		double relativeHumidity = 50;
+		Direction windDirection = Direction.SOUTHWEST;
+		double rainChance = 0;
+		double rainAmount = 0;
+		boolean isColdFrontApproaching = false;
+		double temperature = 75;
+		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+				isColdFrontApproaching, temperature);
+		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
+		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
+		
+		// set up the supplies: name, quantity, capacity, unit
+		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
+		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
+		Supply supply3 = new Supply("drip torches", 1.0, 20.0, "N/A");
+		Supply supply4 = new Supply("rakes", 3.0, 20.0, "N/A");
+		Supply supply5 = new Supply("backpack pump", 1.0, 20.0, "N/A");
+		Supply supply6 = new Supply("dozer", 1.0, 20.0, "N/A");
+		List<Supply> supplies = new ArrayList<Supply>();
+		supplies.add(supply1);
+		supplies.add(supply2);
+		supplies.add(supply3);
+		supplies.add(supply4);
+		supplies.add(supply5);
+		supplies.add(supply6);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnDetermination expectedResult = BurnDetermination.INDETERMINATE;
+		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
+	}
+	@Test
+	public void testMissingAllSupplies() {
+
+		double latitude = 20.0;
+		double longitude = 20.8;
+		boolean isBlackLineVolatile = false;
+		int acresToBeBurned = 10;
+		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		FuelType fuelType = FuelType.LIGHT;
+		Integer widthOfBlacklines = 101;
+		FirePattern firePattern = FirePattern.HEADFIRES;
+		boolean isOutdoorBurningBanned = false;
+		double windSpeed = 10;
+		double humidity = 35;
+		double relativeHumidity = 50;
+		Direction windDirection = Direction.SOUTHWEST;
+		double rainChance = 0;
+		double rainAmount = 0;
+		boolean isColdFrontApproaching = false;
+		double temperature = 75;
+		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+				isColdFrontApproaching, temperature);
+		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
+		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
+		
+		// set up the supplies: name, quantity, capacity, unit
+		Supply supply1 = new Supply("fire-starting fuel", 0.0, 20.0, "pumpers");
+		Supply supply2 = new Supply("pumper", 1.0, 0.0, "gallon");
+		Supply supply3 = new Supply("drip torches", 0.0, 20.0, "N/A");
+		Supply supply4 = new Supply("rakes", 3.0, 0.0, "N/A");
+		Supply supply5 = new Supply("backpack pump", 0.0, 20.0, "N/A");
+		Supply supply6 = new Supply("dozer", 1.0, 0.0, "N/A");
+		List<Supply> supplies = new ArrayList<Supply>();
+		supplies.add(supply1);
+		supplies.add(supply2);
+		supplies.add(supply3);
+		supplies.add(supply4);
+		supplies.add(supply5);
+		supplies.add(supply6);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnDetermination expectedResult = BurnDetermination.NOT_RECOMMENDED_OTHER;
+		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
+	}
+	@Test
+	public void testMissingSomeSupplies() {
+
+		double latitude = 20.0;
+		double longitude = 20.8;
+		boolean isBlackLineVolatile = false;
+		int acresToBeBurned = 10;
+		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		FuelType fuelType = FuelType.LIGHT;
+		Integer widthOfBlacklines = 101;
+		FirePattern firePattern = FirePattern.HEADFIRES;
+		boolean isOutdoorBurningBanned = false;
+		double windSpeed = 10;
+		double humidity = 35;
+		double relativeHumidity = 50;
+		Direction windDirection = Direction.SOUTHWEST;
+		double rainChance = 0;
+		double rainAmount = 0;
+		boolean isColdFrontApproaching = false;
+		double temperature = 75;
+		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+				isColdFrontApproaching, temperature);
+		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
+		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
+		
+		// set up the supplies: name, quantity, capacity, unit
+		Supply supply1 = new Supply("fire-starting fuel", 200.0, 20.0, "pumpers");
+		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
+		Supply supply3 = new Supply("drip torches", 1.0, 20.0, "N/A");
+		Supply supply4 = new Supply("rakes", 3.0, 20.0, "N/A");
+		Supply supply5 = new Supply("backpack pump", 1.0, 20.0, "N/A");
+		Supply supply6 = new Supply("dozer", 1.0, 20.0, "N/A");
+		List<Supply> supplies = new ArrayList<Supply>();
+		supplies.add(supply1);
+		supplies.add(supply2);
+		supplies.add(supply3);
+		supplies.add(supply4);
+		supplies.add(supply5);
+		supplies.add(supply6);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnDetermination expectedResult = BurnDetermination.NOT_RECOMMENDED_OTHER;
+		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
+	}
+	@Test
+	public void testMissingFireSwatters() {
+
+		double latitude = 20.0;
+		double longitude = 20.8;
+		boolean isBlackLineVolatile = false;
+		int acresToBeBurned = 10;
+		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		FuelType fuelType = FuelType.LIGHT;
+		Integer widthOfBlacklines = 101;
+		FirePattern firePattern = FirePattern.HEADFIRES;
+		boolean isOutdoorBurningBanned = false;
+		double windSpeed = 10;
+		double humidity = 35;
+		double relativeHumidity = 50;
+		Direction windDirection = Direction.SOUTHWEST;
+		double rainChance = 0;
+		double rainAmount = 0;
+		boolean isColdFrontApproaching = false;
+		double temperature = 75;
+		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+				isColdFrontApproaching, temperature);
+		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
+		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
+		
+		// set up the supplies: name, quantity, capacity, unit
+		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
+		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
+		Supply supply3 = new Supply("drip torches", 1.0, 20.0, "N/A");
+		Supply supply4 = new Supply("rakes", 0.0, 20.0, "N/A");
+		Supply supply5 = new Supply("backpack pump", 1.0, 20.0, "N/A");
+		Supply supply6 = new Supply("dozer", 1.0, 20.0, "N/A");
+		List<Supply> supplies = new ArrayList<Supply>();
+		supplies.add(supply1);
+		supplies.add(supply2);
+		supplies.add(supply3);
+		supplies.add(supply4);
+		supplies.add(supply5);
+		supplies.add(supply6);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnDetermination expectedResult = BurnDetermination.NOT_RECOMMENDED_OTHER;
+		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
+	}
+	@Test
+	public void testMissingBackPackPump() {
+
+		double latitude = 20.0;
+		double longitude = 20.8;
+		boolean isBlackLineVolatile = false;
+		int acresToBeBurned = 10;
+		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		FuelType fuelType = FuelType.LIGHT;
+		Integer widthOfBlacklines = 101;
+		FirePattern firePattern = FirePattern.HEADFIRES;
+		boolean isOutdoorBurningBanned = false;
+		double windSpeed = 10;
+		double humidity = 35;
+		double relativeHumidity = 50;
+		Direction windDirection = Direction.SOUTHWEST;
+		double rainChance = 0;
+		double rainAmount = 0;
+		boolean isColdFrontApproaching = false;
+		double temperature = 75;
+		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+				isColdFrontApproaching, temperature);
+		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
+		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
+		
+		// set up the supplies: name, quantity, capacity, unit
+		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
+		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
+		Supply supply3 = new Supply("drip torches", 1.0, 20.0, "N/A");
+		Supply supply4 = new Supply("rakes", 3.0, 20.0, "N/A");
+		Supply supply5 = new Supply("backpack pump", 0.0, 20.0, "N/A");
+		Supply supply6 = new Supply("dozer", 1.0, 20.0, "N/A");
+		List<Supply> supplies = new ArrayList<Supply>();
+		supplies.add(supply1);
+		supplies.add(supply2);
+		supplies.add(supply3);
+		supplies.add(supply4);
+		supplies.add(supply5);
+		supplies.add(supply6);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnDetermination expectedResult = BurnDetermination.NOT_RECOMMENDED_OTHER;
+		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
+	}
+	@Test
+	public void testMissingDozer() {
+
+		double latitude = 20.0;
+		double longitude = 20.8;
+		boolean isBlackLineVolatile = false;
+		int acresToBeBurned = 10;
+		Date currentDayDate = new Calendar.Builder().setDate(2023,11,19).setTimeOfDay(0, 0, 0).build().getTime();
+		Date dayBeforeFireDate = new Calendar.Builder().setDate(2023,11,22).setTimeOfDay(12, 0, 0).build().getTime();
+		Date dayOfFireDate = new Calendar.Builder().setDate(2023,11,23).setTimeOfDay(12, 0, 0).build().getTime();
+		FuelType fuelType = FuelType.LIGHT;
+		Integer widthOfBlacklines = 101;
+		FirePattern firePattern = FirePattern.HEADFIRES;
+		boolean isOutdoorBurningBanned = false;
+		double windSpeed = 10;
+		double humidity = 35;
+		double relativeHumidity = 50;
+		Direction windDirection = Direction.SOUTHWEST;
+		double rainChance = 0;
+		double rainAmount = 0;
+		boolean isColdFrontApproaching = false;
+		double temperature = 75;
+		Weather weather = new Weather(windSpeed, windDirection,humidity, relativeHumidity, rainChance, rainAmount,
+				isColdFrontApproaching, temperature);
+		Day dayOfFire = new Day(dayOfFireDate, weather, isOutdoorBurningBanned);
+		Day dayBeforeFire = new Day(dayBeforeFireDate, weather, isOutdoorBurningBanned);
+		
+		// set up the supplies: name, quantity, capacity, unit
+		Supply supply1 = new Supply("fire-starting fuel", 1.0, 20.0, "pumpers");
+		Supply supply2 = new Supply("pumper", 1.0, 20.0, "gallon");
+		Supply supply3 = new Supply("drip torches", 1.0, 20.0, "N/A");
+		Supply supply4 = new Supply("rakes", 3.0, 20.0, "N/A");
+		Supply supply5 = new Supply("backpack pump", 1.0, 20.0, "N/A");
+		Supply supply6 = new Supply("dozer", 0.0, 20.0, "N/A");
+		List<Supply> supplies = new ArrayList<Supply>();
+		supplies.add(supply1);
+		supplies.add(supply2);
+		supplies.add(supply3);
+		supplies.add(supply4);
+		supplies.add(supply5);
+		supplies.add(supply6);
+		BurnPlan burnPlan = new BurnPlan(dayOfFire, currentDayDate, dayBeforeFire, latitude, longitude, fuelType, firePattern, widthOfBlacklines,isBlackLineVolatile, acresToBeBurned, supplies);
+		BurnDetermination expectedResult = BurnDetermination.NOT_RECOMMENDED_OTHER;
+		assertEquals(expectedResult, BurnPlanEvaluationAlgorithm.evaluate(burnPlan));
+	}
 }
