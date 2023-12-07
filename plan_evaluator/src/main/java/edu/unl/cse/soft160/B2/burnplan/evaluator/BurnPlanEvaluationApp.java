@@ -442,7 +442,7 @@ public class BurnPlanEvaluationApp {
 		haveAllInputs = false;
 		input = "";
 
-		System.out.println("Please enter the supplies needed");
+		System.out.println("Please enter the supplies needed.");
 		do {
 			input = "";
 			input = getInput(supplyPrompts[prompt], scanner);
