@@ -121,7 +121,7 @@ public class BurnPlanEvaluationAlgorithm {
 			if (!hasRequiredSupplies || burnPlan.getDay().getWeather().isColdFrontApproaching()
 					|| (burnPlan.getFuelType() == FuelType.HEAVY && weather.getRainChance() > 50) || !withinDateRange) {
 				return BurnDetermination.NOT_RECOMMENDED_OTHER;
-			}
+			} 
 			if (weather.getRainChance() > 50 && weather.getRainAmount() > 10) {
 				return BurnDetermination.NOT_RECOMMENDED_OTHER;
 			}

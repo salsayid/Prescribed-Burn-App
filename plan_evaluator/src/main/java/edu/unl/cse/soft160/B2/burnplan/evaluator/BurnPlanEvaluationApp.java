@@ -562,13 +562,12 @@ public class BurnPlanEvaluationApp {
 					FuelType.valueOf(inputs.get(4).toUpperCase()), FirePattern.valueOf(inputs.get(5).toUpperCase()),
 					Integer.valueOf(inputs.get(6)), Boolean.parseBoolean(inputs.get(7)), Integer.valueOf(inputs.get(8)),
 					supplies);
-					new Supply("pumper", Double.valueOf(inputs.get(11)), Double.valueOf(inputs.get(10)), inputs.get(12)),
-					new Supply("fire-starting fuel", Double.valueOf(inputs.get(14)), Double.valueOf(inputs.get(13)), inputs.get(15)),
-					new Supply("drip torches", Double.valueOf(inputs.get(16)), 0.0, inputs.get(17)),
-					new Supply("rakes", Double.valueOf(inputs.get(18)), 0.0, inputs.get(19)),
-					new Supply("backpack pump", Double.valueOf(inputs.get(20)), 0.0, inputs.get(21)),
-					new Supply("dozer", Double.valueOf(inputs.get(22)), 0.0, inputs.get(23))
-					));
+					new Supply("pumper", Double.valueOf(inputs.get(11)), Double.valueOf(inputs.get(10)), inputs.get(12));
+					new Supply("fire-starting fuel", Double.valueOf(inputs.get(14)), Double.valueOf(inputs.get(13)), inputs.get(15));
+					new Supply("drip torches", Double.valueOf(inputs.get(16)), 0.0, inputs.get(17));
+					new Supply("rakes", Double.valueOf(inputs.get(18)), 0.0, inputs.get(19));
+					new Supply("backpack pump", Double.valueOf(inputs.get(20)), 0.0, inputs.get(21));
+					new Supply("dozer", Double.valueOf(inputs.get(22)), 0.0, inputs.get(23));
 
 			BurnPlan burnPlan = new BurnPlan(dayOfPlanedBurn, currentDay, dayBeforePlanedBurn, Double.valueOf(inputs.get(2)),
 					Double.valueOf(inputs.get(3)), FuelType.valueOf(inputs.get(4).toUpperCase()),
