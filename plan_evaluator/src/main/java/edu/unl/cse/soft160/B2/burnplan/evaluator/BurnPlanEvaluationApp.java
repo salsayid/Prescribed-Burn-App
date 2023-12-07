@@ -426,10 +426,10 @@ public class BurnPlanEvaluationApp {
 			}
 		} while (!haveAllInputs);
 		// inputs start at index 10 for supplies
-		String[] supplyPrompts = {"What is the capasity for each pumper: ",
+		String[] supplyPrompts = {"What is the capacity for each pumper: ",
 				"How many pumpers do you have: ",
 				"What unit do the pumpers belong to: ",
-				"What is the capasity for a barrel of fire starting fluid: ",
+				"What is the capacity for a barrel of fire starting fluid: ",
 				"How many barrels of fire starting fluid do you have: ",
 				"What unit do the fire starting fluid belongs to: ", "How many drip torches do you have: ",
 				"What unit do the drip torches belong to: ", "how many rakes or fire swatters do you have: ",
