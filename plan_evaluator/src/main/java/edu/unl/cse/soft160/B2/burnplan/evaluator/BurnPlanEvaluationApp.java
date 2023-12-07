@@ -426,17 +426,16 @@ public class BurnPlanEvaluationApp {
 				System.exit(1);
 			}
 		} while (!haveAllInputs);
-		// inputs start at index 10 for supplies
-		String[] supplyPrompts = {"What is the capacity for each pumper: ",
+		// inputs start at index 11 for supplies
+		String[] supplyPrompts = {
 				"How many pumpers do you have: ",
-				"What unit do the pumpers belong to: ",
 				"What is the capacity for a barrel of fire starting fluid: ",
 				"How many barrels of fire starting fluid do you have: ",
-				"What unit does the fire starting fluid belongs to (e.g., gallons): ", "How many drip torches do you have: ",
-				"What unit do the drip torches belong to: ", "How many rakes or fire swatters do you have: ",
-				"What unit do the rakes or fire swatters belong to: ", "How many backback pumps do you have: ",
-				"What unit do the backpack pumps belong to: ", "How many dozers do you have: ",
-				"What unit do the dozers belong to: " };
+				"What unit does the fire starting fluid belongs to (e.g., gallons): ", 
+				"How many drip torches do you have: ",
+				"How many rakes or fire swatters do you have: ",
+				"How many backback pumps do you have: ",
+				"How many dozers do you have: "};
 
 		prompt = 0;
 		haveAllInputs = false;
@@ -550,12 +549,12 @@ public class BurnPlanEvaluationApp {
 					Boolean.valueOf(inputs.get(2)));
 
 			List<Supply> supplies = new ArrayList<>(Arrays.asList(
-					new Supply("pumper", Double.valueOf(inputs.get(12)), Double.valueOf(inputs.get(11)), inputs.get(13)),
-					new Supply("fire-starting fuel", Double.valueOf(inputs.get(15)), Double.valueOf(inputs.get(14)), inputs.get(16)),
-					new Supply("drip torches", Double.valueOf(inputs.get(17)), 0.0, inputs.get(18)),
-					new Supply("rakes", Double.valueOf(inputs.get(19)), 0.0, inputs.get(20)),
-					new Supply("backpack pump", Double.valueOf(inputs.get(21)), 0.0, inputs.get(22)),
-					new Supply("dozer", Double.valueOf(inputs.get(23)), 0.0, inputs.get(24))));
+					new Supply("pumper", Double.valueOf(inputs.get(11)), 0.0, ""),
+					new Supply("fire-starting fuel", Double.valueOf(inputs.get(13)), Double.valueOf(inputs.get(12)), inputs.get(14)),
+					new Supply("drip torches", Double.valueOf(inputs.get(15)), 0.0, ""),
+					new Supply("rakes", Double.valueOf(inputs.get(16)), 0.0, ""),
+					new Supply("backpack pump", Double.valueOf(inputs.get(17)), 0.0, ""),
+					new Supply("dozer", Double.valueOf(inputs.get(18)), 0.0, "")));
 
 			BurnPlan burnPlan = new BurnPlan(dayOfPlanedBurn, currentDay, dayBeforePlanedBurn, Double.valueOf(inputs.get(3)),
 					Double.valueOf(inputs.get(4)), FuelType.valueOf(inputs.get(5).toUpperCase()),
