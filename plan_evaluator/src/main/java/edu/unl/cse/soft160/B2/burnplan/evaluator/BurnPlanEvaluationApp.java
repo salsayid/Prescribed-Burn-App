@@ -393,9 +393,9 @@ public class BurnPlanEvaluationApp {
 		Scanner scanner = new Scanner(System.in);
 
 		// get user input
-		String[] inputPrompts = { "What is the planed date for the burn (YYYY, MM, DD): ",
-				"What time is the burn for the planed day (hour in military time): ",
-				"Is Burning banned for the planed day (true/false): ", 
+		String[] inputPrompts = { "What is the planned date for the burn (YYYY, MM, DD): ",
+				"What time is the burn for the planned day (hour in military time): ",
+				"Is Burning banned for the planned day (true/false): ", 
 				"What is the latitude for the burn: ",
 				"What is the longitude for the burn: ", 
 				"What Fuel Type is going to be used (Light/Heavy): ",
