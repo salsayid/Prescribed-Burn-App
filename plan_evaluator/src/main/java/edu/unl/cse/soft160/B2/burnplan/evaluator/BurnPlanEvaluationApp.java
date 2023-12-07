@@ -394,8 +394,11 @@ public class BurnPlanEvaluationApp {
 
 		// get user input
 		String[] inputPrompts = { "What is the planed date for the burn (YYYY, MM, DD): ",
-				"Is Burning banned for the planed day (true/false): ", "What is the latitude for the burn: ",
-				"What is the longitude for the burn: ", "What Fuel Type is going to be used (Light/Heavy): ",
+				"What time is the burn for the planed day (hour in military time): ",
+				"Is Burning banned for the planed day (true/false): ", 
+				"What is the latitude for the burn: ",
+				"What is the longitude for the burn: ", 
+				"What Fuel Type is going to be used (Light/Heavy): ",
 				"What Fire Pattern is going to be used (Headfires/Black_lines): ",
 				"If using Black_lines what is the width (0 if NOT using Black_lines): ",
 				"If using Black_lines is the fuel volatile (true/false if NOT using Black_lines): ",
@@ -422,9 +425,6 @@ public class BurnPlanEvaluationApp {
 				System.exit(1);
 			}
 		} while (!haveAllInputs);
-		// inputs start at index 9 for supplies
-		String[] supplyPrompts = { "What is the capasity for each pumper: ", "How many pumpers do you have: ",
-				"What unit do the pumpers belong to: ", "What is the capasity for a barrel of fire starting fluid: ",
 		// inputs start at index 10 for supplies
 		String[] supplyPrompts = {"What is the capasity for each pumper: ",
 				"How many pumpers do you have: ",
@@ -514,12 +514,11 @@ public class BurnPlanEvaluationApp {
 			Date currentDay = new Date();
 			Date dayBeforePlanedBurnDate = new Calendar.Builder().setDate(Integer.valueOf(planedDateStrs[0].strip()),
 					Integer.valueOf(planedDateStrs[1].strip()) - 1, Integer.valueOf(planedDateStrs[2].strip()))
-					.setTimeOfDay(0, 0, 0).build().getTime();
+					.setTimeOfDay(Integer.parseInt(inputs.get(1)), 0, 0).build().getTime();
+			
 			Date dayOfPlanedBurnDate = new Calendar.Builder().setDate(Integer.valueOf(planedDateStrs[0].strip()),
 					Integer.valueOf(planedDateStrs[1].strip()), Integer.valueOf(planedDateStrs[2].strip()))
-					.setTimeOfDay(0, 0, 0).build().getTime();
-					Integer.valueOf(planedDateStrs[1].strip()), Integer.valueOf(planedDateStrs[2].strip())).setTimeOfDay(0, 0, 0)
-					.build().getTime();
+					.setTimeOfDay(Integer.parseInt(inputs.get(1)), 0, 0).build().getTime();
 			
 			Direction windDirection = Direction.NORTH;
 			long openWeatherWindDirection = 0;
@@ -541,38 +540,26 @@ public class BurnPlanEvaluationApp {
 				windDirection = Direction.NORTHWEST;
 			}
 
-			Weather dayOfPlanedBurnWeather = new Weather(openWeather.getWindSpeed(dayOfPlanedBurnDate), windDirection, Double.valueOf(openWeather.getHumidity(dayOfPlanedBurnDate)), Double.valueOf(openWeather.getHumidity(dayOfPlanedBurnDate)), openWeather.getProbabilityOfPrecipitation(dayOfPlanedBurnDate), openWeather.getDailyRainfall(dayOfPlanedBurnDate), Boolean.valueOf(inputs.get(8)), openWeather.getTemperature(dayOfPlanedBurnDate));
-			Weather dayBeforePlanedBurnWeather = new Weather(openWeather.getWindSpeed(dayBeforePlanedBurnDate), windDirection, Double.valueOf(openWeather.getHumidity(dayBeforePlanedBurnDate)), Double.valueOf(openWeather.getHumidity(dayBeforePlanedBurnDate)), openWeather.getProbabilityOfPrecipitation(dayBeforePlanedBurnDate), openWeather.getDailyRainfall(dayBeforePlanedBurnDate), Boolean.valueOf(inputs.get(8)), openWeather.getTemperature(dayBeforePlanedBurnDate));
+			Weather dayOfPlanedBurnWeather = new Weather(openWeather.getWindSpeed(dayOfPlanedBurnDate), windDirection, Double.valueOf(openWeather.getHumidity(dayOfPlanedBurnDate)), Double.valueOf(openWeather.getHumidity(dayOfPlanedBurnDate)), openWeather.getProbabilityOfPrecipitation(dayOfPlanedBurnDate), openWeather.getDailyRainfall(dayOfPlanedBurnDate), Boolean.valueOf(inputs.get(9)), openWeather.getTemperature(dayOfPlanedBurnDate));
+			Weather dayBeforePlanedBurnWeather = new Weather(openWeather.getWindSpeed(dayBeforePlanedBurnDate), windDirection, Double.valueOf(openWeather.getHumidity(dayBeforePlanedBurnDate)), Double.valueOf(openWeather.getHumidity(dayBeforePlanedBurnDate)), openWeather.getProbabilityOfPrecipitation(dayBeforePlanedBurnDate), openWeather.getDailyRainfall(dayBeforePlanedBurnDate), Boolean.valueOf(inputs.get(9)), openWeather.getTemperature(dayBeforePlanedBurnDate));
 
-			Day dayBeforePlanedBurn = new Day(dayBeforePlanedBurnDate, dayBeforePlanedBurnWeather, Boolean.valueOf(inputs.get(1)));
+			Day dayBeforePlanedBurn = new Day(dayBeforePlanedBurnDate, dayBeforePlanedBurnWeather, Boolean.valueOf(inputs.get(2)));
 			Day dayOfPlanedBurn = new Day(dayOfPlanedBurnDate, dayOfPlanedBurnWeather,
-					Boolean.valueOf(inputs.get(1)));
+					Boolean.valueOf(inputs.get(2)));
 
 			List<Supply> supplies = new ArrayList<>(Arrays.asList(
-					new Supply("pumper", Double.valueOf(inputs.get(10)), Double.valueOf(inputs.get(9)), inputs.get(11)),
-					new Supply("fire-starting fuel", Double.valueOf(inputs.get(13)), Double.valueOf(inputs.get(12)),
-							inputs.get(14)),
-					new Supply("drip torches", Double.valueOf(inputs.get(15)), 0.0, inputs.get(16)),
-					new Supply("rakes", Double.valueOf(inputs.get(17)), 0.0, inputs.get(18)),
-					new Supply("backpack pump", Double.valueOf(inputs.get(19)), 0.0, inputs.get(20)),
-					new Supply("dozer", Double.valueOf(inputs.get(21)), 0.0, inputs.get(22))));
+					new Supply("pumper", Double.valueOf(inputs.get(12)), Double.valueOf(inputs.get(11)), inputs.get(13)),
+					new Supply("fire-starting fuel", Double.valueOf(inputs.get(15)), Double.valueOf(inputs.get(14)), inputs.get(16)),
+					new Supply("drip torches", Double.valueOf(inputs.get(17)), 0.0, inputs.get(18)),
+					new Supply("rakes", Double.valueOf(inputs.get(19)), 0.0, inputs.get(20)),
+					new Supply("backpack pump", Double.valueOf(inputs.get(21)), 0.0, inputs.get(22)),
+					new Supply("dozer", Double.valueOf(inputs.get(23)), 0.0, inputs.get(24))));
 
-			BurnPlan burnPlan = new BurnPlan(dayOfPlanedBurn, currentDay, dayBeforePlanedBurn,
-					Double.valueOf(inputs.get(2)), Double.valueOf(inputs.get(3)),
-					FuelType.valueOf(inputs.get(4).toUpperCase()), FirePattern.valueOf(inputs.get(5).toUpperCase()),
-					Integer.valueOf(inputs.get(6)), Boolean.parseBoolean(inputs.get(7)), Integer.valueOf(inputs.get(8)),
-					supplies);
-					new Supply("pumper", Double.valueOf(inputs.get(11)), Double.valueOf(inputs.get(10)), inputs.get(12));
-					new Supply("fire-starting fuel", Double.valueOf(inputs.get(14)), Double.valueOf(inputs.get(13)), inputs.get(15));
-					new Supply("drip torches", Double.valueOf(inputs.get(16)), 0.0, inputs.get(17));
-					new Supply("rakes", Double.valueOf(inputs.get(18)), 0.0, inputs.get(19));
-					new Supply("backpack pump", Double.valueOf(inputs.get(20)), 0.0, inputs.get(21));
-					new Supply("dozer", Double.valueOf(inputs.get(22)), 0.0, inputs.get(23));
-
-			BurnPlan burnPlan = new BurnPlan(dayOfPlanedBurn, currentDay, dayBeforePlanedBurn, Double.valueOf(inputs.get(2)),
-					Double.valueOf(inputs.get(3)), FuelType.valueOf(inputs.get(4).toUpperCase()),
-					FirePattern.valueOf(inputs.get(5).toUpperCase()), Integer.valueOf(inputs.get(6)),
-					Boolean.parseBoolean(inputs.get(7)), Integer.valueOf(inputs.get(9)), supplies);
+			BurnPlan burnPlan = new BurnPlan(dayOfPlanedBurn, currentDay, dayBeforePlanedBurn, Double.valueOf(inputs.get(3)),
+					Double.valueOf(inputs.get(4)), FuelType.valueOf(inputs.get(5).toUpperCase()),
+					FirePattern.valueOf(inputs.get(6).toUpperCase()), Integer.valueOf(inputs.get(7)),
+					Boolean.parseBoolean(inputs.get(8)), Integer.valueOf(inputs.get(10)), supplies);
+			
 			BurnDetermination planEvaluation = BurnPlanEvaluationAlgorithm.evaluate(burnPlan);
 			printPlanOutput(burnPlan, planEvaluation);
 		} catch (NumberFormatException e) {
