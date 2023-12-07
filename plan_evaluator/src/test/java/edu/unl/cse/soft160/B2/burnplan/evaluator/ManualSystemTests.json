@@ -15,17 +15,17 @@ Test
 	10. input: 200 for the prompt - How many acres are to be burned: 
 
 Next Enter the supplies needed
-	1. input: 50 for the prompt - What is the capasity for each pumper:
+	1. input: 50 for the prompt - What is the capacity for each pumper:
 	2. input: 2 for the prompt - How many pumpers are needed: 
 	3. input: some string (it doesn’t really matter) in this case “blah” was used for the prompt - What unit do the pumpers belong to: 
-	4. input: 10 for the prompt - What is the capasity for a barrel of fire starting fluid: 
+	4. input: 10 for the prompt - What is the capacity for a barrel of fire starting fluid: 
 	5. input: 10 for the prompt - How many barrels of fire starting fluid are needed: 
 	6. input: some string (it doesn’t really matter) in this case “blah” was used for the prompt - What unit do the fire starting fluid belongs to:
 	7. input: 10 for the prompt - How many drip torches are needed: 
 	8. input: some string (it doesn’t really matter) in this case “blah” was used for the prompt - What unit do the drip torches belong to: 
 	9. input: 10 for the prompt - how many rakes or fire swatters are needed:
 	10. input: some string (it doesn’t really matter) in this case “blah” was used for the prompt - What unit do the rakes or fire swatters belong to: 
-	11. input: 1 for the prompt - How many backback pumps are needed: 
+	11. input: 1 for the prompt - How many backpack pumps are needed: 
 	13. input: some string (it doesn’t really matter) in this case “blah” was used for the prompt - What unit do the backpack pumps belong to: 
 	14. input: 1 for the prompt - How many dozers are needed: 
 	15.input: some string (it doesn’t really matter) in this case “blah” was used for the prompt - What unit do the dozers belong to: 
