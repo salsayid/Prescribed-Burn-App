@@ -395,15 +395,12 @@ public class BurnPlanEvaluationApp {
 		// get user input
 		String[] inputPrompts = { "What is the planned date for the burn (YYYY, MM, DD): ",
 				"What time is the burn for the planned day (hour in military time): ",
-				"Is Burning banned for the planned day (true/false): ", 
-				"What is the latitude for the burn: ",
-				"What is the longitude for the burn: ", 
-				"What Fuel Type is going to be used (Light/Heavy): ",
+				"Is Burning banned for the planned day (true/false): ", "What is the latitude for the burn: ",
+				"What is the longitude for the burn: ", "What Fuel Type is going to be used (Light/Heavy): ",
 				"What Fire Pattern is going to be used (Headfires/Black_lines/Backfires): ",
 				"If using Black_lines what is the width (0 if NOT using Black_lines): ",
 				"If using Black_lines is the fuel volatile (true/false if NOT using Black_lines): ",
-				"Is there a cold front approaching (true/false): ",
-				"How many acres are to be burned: " };
+				"Is there a cold front approaching (true/false): ", "How many acres are to be burned: " };
 		int prompt = 0;
 
 		List<String> inputs = new ArrayList<>();
@@ -427,15 +424,12 @@ public class BurnPlanEvaluationApp {
 			}
 		} while (!haveAllInputs);
 		// inputs start at index 11 for supplies
-		String[] supplyPrompts = {
-				"How many pumpers do you have: ",
+		String[] supplyPrompts = { "How many pumpers do you have: ",
 				"What is the capacity for a barrel of fire starting fluid: ",
 				"How many barrels of fire starting fluid do you have: ",
-				"What unit does the fire starting fluid belongs to (e.g., gallons): ", 
-				"How many drip torches do you have: ",
-				"How many rakes or fire swatters do you have: ",
-				"How many backback pumps do you have: ",
-				"How many dozers do you have: "};
+				"What unit does the fire starting fluid belongs to (e.g., gallons): ",
+				"How many drip torches do you have: ", "How many rakes or fire swatters do you have: ",
+				"How many backback pumps do you have: ", "How many dozers do you have: " };
 
 		prompt = 0;
 		haveAllInputs = false;
@@ -476,12 +470,12 @@ public class BurnPlanEvaluationApp {
 
 		OpenWeatherConnector openWeather;
 		String data;
-		
+
 		System.out.print("Do you want to use a JSON file to read weather date? (yes or no): ");
-		String useJson = scanner.next();		
+		String useJson = scanner.next();
 		String jsonFileName;
 		boolean isJsonTrue;
-		
+
 		if (useJson.toLowerCase().equals("yes")) {
 			System.out.print("What is the name of the json file? (ex. my-file.json): ");
 			jsonFileName = scanner.next();
@@ -513,17 +507,20 @@ public class BurnPlanEvaluationApp {
 		try {
 			String[] planedDateStrs = inputs.get(0).split(",");
 			Date currentDay = new Date();
-			Date dayBeforePlanedBurnDate = new Calendar.Builder().setDate(Integer.valueOf(planedDateStrs[0].strip()),
-					Integer.valueOf(planedDateStrs[1].strip()) - 1, Integer.valueOf(planedDateStrs[2].strip()))
+			Date dayBeforePlanedBurnDate = new Calendar.Builder()
+					.setDate(Integer.valueOf(planedDateStrs[0].strip()), Integer.valueOf(planedDateStrs[1].strip()) - 1,
+							Integer.valueOf(planedDateStrs[2].strip()))
 					.setTimeOfDay(Integer.parseInt(inputs.get(1)), 0, 0).build().getTime();
-			
-			Date dayOfPlanedBurnDate = new Calendar.Builder().setDate(Integer.valueOf(planedDateStrs[0].strip()),
-					Integer.valueOf(planedDateStrs[1].strip()), Integer.valueOf(planedDateStrs[2].strip()))
+
+			Date dayOfPlanedBurnDate = new Calendar.Builder()
+					.setDate(Integer.valueOf(planedDateStrs[0].strip()), Integer.valueOf(planedDateStrs[1].strip()),
+							Integer.valueOf(planedDateStrs[2].strip()))
 					.setTimeOfDay(Integer.parseInt(inputs.get(1)), 0, 0).build().getTime();
-			
+
 			Direction windDirection = Direction.NORTH;
 			long openWeatherWindDirection = 0;
-			if ((openWeatherWindDirection >= 0 && openWeatherWindDirection < 23) ||(openWeatherWindDirection <= 360 && openWeatherWindDirection > 337)) {
+			if ((openWeatherWindDirection >= 0 && openWeatherWindDirection < 23)
+					|| (openWeatherWindDirection <= 360 && openWeatherWindDirection > 337)) {
 				windDirection = Direction.NORTH;
 			} else if ((openWeatherWindDirection >= 23 && openWeatherWindDirection < 68)) {
 				windDirection = Direction.NORTHEAST;
@@ -541,26 +538,38 @@ public class BurnPlanEvaluationApp {
 				windDirection = Direction.NORTHWEST;
 			}
 
-			Weather dayOfPlanedBurnWeather = new Weather(openWeather.getWindSpeed(dayOfPlanedBurnDate), windDirection, Double.valueOf(openWeather.getHumidity(dayOfPlanedBurnDate)), Double.valueOf(openWeather.getHumidity(dayOfPlanedBurnDate)), openWeather.getProbabilityOfPrecipitation(dayOfPlanedBurnDate), openWeather.getDailyRainfall(dayOfPlanedBurnDate), Boolean.valueOf(inputs.get(9)), openWeather.getTemperature(dayOfPlanedBurnDate));
-			Weather dayBeforePlanedBurnWeather = new Weather(openWeather.getWindSpeed(dayBeforePlanedBurnDate), windDirection, Double.valueOf(openWeather.getHumidity(dayBeforePlanedBurnDate)), Double.valueOf(openWeather.getHumidity(dayBeforePlanedBurnDate)), openWeather.getProbabilityOfPrecipitation(dayBeforePlanedBurnDate), openWeather.getDailyRainfall(dayBeforePlanedBurnDate), Boolean.valueOf(inputs.get(9)), openWeather.getTemperature(dayBeforePlanedBurnDate));
+			Weather dayOfPlanedBurnWeather = new Weather(openWeather.getWindSpeed(dayOfPlanedBurnDate), windDirection,
+					Double.valueOf(openWeather.getHumidity(dayOfPlanedBurnDate)),
+					Double.valueOf(openWeather.getHumidity(dayOfPlanedBurnDate)),
+					openWeather.getProbabilityOfPrecipitation(dayOfPlanedBurnDate),
+					openWeather.getDailyRainfall(dayOfPlanedBurnDate), Boolean.valueOf(inputs.get(9)),
+					openWeather.getTemperature(dayOfPlanedBurnDate));
+			Weather dayBeforePlanedBurnWeather = new Weather(openWeather.getWindSpeed(dayBeforePlanedBurnDate),
+					windDirection, Double.valueOf(openWeather.getHumidity(dayBeforePlanedBurnDate)),
+					Double.valueOf(openWeather.getHumidity(dayBeforePlanedBurnDate)),
+					openWeather.getProbabilityOfPrecipitation(dayBeforePlanedBurnDate),
+					openWeather.getDailyRainfall(dayBeforePlanedBurnDate), Boolean.valueOf(inputs.get(9)),
+					openWeather.getTemperature(dayBeforePlanedBurnDate));
 
-			Day dayBeforePlanedBurn = new Day(dayBeforePlanedBurnDate, dayBeforePlanedBurnWeather, Boolean.valueOf(inputs.get(2)));
-			Day dayOfPlanedBurn = new Day(dayOfPlanedBurnDate, dayOfPlanedBurnWeather,
+			Day dayBeforePlanedBurn = new Day(dayBeforePlanedBurnDate, dayBeforePlanedBurnWeather,
 					Boolean.valueOf(inputs.get(2)));
+			Day dayOfPlanedBurn = new Day(dayOfPlanedBurnDate, dayOfPlanedBurnWeather, Boolean.valueOf(inputs.get(2)));
 
 			List<Supply> supplies = new ArrayList<>(Arrays.asList(
 					new Supply("pumper", Double.valueOf(inputs.get(11)), 0.0, ""),
-					new Supply("fire-starting fuel", Double.valueOf(inputs.get(13)), Double.valueOf(inputs.get(12)), inputs.get(14)),
+					new Supply("fire-starting fuel", Double.valueOf(inputs.get(13)), Double.valueOf(inputs.get(12)),
+							inputs.get(14)),
 					new Supply("drip torches", Double.valueOf(inputs.get(15)), 0.0, ""),
 					new Supply("rakes", Double.valueOf(inputs.get(16)), 0.0, ""),
 					new Supply("backpack pump", Double.valueOf(inputs.get(17)), 0.0, ""),
 					new Supply("dozer", Double.valueOf(inputs.get(18)), 0.0, "")));
 
-			BurnPlan burnPlan = new BurnPlan(dayOfPlanedBurn, currentDay, dayBeforePlanedBurn, Double.valueOf(inputs.get(3)),
-					Double.valueOf(inputs.get(4)), FuelType.valueOf(inputs.get(5).toUpperCase()),
-					FirePattern.valueOf(inputs.get(6).toUpperCase()), Integer.valueOf(inputs.get(7)),
-					Boolean.parseBoolean(inputs.get(8)), Integer.valueOf(inputs.get(10)), supplies);
-			
+			BurnPlan burnPlan = new BurnPlan(dayOfPlanedBurn, currentDay, dayBeforePlanedBurn,
+					Double.valueOf(inputs.get(3)), Double.valueOf(inputs.get(4)),
+					FuelType.valueOf(inputs.get(5).toUpperCase()), FirePattern.valueOf(inputs.get(6).toUpperCase()),
+					Integer.valueOf(inputs.get(7)), Boolean.parseBoolean(inputs.get(8)),
+					Integer.valueOf(inputs.get(10)), supplies);
+
 			BurnDetermination planEvaluation = BurnPlanEvaluationAlgorithm.evaluate(burnPlan);
 			printPlanOutput(burnPlan, planEvaluation);
 		} catch (NumberFormatException e) {
