@@ -31,6 +31,11 @@ The app can be built and packaged as a JAR by running `mvn package` from the `pl
 
 For development, 'BurnPlanEvaluationAlgorithm.java' can be run in Eclipse by right-clicking on it in the "Package Explorer" and selecting "Run As" → "Java Application".
 
+````
+java -jar plan_evaluator.jar
+````
+where `plan_evaluator.jar` is the name of the JAR that was built (which may vary depending on your Maven configuration.)
+
 The burn plan evaluation app will prompt the user for the date, latitude and longitude, acres to be burned, fuel type, and fire pattern. Depending on the type of fire pattern the app will also will also ask for the width, and if the fuel is volatile. Enter this information as requested. 
 
 The app will then print to the user if the requested burn is possible. Under different outputs of being desired, acceptable, not recommended other, not recommended wind, not recommended temperature, or prohibited. If any information is left blank, the app will report indeterminate.
