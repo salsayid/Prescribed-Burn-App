@@ -1,5 +1,3 @@
-	Link for an example README.md <https://canvas.unl.edu/courses/162910/files/15695789>
-
 # Burn Plan Evaluation App
 
 The Burn Plan Evaluation app connects to OpenWeather. Upon taking; the date, the coordinates in Latitude and Longitude, fuel type, fire pattern, width, if the fuel is volatile, acres, and a list of supplies. The app reports if the user, upon matching specifications, has a desired or acceptable burn. If the burn is outside of specifications, the app shall result in not recommending the burn along with the reason for the recommendation. If there are multiple reasons for the burn plan resulting in not recommended, the program will prioritize a specific reason. Should the burn be banned, the app will result in telling the user that the ban is prohibited. If the inputs are missing any information, the app should result in informing the user that the result is indeterminate.
